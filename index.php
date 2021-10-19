@@ -1,9 +1,19 @@
 <?php
-require ('vendor/autoload.php');
+
+require_once 'vendor/autoload.php';
+$loader = new \Twig\Loader\FilesystemLoader('./view');
+$twig = new \Twig\Environment($loader, [
+    'cache' => '/var/cache',
+]);
+
 /* routes à revoir (à reécrire URL rewriting)*/
 require('controller/postController.php');
 require('controller/homeController.php');
 require('controller/securityController.php');
+
+
+
+
 
 
 try
