@@ -2,11 +2,10 @@
 
 require 'model/HomeManager.php';
 
-function home()
+function homeAction($template)
 {
 
-
-    $twig->render('frontoffice/home.html.twig');
+    echo $template->render(['the' => 'here']);
 
 }
 

@@ -1,10 +1,10 @@
 {% extends 'template_frontoffice.html.twig' %}
 
-{% block title %} S'inscrire {% endblock title%}
+{% block title %} {% endblock title %}
 
 {% block stylesheet %}
-    <link href="public/css/register.css" rel="stylesheet">
-{% endblock %}
+    <link href="public/css/login.css" rel="stylesheet">
+{% endblock stylesheet %}
 
 {% block content %}
 
@@ -13,13 +13,10 @@
             <div class="col-md-12">
                 <div class="">
                     <form onsubmit="event.preventDefault()" class="box">
-                        <h2>S'inscrire</h2>
-                        <input type="text" name="lastName" placeholder="Nom">
-                        <input type="text" name="firstName" placeholder="Prénom">
+                        <h2>Se connecter</h2>
                         <input type="text" name="email" placeholder="Email">
                         <input type="password" name="password" placeholder="Mot de passe">
-                        <input type="submit" name="submit" value="Envoyer" href="#">
-                        <p>Vous avez déjà un compte ? <a href="#"> connectez-vous</a></p>
+                        <input type="submit" name="submit" value="Connexion" href="#">
                     </form>
                 </div>
             </div>

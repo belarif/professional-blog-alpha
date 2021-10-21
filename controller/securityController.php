@@ -2,12 +2,12 @@
 
 require('model/SecurityManager.php');
 
-function login()
+function loginAction($template)
 {
-    require('view/frontoffice/login.html.twig');
+    echo $template->render(['a' => 'b']);
 }
 
-function register()
+function registerAction($template)
 {
-    require('view/frontoffice/register.html.twig');
+    echo $template->render(['a' => 'b']);
 }

@@ -1,48 +1,55 @@
 <?php
 
-require_once 'vendor/autoload.php';
-$loader = new \Twig\Loader\FilesystemLoader('./view');
-$twig = new \Twig\Environment($loader, [
-    'cache' => '/var/cache',
-]);
-
 /* routes à revoir (à reécrire URL rewriting)*/
 require('controller/postController.php');
 require('controller/homeController.php');
 require('controller/securityController.php');
 
-
-
-
+require_once 'vendor/autoload.php';
+$loader = new \Twig\Loader\FilesystemLoader('./view');
+$twig = new \Twig\Environment($loader, [
+    'cache' => '/var/cache', 'auto_reload' => true, 'strict_variables' => true,
+]);
 
 
 try
 {
     if($_GET['action'] == 'home')
     {
-        home();
+        $template = $twig->load('home.html.twig');
+        homeAction($template);
     }
     elseif($_GET['action'] == 'login')
     {
-        login();
+        $template = $twig->load('login_frontoffice.html.twig');
+        loginAction($template);
+    }
+    elseif($_GET['action'] == 'adminLogin')
+    {
+        $template = $twig->load('login_backoffice.html.twig');
+        loginAction($template);
     }
     elseif ($_GET['action'] == 'register')
     {
-        register();
+        $template = $twig->load('register.html.twig');
+        registerAction($template);
     }
     elseif($_GET['action'] == 'listPosts')
     {
-        listPosts();
+        $template = $twig->load('posts.html.twig');
+        listPostsAction($template);
     }
     elseif($_GET['action'] == 'addPost')
     {
-        addPost();
+        $template = $twig->load('addPost.html.twig');
+        addPostAction($template);
     }
     elseif ($_GET['action'] == 'post')
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
-            post();
+            $template = $twig->load('post.html.twig');
+            postAction($template);
         }
         else
         {
@@ -54,13 +61,20 @@ try
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
-            editPost();
+            $template = $twig->load('post.html.twig');
+            editPost($template);
         }
         else
         {
             throw new Exception('Aucun blog post trouvé');
         }
     }
+    elseif($_GET['action'] == 'dashboard/listPosts')
+    {
+        $template = $twig->load('listPosts.html.twig');
+        listPostsAction($template);
+    }
+
     else
     {
         throw new Exception('404 - Page inexistante');

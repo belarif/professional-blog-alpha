@@ -2,30 +2,30 @@
 
 require_once 'model/PostManager.php';
 
-function listPosts()
+function listPostsAction($template)
 {
     $PostManager = new Hocine\Blog\Model\PostManager();
     $posts = $PostManager->getPosts();
 
-    require('view/frontoffice/posts.html.twig');
+    echo $template->render(['f' => 'g']);
 
 }
 
-function post()
+function postAction($template)
 {
     $PostManager = new Hocine\Blog\Model\PostManager();
     $post = $PostManager->getPost();
 
-    require('view/frontoffice/post.html.twig');
+    echo $template->render(['f' => 'l']);
 
 }
 
-function addPost()
+function addPostAction($template)
 {
-    require('view/backoffice/addPost.html.twig');
+    echo $template->render(['f' => 'f']);
 }
 
-function editPost()
+function editPost($template)
 {
-    require('view/backoffice/editPost.html.twig');
+    echo $template->render(['f' => 'g']);
 }
