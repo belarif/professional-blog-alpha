@@ -11,13 +11,9 @@ function listPostsAction($template)
 
 }
 
-function postAction($template)
+function readPostAction($template)
 {
-    $PostManager = new Hocine\Blog\Model\PostManager();
-    $post = $PostManager->getPost();
-
-    echo $template->render(['f' => 'l']);
-
+    echo $template->render(['r' => 'j']);
 }
 
 function addPostAction($template)
@@ -25,7 +21,21 @@ function addPostAction($template)
     echo $template->render(['f' => 'f']);
 }
 
-function editPost($template)
+function editPostAction($template)
 {
     echo $template->render(['f' => 'g']);
+}
+
+function deletePostAction()
+{
+
+}
+
+function postAction($template)
+{
+    $PostManager = new Hocine\Blog\Model\PostManager();
+    $post = $PostManager->getPost();
+
+    echo $template->render(['f' => 'l']);
+
 }
