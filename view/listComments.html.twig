@@ -1,32 +1,31 @@
 {% extends 'template_backoffice.html.twig' %}
 
-{% block title %} Liste des publications  {% endblock title %}
+{% block title %} Liste des commentaires  {% endblock title %}
 
 {% block stylesheet %} {% endblock stylesheet %}
 
 {% block content %}
     <main>
         <div class="container-fluid px-4">
-            <h4 class="mt-4">Gestion des publications</h4>
+            <h4 class="mt-4">Gestion des commentaires</h4>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a href="">Tableau de bord</a></li>
-                <li class="breadcrumb-item active">liste des publications</li>
+                <li class="breadcrumb-item active">liste des commentaires</li>
             </ol>
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    Liste des publications
+                    Liste des commentaires
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
                         <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Chapô</th>
-                            <th>Date de dernière modification</th>
-                            <th>Publié</th>
-                            <th>Salary</th>
+                            <th>Commentaire</th>
+                            <th>Titre de la publication</th>
+                            <th>Utilisateur</th>
+                            <th>Date du commentaire</th>
+                            <th>Valider</th>
                         </tr>
                         </thead>
                         <tfoot>

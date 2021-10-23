@@ -5,6 +5,7 @@ require('controller/postController.php');
 require('controller/homeController.php');
 require('controller/securityController.php');
 require('controller/userController.php');
+require('controller/commentController.php');
 
 require_once 'vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader('./view');
@@ -113,6 +114,11 @@ try
         {
             throw new Exception('Aucun blog post trouvé');
         }
+    }
+    elseif($_GET['action'] == 'dashboard/listComments')
+    {
+        $template = $twig->load('listComments.html.twig');
+        listCommentsAction($template);
     }
     else
     {

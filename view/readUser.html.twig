@@ -1,9 +1,37 @@
 {% extends 'template_backoffice.html.twig' %}
 
-{% block title %} Utilisateur {% endblock title %}
+{% block title %} Détails d'un utilisateur {% endblock title %}
 
-{% block stylesheet %} {% endblock stylesheet %}
+{% block stylesheet %}
+    <link href="public/css/backoffice/readUser.css" rel="stylesheet"/>
+{% endblock stylesheet %}
 
 {% block content %}
+    <main>
+        <div class="container-fluid px-4">
+            <h4 class="mt-4"> Gestion des utilisateurs </h4>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="index.html">Tableau de bord</a></li>
+                <li class="breadcrumb-item active"> détails de l'utilisateur</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="me-1"></i>
+                    Détails de l'utilisateur
+                </div>
+                <div class="card-body">
+                    <p><b>Nom</b> : nom de l'utilisateurs</p>
+                    <p><b>Prénom</b> : prénom de l'utilisateur</p>
+                    <p><b>E-mail</b> : adresse email de l'utilisateur</p>
+                    <p><b>Rôles</b> :
+                    </p>
+                    <ul>
+                        <li>visiteur</li>
+                        <li>administrateur</li>
+                    </ul>
 
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock content %}
