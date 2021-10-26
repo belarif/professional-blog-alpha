@@ -1,11 +1,20 @@
 <?php
 
-function authentification()
-{
-    echo 'data not available yet';
-}
+namespace Hocine\Blog\model;
 
-function registration()
-{
-    echo 'data not available yet';
+require_once 'model/Manager.php';
+
+class SecurityManager extends Manager {
+
+    function authentification()
+    {
+        $db = $this->dbConnect();
+        $req = $db->query('');
+        return $req;
+    }
+
+    function registration()
+    {
+        echo 'data not available yet';
+    }
 }

@@ -1,9 +1,9 @@
-{% extends 'template_frontoffice.html.twig' %}
+{% extends 'template.html.twig' %}
 
 {% block title %} {% endblock title %}
 
 {% block stylesheet %}
-    <link href="public/css/login.css" rel="stylesheet">
+    <link href="public/css/frontoffice/login.css" rel="stylesheet">
 {% endblock stylesheet %}
 
 {% block content %}
@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="">
+                <div class="d-flex justify-content-center">
                     <form onsubmit="event.preventDefault()" class="box">
                         <h2>Se connecter</h2>
                         <input type="text" name="email" placeholder="Email">

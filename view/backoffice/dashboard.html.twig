@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Tableau de bord {% endblock title %}
+
+{% block stylesheet %}
+    <link href="public/css/backoffice/dashboard.css" rel="stylesheet"/>
+{% endblock stylesheet %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+        <div class="dashboard-content">
+            <p class=""><b>Bienvenue dans votre espace d'administration</b></p>
+            <p>Sur cette espace, vous pouvez gérer :</p>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">- Vos publications</li>
+                <li class="list-group-item">- Les commentaires</li>
+                <li class="list-group-item">- Les utilisateurs</li>
+            </ul>
+        </div>
+</div>
+{% endblock content %}

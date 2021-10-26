@@ -1,0 +1,39 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Détails de la publication {% endblock title %}
+
+{% block stylesheet %}
+    <link href="public/css/backoffice/readPost.css" rel="stylesheet"/>
+{% endblock stylesheet %}
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h4 class="mt-4"> Gestion des publications </h4>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.php?action=dashboard">Tableau de bord</a></li>
+            <li class="breadcrumb-item active"> détails de la publication</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="me-1"></i>
+                Détails de la publication
+            </div>
+            <div class="card-body">
+                <p><b>Titre</b> : afficher titre de la publication</p>
+                <p><b>Auteur</b> : afficher l'auteur</p>
+                <p><b>Chapô</b> : texte court coiffant le contenu</p>
+                <p><b>Contenu</b> : Ceci est pour tester l'affichage du contenu d'une publication.
+                    Ceci est pour tester l'affichage du contenu d'une publication.
+                    Ceci est pour tester l'affichage du contenu d'une publication</p>
+                <p><b>Publiée</b> : oui</p>
+                <p><b>Date de publication</b> : JJ/MM/AAAA h:m:s</p>
+                <p><b>Date de dernière modification</b> : JJ/MM/AAA h:m:s</p>
+                <div class="">
+                    <button class="btn btn-primary">Modifier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

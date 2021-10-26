@@ -1,6 +1,6 @@
 <?php
 
-/* routes à revoir (à reécrire URL rewriting)*/
+/* routes à revoir (URL rewriting)*/
 require('controller/postController.php');
 require('controller/homeController.php');
 require('controller/securityController.php');
@@ -8,7 +8,7 @@ require('controller/userController.php');
 require('controller/commentController.php');
 
 require_once 'vendor/autoload.php';
-$loader = new \Twig\Loader\FilesystemLoader('./view');
+$loader = new \Twig\Loader\FilesystemLoader(['view/frontoffice','view/backoffice']);
 $twig = new \Twig\Environment($loader, [
     'cache' => '/var/cache', 'auto_reload' => true, 'strict_variables' => true,
 ]);
@@ -23,12 +23,12 @@ try
     }
     elseif($_GET['action'] == 'login')
     {
-        $template = $twig->load('login_frontoffice.html.twig');
+        $template = $twig->load('login.html.twig');
         loginAction($template);
     }
     elseif($_GET['action'] == 'adminLogin')
     {
-        $template = $twig->load('login_backoffice.html.twig');
+        $template = $twig->load('login.html.twig');
         loginAction($template);
     }
     elseif ($_GET['action'] == 'register')
@@ -53,6 +53,11 @@ try
             throw new Exception('Aucun blog post trouvé');
         }
 
+    }
+    elseif($_GET['action'] == 'dashboard')
+    {
+        $template = $twig->load('dashboard.html.twig');
+        dashboardAction($template);
     }
     elseif($_GET['action'] == 'dashboard/listPosts')
     {
@@ -119,6 +124,18 @@ try
     {
         $template = $twig->load('listComments.html.twig');
         listCommentsAction($template);
+    }
+    elseif($_GET['action'] == 'dashboard/readComment')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('readComment.html.twig');
+            readCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
     }
     else
     {

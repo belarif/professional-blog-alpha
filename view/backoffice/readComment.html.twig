@@ -1,0 +1,32 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} Détails du commentaire {% endblock title %}
+
+{% block stylesheet %}
+    <link href="public/css/backoffice/readComment.css" rel="stylesheet"/>
+{% endblock stylesheet %}
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h4 class="mt-4"> Gestion des commentaires </h4>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.php?action=dashboard">Tableau de bord</a></li>
+            <li class="breadcrumb-item active"> détails du commentaire</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="me-1"></i>
+                Détails du commentaire
+            </div>
+            <div class="card-body">
+                <p><b>Commentaire</b> : afficher le contenu du commentaire, afficher le contenu du commentaire,
+                    afficher le contenu du commentaire,afficher le contenu du commentaire</p>
+                <p><b>Utilisateur</b> : texte court coiffant le contenu</p>
+                <p><b>Date du commentaire</b> jj/mm/aaaa hh:mm:ss</p>
+                <p><b>Validé</b> : oui</p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

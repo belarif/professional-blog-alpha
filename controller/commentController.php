@@ -1,11 +1,16 @@
 <?php
 
-require_once 'model\PostManager.php';
+require_once 'model\CommentManager.php';
 
 function listCommentsAction($template)
 {
-    $PostManager = new Hocine\Blog\Model\PostManager();
-    $posts = $PostManager->getPosts();
+    $CommentManager = new Hocine\Blog\Model\CommentManager();
+    $comments = $CommentManager->getComments();
 
     echo $template->render(['f' => 'g']);
+}
+
+function readCommentAction($template)
+{
+    echo $template->render(['d' => 'f']);
 }
