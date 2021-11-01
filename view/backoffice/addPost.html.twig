@@ -20,52 +20,65 @@
                 Créer une publication
             </div>
             <div class="card-body">
-                <form>
+
+                {#% if errorMessage is defined and errorMessage is not null %#}
+                <div id="flash-danger">
+                    <div class="alert alert-danger text-center">
+                        <p></p>
+                    </div>
+                </div>
+                {#% endif %#}
+                <div id="flash-success">
+                    <div class="alert alert-success text-center">
+                        <p></p>
+                    </div>
+                </div>
+
+                <form method="post" action="index.php?action=dashboard/addPost">
                     <div class="mb-3 row">
-                        <label for="title" class="col-sm-2 col-form-label">Titre</label>
+                        <label for="title" class="col-sm-2 col-form-label">Titre<span>*</span></label>
                         <div class="col-sm-10">
                             <input id="title" class="form-control" type="text" name="title">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="firstName" class="col-sm-2 col-form-label">Chapô</label>
+                        <label for="chapo" class="col-sm-2 col-form-label">Chapô<span>*</span></label>
                         <div class="col-sm-10">
-                            <input id="firstName" class="form-control" type="text" name="firstName">
+                            <input id="chapo" class="form-control" type="text" name="chapo">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="author" class="col-sm-2 col-form-label">Auteur</label>
+                        <label for="author" class="col-sm-2 col-form-label">Auteur<span>*</span></label>
                         <div class="col-sm-10">
                             <input id="author" class="form-control" type="text" name="author">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="content" class="col-sm-2 col-form-label">Contenu</label>
+                        <label for="content" class="col-sm-2 col-form-label">Contenu<span>*</span></label>
                         <div class="col-sm-10">
                             <textarea id="content" class="form-control" name="content"></textarea>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="Status" class="col-sm-2 col-form-label">Publiée</label>
+                        <label for="published" class="col-sm-2 col-form-label">Publiée<span>*</span></label>
                         <div class="col-sm-10">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <input class="form-check-input" type="radio" name="published" id="flexRadioDefault1" value=1>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     oui
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="published" id="flexRadioDefault2" value=0>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     non
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="">
-                        <button class="btn btn-primary">Créer</button>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary" type="submit" name="submit">Créer</button>
                     </div>
-
                 </form>
             </div>
         </div>

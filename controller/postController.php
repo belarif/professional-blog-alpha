@@ -1,41 +1,133 @@
 <?php
 
+namespace ProfessionalBlog\Controller;
+
+use ProfessionalBlog\Model\PostManager;
+
 require_once 'model/PostManager.php';
 
-function listPostsAction($template)
-{
-    $PostManager = new Hocine\Blog\Model\PostManager();
-    $posts = $PostManager->getPosts();
+class PostController {
 
-    echo $template->render(['f' => 'g']);
+    public function addPostAction($template)
+    {
+        try
+        {
+            if (!isset($_POST['title']) || !isset($_POST['chapo']) || !isset($_POST['author'])
+                || !isset($_POST['content']) || !isset($_POST['published']))
+            {
+                if(empty($_POST['title']) || empty($_POST['chapo']) || empty($_POST['author'])
+                    || empty($_POST['content']) || empty($_POST['published']))
+                {
+                    throw new \Exception('Tous les champs sont obligatoires');
 
-}
+                }
+            }
+            else
+            {
+                $title = $_POST['title'];
+                $chapo = $_POST['chapo'];
+                $author = $_POST['author'];
+                $content = $_POST['content'];
+                $published = $_POST['published'];
+                if(isset($_POST['submit']))
+                {
+                    $PostManager = new \ProfessionalBlog\Model\PostManager();
+                    $PostManager->createPost($title,$chapo,$author,$content,$published);
+                }
+            }
+        }
+        catch (\Exception $e)
+        {
 
-function readPostAction($template)
-{
-    echo $template->render(['r' => 'j']);
-}
+        }
+        echo $template->render(['message' => 'message']);
+    }
 
-function addPostAction($template)
-{
-    echo $template->render(['f' => 'f']);
-}
+    public function listPostsAction($template)
+    {
+        $postManager = new PostManager();
+        $listPosts = $postManager->getPosts();
 
-function editPostAction($template)
-{
-    echo $template->render(['f' => 'g']);
-}
+        echo $template->render(['listPosts' => $listPosts]);
 
-function deletePostAction()
-{
+    }
 
-}
+    public function readPostAction($template)
+    {
+        $postManager = new PostManager();
+        $id = $_GET['id'];
+        $post = $postManager->getPost($id);
 
-function postAction($template)
-{
-    $PostManager = new Hocine\Blog\Model\PostManager();
-    $post = $PostManager->getPost();
+        echo $template->render(['post' => $post]);
+    }
 
-    echo $template->render(['f' => 'l']);
+    public function editPostAction($template)
+    {
+        $id = $_GET['id'];
+        $postManager = new PostManager();
+        $post = $postManager->getPost($id);
+
+        echo $template->render(['post' => $post]);
+    }
+
+    public function updatePostAction($template)
+    {
+        try
+        {
+            if (!isset($_POST['id']) || !isset($_POST['title']) || !isset($_POST['chapo']) || !isset($_POST['author'])
+                || !isset($_POST['content']) || !isset($_POST['published']))
+            {
+                if(empty($_POST['id']) || empty($_POST['title']) || empty($_POST['chapo']) || empty($_POST['author'])
+                    || empty($_POST['content']) || empty($_POST['published']))
+                {
+                    throw new \Exception('Tous les champs sont obligatoires');
+                }
+            }
+            else
+            {
+                $id = $_POST['id'];
+                $title = $_POST['title'];
+                $chapo = $_POST['chapo'];
+                $author = $_POST['author'];
+                $content = $_POST['content'];
+                $published = $_POST['published'];
+
+                if(isset($_POST['submit']))
+                {
+                    $postManager = new PostManager();
+                    $postManager->updatePost($id,$title,$chapo,$author,$content,$published);
+
+                    echo $template->render();
+                }
+            }
+        }
+        catch (\Exception $e)
+        {
+
+        }
+    }
+
+    public function deletePostAction()
+    {
+
+    }
+
+    public function postAction($template)
+    {
+        $id = $_GET['id'];
+        $postManager = new PostManager();
+        $post = $postManager->getPost($id);
+
+        echo $template->render(['post' => $post]);
+
+    }
+
+    public function postsAction($template)
+    {
+        $postManager = new PostManager();
+        $posts = $postManager->getPosts();
+
+        echo $template->render(['posts' => $posts]);
+    }
 
 }

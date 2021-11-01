@@ -20,17 +20,22 @@
                 Détails de la publication
             </div>
             <div class="card-body">
-                <p><b>Titre</b> : afficher titre de la publication</p>
-                <p><b>Auteur</b> : afficher l'auteur</p>
-                <p><b>Chapô</b> : texte court coiffant le contenu</p>
-                <p><b>Contenu</b> : Ceci est pour tester l'affichage du contenu d'une publication.
-                    Ceci est pour tester l'affichage du contenu d'une publication.
-                    Ceci est pour tester l'affichage du contenu d'une publication</p>
-                <p><b>Publiée</b> : oui</p>
-                <p><b>Date de publication</b> : JJ/MM/AAAA h:m:s</p>
-                <p><b>Date de dernière modification</b> : JJ/MM/AAA h:m:s</p>
-                <div class="">
-                    <button class="btn btn-primary">Modifier</button>
+                <p><b>Titre</b> : {{ post.title }}</p>
+                <p><b>Auteur</b> : {{ post.author }}</p>
+                <p><b>Chapô</b> : {{ post.chapo }}</p>
+                <p><b>Contenu</b> : {{ post.content }}</p>
+                {% if post.published == 1 %}
+                    <p><b>Publiée</b> : oui</p>
+                {% else %}
+                    <p><b>Publiée</b> : non</p>
+                {% endif %}
+                <p><b>Date de publication</b> : {{ post.createdAt }}</p>
+                <p><b>Date de dernière modification</b> : {{ post.lastUpdate }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="justify-content-between">
+                        <a href="index.php?action=dashboard/listPosts"><button class="btn btn-primary">Retour liste</button></a>
+                        <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}"><button class="btn btn-primary">Modifier</button></a>
+                    </div>
                 </div>
             </div>
         </div>

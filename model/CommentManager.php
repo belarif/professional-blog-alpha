@@ -1,6 +1,6 @@
 <?php
 
-namespace Hocine\Blog\Model;
+namespace ProfessionalBlog\Model;
 
 class CommentManager extends Manager
 {

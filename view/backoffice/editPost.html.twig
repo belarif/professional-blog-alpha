@@ -20,51 +20,62 @@
                 Modifier la publication
             </div>
             <div class="card-body">
-                <form>
+                <form method="post" action="index.php?action=dashboard/updatePost">
+                    <div class="mb-3 row visually-hidden">
+                        <label for="id" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input id="id" class="form-control" type="hidden" name="id" value="{{ post.id }}">
+                        </div>
+                    </div>
                     <div class="mb-3 row">
                         <label for="title" class="col-sm-2 col-form-label">Titre</label>
                         <div class="col-sm-10">
-                            <input id="title" class="form-control" type="text" name="title">
+                            <input id="title" class="form-control" type="text" name="title" value="{{ post.title }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="author" class="col-sm-2 col-form-label">Auteur</label>
                         <div class="col-sm-10">
-                            <input id="author" class="form-control" type="text" name="author">
+                            <input id="author" class="form-control" type="text" name="author" value="{{ post.author }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="firstName" class="col-sm-2 col-form-label">Chapô</label>
+                        <label for="chapo" class="col-sm-2 col-form-label">Chapô</label>
                         <div class="col-sm-10">
-                            <input id="firstName" class="form-control" type="text" name="firstName">
+                            <input id="chapo" class="form-control" type="text" name="chapo" value="{{ post.chapo }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="content" class="col-sm-2 col-form-label">Contenu</label>
                         <div class="col-sm-10">
-                            <textarea id="content" class="form-control" name="content"></textarea>
+                            <textarea id="content" class="form-control" name="content">{{ post.content }}</textarea>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="Status" class="col-sm-2 col-form-label">Publiée</label>
+                        <label for="published" class="col-sm-2 col-form-label">Publiée</label>
                         <div class="col-sm-10">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" {% if post.published == 1 %} checked {% endif %}>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     oui
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" {% if post.published == 0 %} checked {% endif %}>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     non
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <div class="">
-                        <button class="btn btn-primary">Mettre à jour</button>
+
+                    <div class="d-flex justify-content-end">
+                        <div class="justify-content-between">
+                            <a href="index.php?action=dashboard/listPosts"><button class="btn btn-primary">Retour liste</button></a>
+                            <button class="btn btn-primary" type="submit" name="submit">Mettre à jour</button>
+                        </div>
                     </div>
+
                 </form>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hocine\Blog\model;
+namespace ProfessionalBlog\Model;
 
 require_once 'model/Manager.php';
 

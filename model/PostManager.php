@@ -1,34 +1,73 @@
 <?php
 
-namespace Hocine\Blog\Model;
+namespace ProfessionalBlog\Model;
 
 require_once 'model/Manager.php';
 
+
 class PostManager extends Manager {
 
-    function getPosts()
+    public function createPost($title,$chapo,$author,$content,$published)
     {
         $db = $this->dbConnect();
-        $req = $db->query('');
-        return $req;
+
+        $query = $db->prepare(
+            "INSERT INTO post(title, chapo, author, content, lastUpdate, createdAt, published) 
+                    VALUES (:title, :chapo, :author, :content, :lastUpdate, :createdAt, :published)");
+
+        $query->execute([
+            'title' => $title,
+            'chapo' => $chapo,
+            'author' => $author,
+            'content' => $content,
+            'lastUpdate' => NULL,
+            'createdAt' => date("Y-m-d H:i:s"),
+            'published' => $published
+        ]);
+
+
     }
 
-    function getPost()
+    public function getPosts()
     {
-        return 'bonjour';
+        $db = $this->dbConnect();
+        $posts = $db->query("SELECT * FROM post ORDER BY createdAt DESC");
+
+        return $posts;
     }
 
-    function createPost()
+    public function getPost($id)
     {
+        $db = $this->dbConnect();
+        $query = $db->prepare("SELECT * FROM post WHERE id = :id");
+        $query->execute(['id' => $id]);
+        $post = $query->fetch();
 
+        return $post;
     }
 
-    function updatePost()
+    public function updatePost($id,$title,$chapo,$author,$content,$published)
     {
+        $db = $this->dbConnect();
+        $query = $db->prepare(
+            "UPDATE post SET title = :title, chapo = :chapo, author = :author, 
+                content = :content, lastUpdate = :lastUpdate, published = :published
+                WHERE id = :id"
+        );
+
+        $query->execute([
+            'title' => $title,
+            'chapo' => $chapo,
+            'author' => $author,
+            'content' => $content,
+            'lastUpdate' => date("Y-m-d H:i:s"),
+            'published' => $published,
+            'id' => $id,
+        ]);
 
     }
 
-    function deletePost()
+    public function deletePost()
     {
 
     }

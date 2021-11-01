@@ -1,12 +1,15 @@
 <?php
 
-namespace Hocine\Blog\Model;
+namespace ProfessionalBlog\Model;
+
+use PDO;
 
 class Manager
 {
     protected function dbConnect()
     {
-        $db = new \PDO('mysql:host=localhost;dbname=professional-blog-hocine;charset=utf8','root','');
+        $db = new \PDO('mysql:host=localhost;dbname=blog-hocine;charset=utf8','root','',
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
         return $db;
     }
 }

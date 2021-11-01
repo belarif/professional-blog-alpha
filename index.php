@@ -7,12 +7,16 @@ require('controller/securityController.php');
 require('controller/userController.php');
 require('controller/commentController.php');
 
+
 require_once 'vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader(['view/frontoffice','view/backoffice']);
 $twig = new \Twig\Environment($loader, [
-    'cache' => '/var/cache', 'auto_reload' => true, 'strict_variables' => true,
+    'cache' => '/var/cache',
+    'auto_reload' => true,
+    'strict_variables' => true,
+    'debug' => true,
 ]);
-
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
 try
 {
@@ -39,14 +43,16 @@ try
     elseif($_GET['action'] == 'listPosts')
     {
         $template = $twig->load('posts.html.twig');
-        listPostsAction($template);
+        $postsPage = new \ProfessionalBlog\Controller\PostController();
+        $postsPage->postsAction($template);
     }
     elseif ($_GET['action'] == 'post')
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $template = $twig->load('post.html.twig');
-            postAction($template);
+            $postPage = new \ProfessionalBlog\Controller\PostController();
+            $postPage->postAction($template);
         }
         else
         {
@@ -62,19 +68,37 @@ try
     elseif($_GET['action'] == 'dashboard/listPosts')
     {
         $template = $twig->load('listPosts.html.twig');
-        listPostsAction($template);
+        $listPostsPage = new \ProfessionalBlog\Controller\PostController();
+        $listPostsPage->listPostsAction($template);
     }
     elseif($_GET['action'] == 'dashboard/addPost')
     {
         $template = $twig->load('addPost.html.twig');
-        addPostAction($template);
+        $addPost = new ProfessionalBlog\Controller\PostController();
+        $addPost->addPostAction($template);
     }
     elseif ($_GET['action'] == 'dashboard/editPost')
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $template = $twig->load('editPost.html.twig');
-            editPostAction($template);
+            $editPost = new \ProfessionalBlog\Controller\PostController();
+            $editPost->editPostAction($template);
+
+        }
+        else
+        {
+            throw new Exception('Aucun blog post trouvé');
+        }
+    }
+    elseif ($_GET['action'] == 'dashboard/updatePost')
+    {
+        if(isset($_POST['id']) && $_POST['id'] > 0)
+        {
+            $template = $twig->load('listPosts.html.twig');
+            $updatePost = new \ProfessionalBlog\Controller\PostController();
+            $updatePost->updatePostAction($template);
+
         }
         else
         {
@@ -86,7 +110,8 @@ try
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $template = $twig->load('readPost.html.twig');
-            readPostAction($template);
+            $readPost = new \ProfessionalBlog\Controller\PostController();
+            $readPost->readPostAction($template);
         }
         else
         {
