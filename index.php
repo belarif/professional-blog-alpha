@@ -151,7 +151,21 @@ try
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $template = $twig->load('readComment.html.twig');
-            readCommentAction($template);
+            $readComment = new \ProfessilnalBlog\Controller\CommentController();
+            $readComment->readCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
+    elseif($_GET['action'] == 'dashboard/editComment')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('editComment.html.twig');
+            $editComment = new \ProfessilnalBlog\Controller\CommentController();
+            $editComment->editCommentAction($template);
         }
         else
         {

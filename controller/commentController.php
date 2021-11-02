@@ -19,8 +19,22 @@ class CommentController
 
     public function readCommentAction($template)
     {
-        echo $template->render(['d' => 'f']);
+        $id = $_GET['id'];
+        $commentManager = new CommentManager();
+        $comment = $commentManager->getComment($id);
+
+        echo $template->render(['comment' => $comment]);
     }
+
+    public function editCommentAction($template)
+    {
+        $commentManager = new CommentManager();
+        $editComment = $commentManager->getComment();
+
+        echo $template->render(['editComment' => $editComment]);
+    }
+
+
 }
 
 
