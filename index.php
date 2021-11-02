@@ -172,6 +172,19 @@ try
             throw new Exception('Aucun commentaire trouvé');
         }
     }
+    elseif($_GET['action'] == 'dashboard/updateComment')
+    {
+        if(isset($_POST['id']) && $_POST['id'] > 0)
+        {
+            $template = $twig->load('listComments.html.twig');
+            $updateComment = new \ProfessilnalBlog\Controller\CommentController();
+            $updateComment->updateCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
     /*** routes comments management ***/
 
     /*** routes users management ***/

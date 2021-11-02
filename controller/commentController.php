@@ -2,6 +2,7 @@
 
 namespace ProfessilnalBlog\Controller;
 
+use mysql_xdevapi\Exception;
 use ProfessionalBlog\Model\CommentManager;
 
 require_once 'model\CommentManager.php';
@@ -28,10 +29,36 @@ class CommentController
 
     public function editCommentAction($template)
     {
+        $id = $_GET['id'];
         $commentManager = new CommentManager();
-        $editComment = $commentManager->getComment();
+        $comment = $commentManager->getComment($id);
 
-        echo $template->render(['editComment' => $editComment]);
+        echo $template->render(['comment' => $comment]);
+    }
+
+    public function updateCommentAction($template)
+    {
+
+        if(!isset($_POST['id']) || !isset($_POST['isEnabled']))
+        {
+            if(empty($_POST['id']) || empty($_POST['isEnabled']))
+            {
+                throw new \Exception("tous les champs sont obligatoires");
+            }
+        }
+        else
+        {
+            $id = $_POST['id'];
+            $isEnabled = $_POST['isEnabled'];
+            if(isset($_POST['submit']))
+            {
+                $commentManager = new CommentManager();
+                $commentManager->updateComment($id,$isEnabled);
+                $listComments = $commentManager->getComments();
+
+                echo $template->render(['listComments' => $listComments]);
+            }
+        }
     }
 
 

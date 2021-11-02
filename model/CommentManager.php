@@ -38,10 +38,14 @@ class CommentManager extends Manager
         return $post;
     }
 
-    public function updateComment()
+    public function updateComment($id,$isEnabled)
     {
         $db = $this->dbConnect();
-
+        $query = $db->prepare("UPDATE comment SET isEnabled = :isEnabled WHERE id = :id");
+        $query->execute([
+            'id' => $id,
+            'isEnabled' => $isEnabled,
+        ]);
     }
 
 }
