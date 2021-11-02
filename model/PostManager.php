@@ -20,7 +20,7 @@ class PostManager extends Manager {
             'chapo' => $chapo,
             'author' => $author,
             'content' => $content,
-            'lastUpdate' => NULL,
+            'lastUpdate' => date("Y-m-d H:i:s"),
             'createdAt' => date("Y-m-d H:i:s"),
             'published' => $published
         ]);
@@ -67,8 +67,13 @@ class PostManager extends Manager {
 
     }
 
-    public function deletePost()
+    public function deletePost($id)
     {
+        $db = $this->dbConnect();
+        $query = $db->prepare('DELETE FROM post WHERE id=:id');
+        $query->execute([
+            'id' => $id,
+        ]);
 
     }
 

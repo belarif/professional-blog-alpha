@@ -20,6 +20,8 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 try
 {
+
+    /*** front office routes ***/
     if($_GET['action'] == 'home')
     {
         $template = $twig->load('home.html.twig');
@@ -60,11 +62,16 @@ try
         }
 
     }
+    /*** front office routes ***/
+
+    /*** back office routes ***/
     elseif($_GET['action'] == 'dashboard')
     {
         $template = $twig->load('dashboard.html.twig');
         dashboardAction($template);
     }
+
+    /*** routes posts management ***/
     elseif($_GET['action'] == 'dashboard/listPosts')
     {
         $template = $twig->load('listPosts.html.twig');
@@ -98,7 +105,6 @@ try
             $template = $twig->load('listPosts.html.twig');
             $updatePost = new \ProfessionalBlog\Controller\PostController();
             $updatePost->updatePostAction($template);
-
         }
         else
         {
@@ -118,6 +124,22 @@ try
             throw new Exception('Aucun blog post trouvé');
         }
     }
+    elseif($_GET['action'] == 'dashboard/deletePost')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('listPosts.html.twig');
+            $deletePost = new \ProfessionalBlog\Controller\PostController();
+            $deletePost->deletePostAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun blog post trouvé');
+        }
+    }
+    /*** routes posts management ***/
+
+    /*** routes users management ***/
     elseif($_GET['action'] == 'dashboard/listUsers')
     {
         $template = $twig->load('listUsers.html.twig');
@@ -145,6 +167,9 @@ try
             throw new Exception('Aucun blog post trouvé');
         }
     }
+    /*** routes users management ***/
+
+    /*** routes comments management ***/
     elseif($_GET['action'] == 'dashboard/listComments')
     {
         $template = $twig->load('listComments.html.twig');
@@ -162,6 +187,9 @@ try
             throw new Exception('Aucun commentaire trouvé');
         }
     }
+    /*** routes comments management ***/
+    /*** back office routes ***/
+
     else
     {
         throw new Exception('404 - Page inexistante');

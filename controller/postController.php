@@ -19,7 +19,6 @@ class PostController {
                     || empty($_POST['content']) || empty($_POST['published']))
                 {
                     throw new \Exception('Tous les champs sont obligatoires');
-
                 }
             }
             else
@@ -33,6 +32,8 @@ class PostController {
                 {
                     $PostManager = new \ProfessionalBlog\Model\PostManager();
                     $PostManager->createPost($title,$chapo,$author,$content,$published);
+
+                    header("Location:index.php?action=dashboard/listPosts");
                 }
             }
         }
@@ -40,6 +41,7 @@ class PostController {
         {
 
         }
+
         echo $template->render(['message' => 'message']);
     }
 
@@ -96,8 +98,9 @@ class PostController {
                 {
                     $postManager = new PostManager();
                     $postManager->updatePost($id,$title,$chapo,$author,$content,$published);
+                    $listPosts = $postManager->getPosts();
 
-                    echo $template->render();
+                    echo $template->render(['listPosts' => $listPosts]);
                 }
             }
         }
@@ -107,9 +110,13 @@ class PostController {
         }
     }
 
-    public function deletePostAction()
+    public function deletePostAction($template)
     {
-
+        $id = $_GET['id'];
+        $postManager = new PostManager();
+        $postManager->deletePost($id);
+        $listPosts = $postManager->getPosts();
+        echo $template->render(['listPosts' => $listPosts]);
     }
 
     public function postAction($template)
