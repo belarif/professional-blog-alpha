@@ -139,6 +139,27 @@ try
     }
     /*** routes posts management ***/
 
+    /*** routes comments management ***/
+    elseif($_GET['action'] == 'dashboard/listComments')
+    {
+        $template = $twig->load('listComments.html.twig');
+        $listComments = new \ProfessilnalBlog\Controller\CommentController();
+        $listComments->listCommentsAction($template);
+    }
+    elseif($_GET['action'] == 'dashboard/readComment')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('readComment.html.twig');
+            readCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
+    /*** routes comments management ***/
+
     /*** routes users management ***/
     elseif($_GET['action'] == 'dashboard/listUsers')
     {
@@ -168,26 +189,6 @@ try
         }
     }
     /*** routes users management ***/
-
-    /*** routes comments management ***/
-    elseif($_GET['action'] == 'dashboard/listComments')
-    {
-        $template = $twig->load('listComments.html.twig');
-        listCommentsAction($template);
-    }
-    elseif($_GET['action'] == 'dashboard/readComment')
-    {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
-        {
-            $template = $twig->load('readComment.html.twig');
-            readCommentAction($template);
-        }
-        else
-        {
-            throw new Exception('Aucun commentaire trouvé');
-        }
-    }
-    /*** routes comments management ***/
     /*** back office routes ***/
 
     else

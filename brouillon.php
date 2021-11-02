@@ -10,3 +10,9 @@ echo "<pre>";
             echo "</pre>";
 die();
 }
+
+SELECT comment.content,comment.createdAt,comment.isEnabled,post.title,post.author
+FROM comment
+INNER JOIN post
+ON comment.post_id = post.id
+ORDER BY comment.createdAt DESC
