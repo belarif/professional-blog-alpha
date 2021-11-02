@@ -38,7 +38,6 @@ class CommentController
 
     public function updateCommentAction($template)
     {
-
         if(!isset($_POST['id']) || !isset($_POST['isEnabled']))
         {
             if(empty($_POST['id']) || empty($_POST['isEnabled']))
@@ -61,7 +60,15 @@ class CommentController
         }
     }
 
+    public function deleteCommentAction($template)
+    {
+        $id = $_GET['id'];
+        $commentManager = new CommentManager();
+        $commentManager->deleteComment($id);
+        $listComments = $commentManager->getComments();
 
+        echo $template->render(['listComments' => $listComments]);
+    }
 }
 
 

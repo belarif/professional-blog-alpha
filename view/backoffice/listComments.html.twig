@@ -50,7 +50,7 @@
                             <td>
                                 <a href="index.php?action=dashboard/editComment&id={{ comment.id }}">Modifier</a>
                                 <a href="index.php?action=dashboard/readComment&id={{ comment.id }}">Afficher</a>
-                                <a href="index.php?action=dashboard/deleteComment&id={{ comment.id }}">supprimer</a>
+                                <a href="index.php?action=dashboard/deleteComment&id={{ comment.id }}" onclick="deleteComment()">supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -61,3 +61,12 @@
     </div>
 </main>
 {% endblock content %}
+
+{% block javascript %}
+<script type="application/javascript">
+    function deleteComment()
+    {
+        confirm("Etes vous sur de vouloir supprimer ce commentaire");
+    }
+</script>
+{% endblock %}

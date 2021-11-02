@@ -185,6 +185,19 @@ try
             throw new Exception('Aucun commentaire trouvé');
         }
     }
+    elseif($_GET['action'] == 'dashboard/deleteComment')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('listComments.html.twig');
+            $deleteComment = new \ProfessilnalBlog\Controller\CommentController();
+            $deleteComment->deleteCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
     /*** routes comments management ***/
 
     /*** routes users management ***/
