@@ -41,7 +41,7 @@
                         <td>
                             <a href="index.php?action=dashboard/readUser&id={{ user.id }}">Afficher</a>
                             <a href="index.php?action=dashboard/editUser&id={{ user.id }}">modifier</a>
-                            <a href="index.php?action=dashboard/deleteUser&id={{ user.id }}">supprimer</a>
+                            <a href="index.php?action=dashboard/deleteUser&id={{ user.id }}" onclick="deleteUser()">supprimer</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -52,3 +52,12 @@
     </div>
 </main>
 {% endblock content %}
+
+{% block javascript %}
+    <script type="application/javascript">
+        function deleteUser()
+        {
+            confirm("Etes vous sur de vouloir supprimer cet utilisateur");
+        }
+    </script>
+{% endblock %}

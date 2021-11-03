@@ -113,6 +113,14 @@ class UserController
         echo $template->render(['user' => $user]);
     }
 
+    public function deleteUserAction($template)
+    {
+        $id = $_GET['id'];
+        $deleteUser = new UserManager();
+        $deleteUser->deleteUser($id);
+
+        header("Location: index.php?action=dashboard/listUsers");
+    }
 }
 
 

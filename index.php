@@ -245,6 +245,19 @@ try
             throw new Exception('Aucun blog post trouvé');
         }
     }
+    elseif($_GET['action'] == 'dashboard/deleteUser')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('listUsers.html.twig');
+            $deleteUser = new \ProfessionalBlog\Controller\UserController();
+            $deleteUser->deleteUserAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
     /*** routes users management ***/
     /*** back office routes ***/
 
