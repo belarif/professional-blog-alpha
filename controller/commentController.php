@@ -2,7 +2,6 @@
 
 namespace ProfessilnalBlog\Controller;
 
-use mysql_xdevapi\Exception;
 use ProfessionalBlog\Model\CommentManager;
 
 require_once 'model\CommentManager.php';
@@ -36,7 +35,7 @@ class CommentController
         echo $template->render(['comment' => $comment]);
     }
 
-    public function updateCommentAction($template)
+    public function updateCommentAction()
     {
         if(!isset($_POST['id']) || !isset($_POST['isEnabled']))
         {
@@ -53,21 +52,19 @@ class CommentController
             {
                 $commentManager = new CommentManager();
                 $commentManager->updateComment($id,$isEnabled);
-                $listComments = $commentManager->getComments();
 
-                echo $template->render(['listComments' => $listComments]);
+                header("Location:index.php?action=dashboard/listComments");
             }
         }
     }
 
-    public function deleteCommentAction($template)
+    public function deleteCommentAction()
     {
         $id = $_GET['id'];
         $commentManager = new CommentManager();
         $commentManager->deleteComment($id);
-        $listComments = $commentManager->getComments();
 
-        echo $template->render(['listComments' => $listComments]);
+        header("Location:index.php?action=dashboard/listComments");
     }
 }
 

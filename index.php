@@ -176,9 +176,8 @@ try
     {
         if(isset($_POST['id']) && $_POST['id'] > 0)
         {
-            $template = $twig->load('listComments.html.twig');
             $updateComment = new \ProfessilnalBlog\Controller\CommentController();
-            $updateComment->updateCommentAction($template);
+            $updateComment->updateCommentAction();
         }
         else
         {
@@ -189,9 +188,8 @@ try
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
-            $template = $twig->load('listComments.html.twig');
             $deleteComment = new \ProfessilnalBlog\Controller\CommentController();
-            $deleteComment->deleteCommentAction($template);
+            $deleteComment->deleteCommentAction();
         }
         else
         {
