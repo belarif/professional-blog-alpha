@@ -6,14 +6,16 @@ require_once 'model/Manager.php';
 
 class UserManager extends Manager {
 
-    function getUsers()
+    public function getUsers()
     {
         $db = $this->dbConnect();
-        $req = $db->query('');
-        return $req;
+        $users = $db->query('SELECT * FROM user');
+
+        return $users;
+
     }
 
-    function getUserAction()
+    public function getUserAction()
     {
 
     }

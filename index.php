@@ -204,7 +204,8 @@ try
     elseif($_GET['action'] == 'dashboard/listUsers')
     {
         $template = $twig->load('listUsers.html.twig');
-        listUsersAction($template);
+        $listUsers = new \ProfessionalBlog\Controller\UserController();
+        $listUsers->listUsersAction($template);
     }
     elseif($_GET['action'] == 'dashboard/addUser')
     {

@@ -1,29 +1,37 @@
 <?php
 
+namespace ProfessionalBlog\Controller;
+
+use ProfessionalBlog\Model\UserManager;
+
 require_once 'model/UserManager.php';
 
-
-function listUsersAction($template)
+class UserController
 {
-    $UserManager = new Hocine\Blog\Model\UserManager();
-    $posts = $UserManager->getUsers();
+    public function listUsersAction($template)
+    {
+        $UserManager = new UserManager();
+        $listUsers = $UserManager->getUsers();
 
-    echo $template->render(['f' => 'g']);
+        echo $template->render(['listUsers' => $listUsers]);
 
+    }
+
+    public function addUserAction($template)
+    {
+        echo $template->render(['f' => 'k']);
+    }
+
+    public function editUserAction($template)
+    {
+        echo $template->render(['f' => 'l']);
+    }
+
+    public function readUserAction($template)
+    {
+        echo $template->render(['g' => 'e']);
+    }
 }
 
-function addUserAction($template)
-{
-    echo $template->render(['f' => 'k']);
-}
 
-function editUserAction($template)
-{
-    echo $template->render(['f' => 'l']);
-}
-
-function readUserAction($template)
-{
-    echo $template->render(['g' => 'e']);
-}
 
