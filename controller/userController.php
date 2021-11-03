@@ -113,7 +113,7 @@ class UserController
         echo $template->render(['user' => $user]);
     }
 
-    public function deleteUserAction($template)
+    public function deleteUserAction()
     {
         $id = $_GET['id'];
         $deleteUser = new UserManager();

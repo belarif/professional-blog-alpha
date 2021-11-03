@@ -223,9 +223,8 @@ try
     {
         if(isset($_POST['id']) && $_POST['id'] > 0)
         {
-            $template = $twig->load('listUsers.html.twig');
             $updateUser = new \ProfessionalBlog\Controller\UserController();
-            $updateUser->updateUserAction($template);
+            $updateUser->updateUserAction();
         }
         else
         {
@@ -249,9 +248,8 @@ try
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
-            $template = $twig->load('listUsers.html.twig');
             $deleteUser = new \ProfessionalBlog\Controller\UserController();
-            $deleteUser->deleteUserAction($template);
+            $deleteUser->deleteUserAction();
         }
         else
         {
