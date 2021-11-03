@@ -210,7 +210,8 @@ try
     elseif($_GET['action'] == 'dashboard/addUser')
     {
         $template = $twig->load('addUser.html.twig');
-        addUserAction($template);
+        $addUser = new \ProfessionalBlog\Controller\UserController();
+        $addUser->addUserAction($template);
     }
     elseif($_GET['action'] == 'dashboard/editUser')
     {

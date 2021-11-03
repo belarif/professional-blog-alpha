@@ -19,4 +19,20 @@ class UserManager extends Manager {
     {
 
     }
+
+    public function createUser($lastName,$firstName,$email,$password,$role)
+    {
+        $db = $this->dbConnect();
+        $query = $db->prepare(
+            "INSERT INTO user(lastName, firstName, email, password, role, createdAt) 
+            VALUES (:lastName, :firstName, :email, :password, :role, :createdAt)");
+        $query->execute([
+           'lastName' => $lastName,
+           'firstName' => $firstName,
+           'email' => $email,
+           'password' => $password,
+           'role' => $role,
+           'createdAt' => date("Y-m-d H:i:s"),
+        ]);
+    }
 }
