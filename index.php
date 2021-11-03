@@ -216,14 +216,29 @@ try
     elseif($_GET['action'] == 'dashboard/editUser')
     {
         $template = $twig->load('editUser.html.twig');
-        editUserAction($template);
+        $editUser = new \ProfessionalBlog\Controller\UserController();
+        $editUser->editUserAction($template);
+    }
+    elseif($_GET['action'] == 'dashboard/updateUser')
+    {
+        if(isset($_POST['id']) && $_POST['id'] > 0)
+        {
+            $template = $twig->load('listUsers.html.twig');
+            $updateUser = new \ProfessionalBlog\Controller\UserController();
+            $updateUser->updateUserAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun blog post trouvé');
+        }
     }
     elseif($_GET['action'] == 'dashboard/readUser')
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $template = $twig->load('readUser.html.twig');
-            readUserAction($template);
+            $readUser = new \ProfessionalBlog\Controller\UserController();
+            $readUser->readUserAction($template);
         }
         else
         {

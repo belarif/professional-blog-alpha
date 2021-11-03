@@ -38,16 +38,10 @@
                         <td>{{ user.email }}</td>
                         <td>{{ user.role }}</td>
                         <td>{{ user.createdAt }}</td>
-                        <!--<td>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                <label for="flexSwitchCheckChecked"></label>
-                            </div>
-                        </td>-->
                         <td>
-                            <a href="index.php?action=dashboard/readUser&id=4">Afficher</a>
-                            <a href="index.php?action=dashboard/editUser&id=4">modifier</a>
-                            <a href="index.php?action=dashboard/deleteUser&id=4">supprimer</a>
+                            <a href="index.php?action=dashboard/readUser&id={{ user.id }}">Afficher</a>
+                            <a href="index.php?action=dashboard/editUser&id={{ user.id }}">modifier</a>
+                            <a href="index.php?action=dashboard/deleteUser&id={{ user.id }}">supprimer</a>
                         </td>
                     </tr>
                     {% endfor %}

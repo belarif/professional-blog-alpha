@@ -15,9 +15,15 @@ class UserManager extends Manager {
 
     }
 
-    public function getUserAction()
+    public function getUser($id)
     {
-
+        $db = $this->dbConnect();
+        $query = $db->prepare("SELECT * FROM user WHERE id = :id");
+        $query->execute([
+            'id' => $id,
+        ]);
+        $user = $query->fetch();
+        return $user;
     }
 
     public function createUser($lastName,$firstName,$email,$password,$role)
@@ -33,6 +39,22 @@ class UserManager extends Manager {
            'password' => $password,
            'role' => $role,
            'createdAt' => date("Y-m-d H:i:s"),
+        ]);
+    }
+
+    public function updateUser($id,$lastName,$firstName,$email,$password,$role)
+    {
+        $db = $this->dbConnect();
+        $query = $db->prepare("UPDATE user SET lastName = :lastName, firstName = :firstName, 
+                email = :email, password = :password, role = :role 
+                WHERE id = :id");
+        $query->execute([
+            'lastName' => $lastName,
+            'firstName' => $firstName,
+            'email' => $email,
+            'password' => $password,
+            'role' => $role,
+            'id' => $id,
         ]);
     }
 }

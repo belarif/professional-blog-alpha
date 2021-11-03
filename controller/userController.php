@@ -14,7 +14,6 @@ class UserController
         $listUsers = $UserManager->getUsers();
 
         echo $template->render(['listUsers' => $listUsers]);
-
     }
 
     public function addUserAction($template)
@@ -60,12 +59,58 @@ class UserController
 
     public function editUserAction($template)
     {
-        echo $template->render(['f' => 'l']);
+        $id = $_GET['id'];
+        $UserManager = new UserManager();
+        $user = $UserManager->getUser($id);
+
+        echo $template->render(['user' => $user]);
+    }
+
+    public function updateUserAction()
+    {
+        try
+        {
+            if(!isset($_POST['id']) || !isset($_POST['lastName']) || !isset($_POST['firstName'])
+                || !isset($_POST['email']) || !isset($_POST['password']) || !isset($_POST['role']))
+            {
+                if(empty($_POST['id']) || empty($_POST['lastName']) || empty($_POST['firstName'])
+                    || empty($_POST['email']) || empty($_POST['password']) || empty($_POST['role']))
+                {
+                    throw new \Exception("tous les champs sont obligatoires");
+
+                }
+            }
+            else
+            {
+                $id = $_POST['id'];
+                $lastName = $_POST['lastName'];
+                $firstName = $_POST['firstName'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $role = $_POST['role'];
+
+                if(isset($_POST['submit']))
+                {
+                    $UserManager = new UserManager();
+                    $UserManager->updateUser($id,$lastName,$firstName,$email,$password,$role);
+
+                    header("Location: index.php?action=dashboard/listUsers");
+                }
+            }
+        }
+        catch (\Exception $e)
+        {
+
+        }
     }
 
     public function readUserAction($template)
     {
-        echo $template->render(['g' => 'e']);
+        $id = $_GET['id'];
+        $UserManager = new UserManager();
+        $user = $UserManager->getUser($id);
+
+        echo $template->render(['user' => $user]);
     }
 
 }
