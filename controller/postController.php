@@ -72,7 +72,7 @@ class PostController {
         echo $template->render(['post' => $post]);
     }
 
-    public function updatePostAction($template)
+    public function updatePostAction()
     {
         try
         {
@@ -98,9 +98,8 @@ class PostController {
                 {
                     $postManager = new PostManager();
                     $postManager->updatePost($id,$title,$chapo,$author,$content,$published);
-                    $listPosts = $postManager->getPosts();
 
-                    echo $template->render(['listPosts' => $listPosts]);
+                    header("Location:index.php?action=dashboard/listPosts");
                 }
             }
         }

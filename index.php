@@ -102,9 +102,8 @@ try
     {
         if(isset($_POST['id']) && $_POST['id'] > 0)
         {
-            $template = $twig->load('listPosts.html.twig');
             $updatePost = new \ProfessionalBlog\Controller\PostController();
-            $updatePost->updatePostAction($template);
+            $updatePost->updatePostAction();
         }
         else
         {
