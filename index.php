@@ -192,7 +192,6 @@ try
     else
     {
         throw new Exception('404 - Page inexistante');
-
     }
 
 }
