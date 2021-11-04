@@ -54,10 +54,14 @@
 {% endblock content %}
 
 {% block javascript %}
-    <script type="application/javascript">
-        function deleteUser()
-        {
-            confirm("Etes vous sur de vouloir supprimer cet utilisateur");
+    function deleteUser()
+    {
+        if(confirm("Êtes vous sûr de vouloir supprimer l'utilisateur ?")){
+            window.location.href = "index.php?action=dashboard/listUsers";
         }
-    </script>
+        else {
+            alert("Vous avez annulé la suppression");
+        }
+    }
+    window.deleteUser = deleteUser;
 {% endblock %}
