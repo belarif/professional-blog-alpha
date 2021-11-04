@@ -63,10 +63,14 @@
 {% endblock content %}
 
 {% block javascript %}
-<script type="application/javascript">
     function deleteComment()
     {
-        confirm("Etes vous sur de vouloir supprimer ce commentaire");
+        if(confirm("Êtes vous sûr de vouloir supprimer le commentaire ?")){
+            window.location.href = "index.php?action=dashboard/listComments";
+        }
+        else {
+            alert("Vous avez annulé la suppression");
+        }
     }
-</script>
+    window.deleteComment = deleteComment;
 {% endblock %}
