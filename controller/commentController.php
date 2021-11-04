@@ -35,14 +35,34 @@ class CommentController
         echo $template->render(['comment' => $comment]);
     }
 
+    /*public function updateCommentAction()
+    {
+        if(isset($_POST['id']) && isset($_POST['isEnabled'])) {
+            if (!empty($_POST['id']) && !empty($_POST['isEnabled'])) {
+
+                $id = $_POST['id'];
+                $isEnabled = $_POST['isEnabled'];
+
+                if (isset($_POST['submit'])) {
+                    $commentManager = new CommentManager();
+                    $commentManager->updateComment($id, $isEnabled);
+
+                    header("Location: index.php?action=dashboard/listComments");
+                }
+            }
+            else
+            {
+                throw new \Exception("tous les champs sont obligatoires");
+            }
+        }
+
+    }*/
+
     public function updateCommentAction()
     {
         if(!isset($_POST['id']) || !isset($_POST['isEnabled']))
         {
-            if(empty($_POST['id']) || empty($_POST['isEnabled']))
-            {
-                throw new \Exception("tous les champs sont obligatoires");
-            }
+            throw new \Exception("tous les champs sont obligatoires");
         }
         else
         {
