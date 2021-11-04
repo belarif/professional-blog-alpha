@@ -20,6 +20,13 @@
                 Créer un utilisateur
             </div>
             <div class="card-body">
+                {% if errorMessage is defined and errorMessage is not null %}
+                <div id="flash-danger">
+                    <div class="alert alert-danger text-center">
+                        <p>{{ errorMessage }}</p>
+                    </div>
+                </div>
+                {% endif %}
                 <form method="post" action="index.php?action=dashboard/addUser">
                     <div class="mb-3 row">
                         <label for="lastName" class="col-sm-2 col-form-label">Nom<span>*</span></label>

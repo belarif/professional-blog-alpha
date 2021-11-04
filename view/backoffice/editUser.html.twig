@@ -26,27 +26,27 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="lastName" class="col-sm-2 col-form-label">Nom</label>
+                        <label for="lastName" class="col-sm-2 col-form-label">Nom<span>*</span></label>
                         <div class="col-sm-10">
-                            <input id="lastName" class="form-control" type="text" name="lastName" value="{{ user.lastName }}">
+                            <input id="lastName" class="form-control" type="text" name="lastName" value="{{ user.lastName }}" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="firstName" class="col-sm-2 col-form-label">Prénom</label>
+                        <label for="firstName" class="col-sm-2 col-form-label">Prénom<span>*</span></label>
                         <div class="col-sm-10">
-                            <input id="firstName" class="form-control" type="text" name="firstName" value="{{ user.firstName }}">
+                            <input id="firstName" class="form-control" type="text" name="firstName" value="{{ user.firstName }}" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="email" class="col-sm-2 col-form-label">E-mail</label>
+                        <label for="email" class="col-sm-2 col-form-label">E-mail<span>*</span></label>
                         <div class="col-sm-10">
-                            <input id="email" class="form-control" type="email" name="email" value="{{ user.email }}">
+                            <input id="email" class="form-control" type="email" name="email" value="{{ user.email }}" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
+                        <label for="password" class="col-sm-2 col-form-label">Mot de passe<span>*</span></label>
                         <div class="col-sm-10">
-                            <input id="password" class="form-control" type="password" name="password" value="{{ user.password }}">
+                            <input id="password" class="form-control" type="password" name="password" value="{{ user.password }}" required>
                         </div>
                     </div>
                     <div class="mb-3 row">
