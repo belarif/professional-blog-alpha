@@ -45,8 +45,7 @@ try
     elseif($_GET['action'] == 'listPosts')
     {
         $template = $twig->load('posts.html.twig');
-        $postsPage = new \ProfessionalBlog\Controller\PostController();
-        $postsPage->postsAction($template);
+
     }
     elseif ($_GET['action'] == 'post')
     {
