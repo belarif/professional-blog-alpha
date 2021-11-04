@@ -10,3 +10,55 @@ echo "<pre>";
             echo "</pre>";
 die();
 }
+
+
+/*** routes users management ***/
+elseif($_GET['action'] == 'dashboard/listUsers')
+{
+$template = $twig->load('listUsers.html.twig');
+listUsersAction($template);
+}
+elseif($_GET['action'] == 'dashboard/addUser')
+{
+$template = $twig->load('addUser.html.twig');
+addUserAction($template);
+}
+elseif($_GET['action'] == 'dashboard/editUser')
+{
+$template = $twig->load('editUser.html.twig');
+editUserAction($template);
+}
+elseif($_GET['action'] == 'dashboard/readUser')
+{
+if(isset($_GET['id']) && $_GET['id'] > 0)
+{
+$template = $twig->load('readUser.html.twig');
+readUserAction($template);
+}
+else
+{
+throw new Exception('Aucun blog post trouvé');
+}
+}
+/*** routes users management ***/
+
+
+/*** routes comments management ***/
+elseif($_GET['action'] == 'dashboard/listComments')
+{
+$template = $twig->load('listComments.html.twig');
+listCommentsAction($template);
+}
+elseif($_GET['action'] == 'dashboard/readComment')
+{
+if(isset($_GET['id']) && $_GET['id'] > 0)
+{
+$template = $twig->load('readComment.html.twig');
+readCommentAction($template);
+}
+else
+{
+throw new Exception('Aucun commentaire trouvé');
+}
+}
+/*** routes comments management ***/
