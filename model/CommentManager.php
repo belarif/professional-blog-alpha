@@ -11,10 +11,13 @@ class CommentManager extends Manager
     {
         $db = $this->dbConnect();
         $query = $db->prepare(
-            "SELECT comment.id,comment.content,comment.createdAt,comment.isEnabled,post.title AS postTitle,post.author AS postAuthor
-            FROM comment
-            INNER JOIN post
+            "SELECT comment.id, comment.content, comment.createdAt, comment.isEnabled, post.title AS postTitle, 
+            user.lastName AS lastnameAuthor, user.firstName AS firstnameAuthor
+            FROM post
+            INNER JOIN comment
             ON comment.post_id = post.id
+            INNER JOIN  user
+            ON comment.user_id = user.id
             ORDER BY comment.createdAt DESC"
         );
         $query->execute();
@@ -25,11 +28,17 @@ class CommentManager extends Manager
     public function getComment($id)
     {
         $db = $this->dbConnect();
-        $query = $db->prepare("SELECT comment.id,comment.content,comment.createdAt,comment.isEnabled,post.title AS postTitle,post.author AS postAuthor
-            FROM comment
-            INNER JOIN post
+        $query = $db->prepare(
+            "SELECT comment.id, comment.content, comment.createdAt, comment.isEnabled, post.title AS postTitle, 
+            user.lastName AS lastnameAuthor, user.firstName AS firstnameAuthor
+            FROM post
+            INNER JOIN comment
             ON comment.post_id = post.id
-            WHERE comment.id = :id");
+            INNER JOIN  user
+            ON comment.user_id = user.id
+            WHERE comment.id = :id  
+            ORDER BY comment.createdAt DESC"
+        );
         $query->execute([
             'id' => $id,
         ]);
