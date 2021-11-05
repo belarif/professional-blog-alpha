@@ -20,20 +20,13 @@
                 Créer une publication
             </div>
             <div class="card-body">
-
-                {#% if errorMessage is defined and errorMessage is not null %#}
+                {% if errorMessage is defined and errorMessage is not null %}
                 <div id="flash-danger">
                     <div class="alert alert-danger text-center">
-                        <p></p>
+                        <p>{{ errorMessage }}</p>
                     </div>
                 </div>
-                {#% endif %#}
-                <div id="flash-success">
-                    <div class="alert alert-success text-center">
-                        <p></p>
-                    </div>
-                </div>
-
+                {% endif %}
                 <form method="post" action="index.php?action=dashboard/addPost">
                     <div class="mb-3 row">
                         <label for="title" class="col-sm-2 col-form-label">Titre<span>*</span></label>

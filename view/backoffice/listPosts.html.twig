@@ -33,7 +33,7 @@
                     {% for post in listPosts %}
                     <tr>
                         <td>{{ post.title }}</td>
-                        <td>{{ post.author }}</td>
+                        <td>{{ post.lastName }}</td>
                         <td>{{ post.chapo }}</td>
                         <td>{{ post.lastUpdate }}</td>
                         <td>
@@ -51,8 +51,8 @@
                         </td>
                         <td>
                             <a href="index.php?action=dashboard/readPost&amp;id={{ post.id }}"> Afficher</a>
-                            <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}">modifier</a>
-                            <a href="index.php?action=dashboard/deletePost&amp;id={{ post.id }}" onclick="deletePost()">supprimer</a>
+                            <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}"> modifier</a>
+                            <a href="index.php?action=dashboard/deletePost&amp;id={{ post.id }}" onclick="deletePost()"> supprimer</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -65,10 +65,14 @@
 {% endblock content %}
 
 {% block javascript %}
-    <script type="application/javascript">
     function deletePost()
     {
-        confirm("Etes vous sur de vouloir supprimer ce post");
+        if(confirm("Êtes vous sûr de vouloir supprimer le post ?")){
+            window.location.href = "index.php?action=dashboard/listPosts";
+        }
+        else {
+            alert("Vous avez annulé la suppression");
+        }
     }
-    </script>
+    window.deletePost = deletePost;
 {% endblock %}
