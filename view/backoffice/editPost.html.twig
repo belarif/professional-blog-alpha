@@ -34,9 +34,15 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="author" class="col-sm-2 col-form-label">Auteur<span>*</span></label>
+                        <label for="author" class="col-sm-2 col-form-label">Author<span>*</span></label>
                         <div class="col-sm-10">
-                            <input id="author" class="form-control" type="text" name="author" value="{{ post.author }}" required>
+                            <select class="form-select" aria-label=".form-select-lg example" id="author" name="author" required>
+                                <!--<option selected>-- sélectionner un utilisateur --</option>-->
+                                <option selected value="{{ post.user_id }}" name="author">{{ post.lastName }} {{ post.firstName }}</option>
+                                {% for user in listUsers %}
+                                    <option value="{{ user.id }}" name="author">{{ user.lastName }} {{ user.firstName }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="mb-3 row">
