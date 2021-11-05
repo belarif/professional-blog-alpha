@@ -31,7 +31,14 @@ class PostManager extends Manager {
     public function getPosts()
     {
         $db = $this->dbConnect();
-        $posts = $db->query("SELECT * FROM post ORDER BY createdAt DESC");
+        $posts = $db->query(
+            "SELECT post.id, post.title, post.chapo, post.content, post.lastUpdate, 
+            post.createdAt, post.published, user.lastName, user.firstName 
+            FROM post
+            INNER JOIN user
+            ON post.user_id = user.id
+            ORDER BY post.createdAt DESC"
+        );
 
         return $posts;
     }
