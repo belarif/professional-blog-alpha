@@ -21,8 +21,8 @@
             </div>
             <div class="card-body">
                 <p><b>Titre</b> : {{ post.title }}</p>
-                <p><b>Auteur</b> : {{ post.user_id }}</p>
-                <p><b>Chapô</b> : {{ post.lastName }} {{ post.firstName }}</p>
+                <p><b>Auteur</b> : {{ post.lastName }} {{ post.firstName }}</p>
+                <p><b>Chapô</b> : {{ post.chapo }}</p>
                 <p><b>Contenu</b> : {{ post.content }}</p>
                 {% if post.published == 1 %}
                     <p><b>Publiée</b> : oui</p>
