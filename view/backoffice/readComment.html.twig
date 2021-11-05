@@ -20,11 +20,17 @@
                 Détails du commentaire
             </div>
             <div class="card-body">
-                <p><b>Commentaire</b> : afficher le contenu du commentaire, afficher le contenu du commentaire,
-                    afficher le contenu du commentaire,afficher le contenu du commentaire</p>
-                <p><b>Utilisateur</b> : texte court coiffant le contenu</p>
-                <p><b>Date du commentaire</b> jj/mm/aaaa hh:mm:ss</p>
-                <p><b>Validé</b> : oui</p>
+                <p><b>Commentaire</b> : {{ comment.content }}</p>
+                <p><b>Date du commentaire</b> {{ comment.createdAt }}</p>
+                <p><b>Validé</b> : {% if comment.isEnabled == 1 %} oui {% else %} non {% endif %}</p>
+                <p><b>Titre de la publication</b> : {{ comment.postTitle }}</p>
+                <p><b>Auteur</b> : {{ comment.postAuthor }}</p>
+                <div class="d-flex justify-content-end">
+                    <div class="justify-content-between">
+                        <a href="index.php?action=dashboard/listComments"><button class="btn btn-primary">Retour liste</button></a>
+                        <a href="index.php?action=dashboard/editComment&amp;id={{ comment.id }}"><button class="btn btn-primary">Modifier</button></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

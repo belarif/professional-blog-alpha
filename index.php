@@ -137,48 +137,59 @@ try
     }
     /*** routes posts management ***/
 
-    /*** routes users management ***/
-    elseif($_GET['action'] == 'dashboard/listUsers')
-    {
-        $template = $twig->load('listUsers.html.twig');
-        listUsersAction($template);
-    }
-    elseif($_GET['action'] == 'dashboard/addUser')
-    {
-        $template = $twig->load('addUser.html.twig');
-        addUserAction($template);
-    }
-    elseif($_GET['action'] == 'dashboard/editUser')
-    {
-        $template = $twig->load('editUser.html.twig');
-        editUserAction($template);
-    }
-    elseif($_GET['action'] == 'dashboard/readUser')
-    {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
-        {
-            $template = $twig->load('readUser.html.twig');
-            readUserAction($template);
-        }
-        else
-        {
-            throw new Exception('Aucun blog post trouvé');
-        }
-    }
-    /*** routes users management ***/
-
     /*** routes comments management ***/
     elseif($_GET['action'] == 'dashboard/listComments')
     {
         $template = $twig->load('listComments.html.twig');
-        listCommentsAction($template);
+        $listComments = new \ProfessilnalBlog\Controller\CommentController();
+        $listComments->listCommentsAction($template);
     }
     elseif($_GET['action'] == 'dashboard/readComment')
     {
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $template = $twig->load('readComment.html.twig');
-            readCommentAction($template);
+            $readComment = new \ProfessilnalBlog\Controller\CommentController();
+            $readComment->readCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
+    elseif($_GET['action'] == 'dashboard/editComment')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('editComment.html.twig');
+            $editComment = new \ProfessilnalBlog\Controller\CommentController();
+            $editComment->editCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
+    elseif($_GET['action'] == 'dashboard/updateComment')
+    {
+        if(isset($_POST['id']) && $_POST['id'] > 0)
+        {
+            $template = $twig->load('listComments.html.twig');
+            $updateComment = new \ProfessilnalBlog\Controller\CommentController();
+            $updateComment->updateCommentAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
+    elseif($_GET['action'] == 'dashboard/deleteComment')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('listComments.html.twig');
+            $deleteComment = new \ProfessilnalBlog\Controller\CommentController();
+            $deleteComment->deleteCommentAction($template);
         }
         else
         {
@@ -186,6 +197,64 @@ try
         }
     }
     /*** routes comments management ***/
+
+    /*** routes users management ***/
+    elseif($_GET['action'] == 'dashboard/listUsers')
+    {
+        $template = $twig->load('listUsers.html.twig');
+        $listUsers = new \ProfessionalBlog\Controller\UserController();
+        $listUsers->listUsersAction($template);
+    }
+    elseif($_GET['action'] == 'dashboard/addUser')
+    {
+        $template = $twig->load('addUser.html.twig');
+        $addUser = new \ProfessionalBlog\Controller\UserController();
+        $addUser->addUserAction($template);
+    }
+    elseif($_GET['action'] == 'dashboard/editUser')
+    {
+        $template = $twig->load('editUser.html.twig');
+        $editUser = new \ProfessionalBlog\Controller\UserController();
+        $editUser->editUserAction($template);
+    }
+    elseif($_GET['action'] == 'dashboard/updateUser')
+    {
+        if(isset($_POST['id']) && $_POST['id'] > 0)
+        {
+            $updateUser = new \ProfessionalBlog\Controller\UserController();
+            $updateUser->updateUserAction();
+        }
+        else
+        {
+            throw new Exception('Aucun blog post trouvé');
+        }
+    }
+    elseif($_GET['action'] == 'dashboard/readUser')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $template = $twig->load('readUser.html.twig');
+            $readUser = new \ProfessionalBlog\Controller\UserController();
+            $readUser->readUserAction($template);
+        }
+        else
+        {
+            throw new Exception('Aucun blog post trouvé');
+        }
+    }
+    elseif($_GET['action'] == 'dashboard/deleteUser')
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $deleteUser = new \ProfessionalBlog\Controller\UserController();
+            $deleteUser->deleteUserAction();
+        }
+        else
+        {
+            throw new Exception('Aucun commentaire trouvé');
+        }
+    }
+    /*** routes users management ***/
     /*** back office routes ***/
 
     else
