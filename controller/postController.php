@@ -12,25 +12,24 @@ class PostController {
 
     public function addPostAction($template)
     {
-
         try
         {
-            if (isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['author'])
+            if (isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
                 && isset($_POST['content']) && isset($_POST['published']))
             {
-                if (!empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['author'])
+                if (!empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['user_id'])
                     && !empty($_POST['content']) && !empty($_POST['published']))
                 {
                     $title = $_POST['title'];
                     $chapo = $_POST['chapo'];
-                    $author = $_POST['author'];
+                    $user_id = $_POST['user_id'];
                     $content = $_POST['content'];
                     $published = $_POST['published'];
 
                     if (isset($_POST['submit']))
                     {
                         $PostManager = new \ProfessionalBlog\Model\PostManager();
-                        $PostManager->createPost($title, $chapo, $author, $content, $published);
+                        $PostManager->createPost($title, $chapo, $user_id, $content, $published);
                         header("Location:index.php?action=dashboard/listPosts");
 
                     }
@@ -47,10 +46,10 @@ class PostController {
             echo $template->render(['errorMessage' => $errorMessage]);
         }
 
-        $UserManager = new \ProfessionalBlog\Model\UserManager();
-        $listUsers = $UserManager->getUsers();
+        $UserManager = new UserManager();
+        $users = $UserManager->getUsers();
 
-        echo $template->render(['listUsers' => $listUsers]);
+        echo $template->render(['users' => $users]);
     }
 
     public function listPostsAction($template)
@@ -77,28 +76,31 @@ class PostController {
         $postManager = new PostManager();
         $post = $postManager->getPost($id);
 
-        echo $template->render(['post' => $post]);
+        $UserManager = new UserManager();
+        $users = $UserManager->getUsers();
+
+        echo $template->render(['post' => $post, 'users' => $users]);
     }
 
     public function updatePostAction()
     {
-        if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['author'])
+        if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
             && isset($_POST['content']) && isset($_POST['published']))
         {
-            if(!empty($_POST['id']) && !empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['author'])
+            if(!empty($_POST['id']) && !empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['user_id'])
                 && !empty($_POST['content']) && !empty($_POST['published']))
             {
                 $id = $_POST['id'];
                 $title = $_POST['title'];
                 $chapo = $_POST['chapo'];
-                $author = $_POST['author'];
+                $user_id = $_POST['user_id'];
                 $content = $_POST['content'];
                 $published = $_POST['published'];
 
                 if(isset($_POST['submit']))
                 {
                     $postManager = new PostManager();
-                    $postManager->updatePost($id,$title,$chapo,$author,$content,$published);
+                    $postManager->updatePost($id,$title,$chapo,$user_id,$content,$published);
 
                     header("Location:index.php?action=dashboard/listPosts");
                 }
