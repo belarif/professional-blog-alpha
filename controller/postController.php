@@ -3,13 +3,16 @@
 namespace ProfessionalBlog\Controller;
 
 use ProfessionalBlog\Model\PostManager;
+use ProfessionalBlog\Model\UserManager;
 
 require_once 'model/PostManager.php';
+require_once 'model/UserManager.php';
 
 class PostController {
 
     public function addPostAction($template)
     {
+
         try
         {
             if (isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['author'])
@@ -44,7 +47,10 @@ class PostController {
             echo $template->render(['errorMessage' => $errorMessage]);
         }
 
-        echo $template->render();
+        $UserManager = new \ProfessionalBlog\Model\UserManager();
+        $listUsers = $UserManager->getUsers();
+
+        echo $template->render(['listUsers' => $listUsers]);
     }
 
     public function listPostsAction($template)
