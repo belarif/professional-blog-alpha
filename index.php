@@ -7,7 +7,6 @@ require('controller/securityController.php');
 require('controller/userController.php');
 require('controller/commentController.php');
 
-
 require_once 'vendor/autoload.php';
 $loader = new \Twig\Loader\FilesystemLoader(['view/frontoffice','view/backoffice']);
 $twig = new \Twig\Environment($loader, [
@@ -20,7 +19,6 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 try
 {
-
     /*** front office routes ***/
     if($_GET['action'] == 'home')
     {

@@ -6,7 +6,6 @@ use ProfessionalBlog\Model\PostManager;
 use ProfessionalBlog\Model\UserManager;
 use ProfessionalBlog\Model\CommentManager;
 
-
 require_once 'model/PostManager.php';
 require_once 'model/UserManager.php';
 require_once 'model/CommentManager.php';
@@ -122,11 +121,38 @@ class PostController {
 
     public function postAction($template)
     {
-        $id = $_GET['id'];
-        $postManager = new PostManager();
-        $post = $postManager->getPost($id);
+        try
+            {
+                $id = $_GET['id'];
+                $postManager = new PostManager();
+                $post = $postManager->getPost($id);
+                $commentManager = new CommentManager();
+                $comments = $commentManager->getCommentsPost($id);
 
-        echo $template->render(['post' => $post]);
+                if(isset($_POST['content']) && !empty($_POST['content']))
+                {
+                    $post_id = $id;
+                    $content = htmlspecialchars($_POST['content']);
+
+                    if(isset($_POST['submit']))
+                    {
+                        $commentManager->createComment($content,$post_id);
+                        header("Location:index.php?action=post&id=".$id);
+                    }
+                    else
+                    {
+                        throw new \Exception("veuillez écrire votre commentaire");
+                    }
+
+                }
+
+            }
+            catch (\Exception $e)
+            {
+                die('Error : '.$e->getMessage());
+            }
+
+        echo $template->render(['post' => $post, 'comments' => $comments]);
 
     }
 
