@@ -4,9 +4,12 @@ namespace ProfessionalBlog\Controller;
 
 use ProfessionalBlog\Model\PostManager;
 use ProfessionalBlog\Model\UserManager;
+use ProfessionalBlog\Model\CommentManager;
+
 
 require_once 'model/PostManager.php';
 require_once 'model/UserManager.php';
+require_once 'model/CommentManager.php';
 
 class PostController {
 
@@ -130,9 +133,9 @@ class PostController {
     public function postsAction($template)
     {
         $postManager = new PostManager();
-        $posts = $postManager->getPosts();
+        $listPosts = $postManager->getPosts();
 
-        echo $template->render(['posts' => $posts]);
+        echo $template->render(['listPosts' => $listPosts]);
     }
 
 }

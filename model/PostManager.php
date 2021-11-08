@@ -46,7 +46,7 @@ class PostManager extends Manager {
         $db = $this->dbConnect();
         $query = $db->prepare("
             SELECT post.id, post.title, post.chapo, post.user_id, post.content, post.lastUpdate, 
-            post.createdAt, post.published, user.lastName, user.firstName 
+            post.createdAt, post.published, user.lastName AS lastnameAdmin, user.firstName AS firstnameAdmin
             FROM post
             INNER JOIN user
             ON post.user_id = user.id
@@ -88,7 +88,6 @@ class PostManager extends Manager {
         $query->execute([
             'id' => $id,
         ]);
-
     }
 
 }

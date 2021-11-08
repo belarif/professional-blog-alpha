@@ -25,7 +25,8 @@ try
     if($_GET['action'] == 'home')
     {
         $template = $twig->load('home.html.twig');
-        homeAction($template);
+        $homePage = new \professionalBlog\controller\HomeController();
+        $homePage->homeAction($template);
     }
     elseif($_GET['action'] == 'login')
     {
@@ -45,7 +46,8 @@ try
     elseif($_GET['action'] == 'listPosts')
     {
         $template = $twig->load('posts.html.twig');
-
+        $postsPage = new \ProfessionalBlog\Controller\PostController();
+        $postsPage->postsAction($template);
     }
     elseif ($_GET['action'] == 'post')
     {
