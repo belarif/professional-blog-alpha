@@ -24,7 +24,7 @@
                         <th>Titre</th>
                         <th>Auteur</th>
                         <th>Chapô</th>
-                        <th>Date</th>
+                        <th>Date de modification</th>
                         <th>Publié (non/oui)</th>
                         <th>Actions</th>
                     </tr>
@@ -35,7 +35,7 @@
                         <td>{{ post.title }}</td>
                         <td>{{ post.lastName }} {{ post.firstName }}</td>
                         <td>{{ post.chapo }}</td>
-                        <td>{{ post.lastUpdate }}</td>
+                        <td>{{ post.lastUpdate|date("d/m/Y \\à h:m:s") }}</td>
                         <td>
                             {% if post.published == 1 %}
                                 <div class="form-check form-switch">
