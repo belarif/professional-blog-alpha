@@ -23,7 +23,7 @@
                 <p><b>Nom</b> : {{ user.lastName }}</p>
                 <p><b>Prénom</b> : {{ user.firstName }}</p>
                 <p><b>E-mail</b> : {{ user.email }}</p>
-                <p><b>Rôle</b> : {{ user.role }}</p>
+                <p><b>Rôle</b> : {% if user.role == 1 %} administrateur {% else %} visiteur {% endif %}</p>
                 <p><b>Date d'inscription</b> : {{ user.createdAt }}</p>
                 <div class="d-flex justify-content-end">
                     <div class="justify-content-between">

@@ -39,7 +39,7 @@
                             <select class="form-select" aria-label=".form-select-lg example" id="user_id" name="user_id" required>
                                 <option selected>-- sélectionner un utilisateur --</option>
                                 {% for user in users %}
-                                    {% if user.role == 'administrateur' %}
+                                    {% if user.role == '1' %}
                                     <option value="{{ user.id }}" name="user_id"
                                             {% if post.user_id == user.id %} selected {% endif %}>{{ user.lastName }} {{ user.firstName }}
                                     </option>
