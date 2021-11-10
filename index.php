@@ -29,17 +29,21 @@ try
     elseif($_GET['action'] == 'login')
     {
         $template = $twig->load('login.html.twig');
-        loginAction($template);
+        $login = new \ProfessionalBlog\Controller\SecurityController();
+        $login->loginAction($template);
     }
     elseif($_GET['action'] == 'adminLogin')
     {
         $template = $twig->load('login.html.twig');
+
         loginAction($template);
     }
     elseif ($_GET['action'] == 'register')
     {
         $template = $twig->load('register.html.twig');
-        registerAction($template);
+        $register = new \ProfessionalBlog\Controller\SecurityController();
+        $register->registerAction($template);
+
     }
     elseif($_GET['action'] == 'listPosts')
     {
@@ -67,7 +71,8 @@ try
     elseif($_GET['action'] == 'dashboard')
     {
         $template = $twig->load('dashboard.html.twig');
-        dashboardAction($template);
+        $dashboard = new \ProfessionalBlog\Controller\SecurityController();
+        $dashboard->dashboardAction($template);
     }
 
     /*** routes posts management ***/
