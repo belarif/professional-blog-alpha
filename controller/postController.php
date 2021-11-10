@@ -19,22 +19,17 @@ class PostController {
             if (isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
                 && isset($_POST['content']) && isset($_POST['published']))
             {
-                if (!empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['user_id'])
-                    && !empty($_POST['content']) && !empty($_POST['published']))
+                $title = $_POST['title'];
+                $chapo = $_POST['chapo'];
+                $user_id = $_POST['user_id'];
+                $content = $_POST['content'];
+                $published = $_POST['published'];
+
+                if (isset($_POST['submit']))
                 {
-                    $title = $_POST['title'];
-                    $chapo = $_POST['chapo'];
-                    $user_id = $_POST['user_id'];
-                    $content = $_POST['content'];
-                    $published = $_POST['published'];
-
-                    if (isset($_POST['submit']))
-                    {
-                        $PostManager = new \ProfessionalBlog\Model\PostManager();
-                        $PostManager->createPost($title, $chapo, $user_id, $content, $published);
-                        header("Location:index.php?action=dashboard/listPosts");
-
-                    }
+                    $PostManager = new \ProfessionalBlog\Model\PostManager();
+                    $PostManager->createPost($title, $chapo, $user_id, $content, $published);
+                    header("Location:index.php?action=dashboard/listPosts");
                 }
                 else
                 {
@@ -60,7 +55,6 @@ class PostController {
         $listPosts = $postManager->getPosts();
 
         echo $template->render(['listPosts' => $listPosts]);
-
     }
 
     public function readPostAction($template)
@@ -89,23 +83,19 @@ class PostController {
         if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
             && isset($_POST['content']) && isset($_POST['published']))
         {
-            if(!empty($_POST['id']) && !empty($_POST['title']) && !empty($_POST['chapo']) && !empty($_POST['user_id'])
-                && !empty($_POST['content']) && !empty($_POST['published']))
+            $id = $_POST['id'];
+            $title = $_POST['title'];
+            $chapo = $_POST['chapo'];
+            $user_id = $_POST['user_id'];
+            $content = $_POST['content'];
+            $published = $_POST['published'];
+
+            if(isset($_POST['submit']))
             {
-                $id = $_POST['id'];
-                $title = $_POST['title'];
-                $chapo = $_POST['chapo'];
-                $user_id = $_POST['user_id'];
-                $content = $_POST['content'];
-                $published = $_POST['published'];
+                $postManager = new PostManager();
+                $postManager->updatePost($id,$title,$chapo,$user_id,$content,$published);
 
-                if(isset($_POST['submit']))
-                {
-                    $postManager = new PostManager();
-                    $postManager->updatePost($id,$title,$chapo,$user_id,$content,$published);
-
-                    header("Location:index.php?action=dashboard/listPosts");
-                }
+                header("Location:index.php?action=dashboard/listPosts");
             }
         }
     }
@@ -122,38 +112,35 @@ class PostController {
     public function postAction($template)
     {
         try
-            {
-                $id = $_GET['id'];
-                $postManager = new PostManager();
-                $post = $postManager->getPost($id);
-                $commentManager = new CommentManager();
-                $comments = $commentManager->getCommentsPost($id);
+        {
+            $id = $_GET['id'];
+            $postManager = new PostManager();
+            $post = $postManager->getPost($id);
+            $commentManager = new CommentManager();
+            $comments = $commentManager->getCommentsPost($id);
 
-                if(isset($_POST['content']) && !empty($_POST['content']))
+            if(isset($_POST['content']) && !empty($_POST['content']))
+            {
+                $post_id = $id;
+                $content = htmlspecialchars($_POST['content']);
+
+                if(isset($_POST['submit']))
                 {
-                    $post_id = $id;
-                    $content = htmlspecialchars($_POST['content']);
-
-                    if(isset($_POST['submit']))
-                    {
-                        $commentManager->createComment($content,$post_id);
-                        header("Location:index.php?action=post&id=".$id);
-                    }
-                    else
-                    {
-                        throw new \Exception("veuillez écrire votre commentaire");
-                    }
-
+                    $commentManager->createComment($content,$post_id);
+                    header("Location:index.php?action=post&id=".$id);
                 }
-
+                else
+                {
+                    throw new \Exception("veuillez écrire votre commentaire");
+                }
             }
-            catch (\Exception $e)
-            {
-                die('Error : '.$e->getMessage());
-            }
+        }
+        catch (\Exception $e)
+        {
+            die('Error : '.$e->getMessage());
+        }
 
         echo $template->render(['post' => $post, 'comments' => $comments]);
-
     }
 
     public function postsAction($template)
