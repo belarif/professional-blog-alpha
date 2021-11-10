@@ -28,7 +28,7 @@ class CommentManager extends Manager
         $db = $this->dbConnect();
         $query = $db->prepare(
             "SELECT comment.id, comment.content, comment.createdAt, comment.isEnabled, post.title AS postTitle, 
-            user.lastName AS lastnameAuthor, user.firstName AS firstnameAuthor
+            user.lastName AS lastnameVisitor, user.firstName AS firstnameVisitor
             FROM post
             INNER JOIN comment
             ON comment.post_id = post.id
