@@ -36,12 +36,12 @@
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.email }}</td>
-                        <td>{{ user.role }}</td>
+                        <td>{% if user.role == 1 %} administrateur {% else %} visiteur {% endif %}</td>
                         <td>{{ user.createdAt }}</td>
                         <td>
                             <a href="index.php?action=dashboard/readUser&id={{ user.id }}">Afficher</a>
                             <a href="index.php?action=dashboard/editUser&id={{ user.id }}">modifier</a>
-                            <a href="index.php?action=dashboard/deleteUser&id={{ user.id }}" onclick="deleteUser()">supprimer</a>
+                            <a href="javascript:void(0)" onclick="deleteUser({{ user.id }})">supprimer</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -54,10 +54,10 @@
 {% endblock content %}
 
 {% block javascript %}
-    function deleteUser()
+    function deleteUser(id)
     {
         if(confirm("Êtes vous sûr de vouloir supprimer l'utilisateur ?")){
-            window.location.href = "index.php?action=dashboard/listUsers";
+            window.location.href = "index.php?action=dashboard/deleteUser&id=" + id;
         }
         else {
             alert("Vous avez annulé la suppression");
