@@ -22,7 +22,7 @@
             <div class="card-body">
                 <p><b>Commentaire</b> : {{ comment.content }}</p>
                 <p><b>Auteur</b> : {{ comment.lastnameAuthor }} {{ comment.firstnameAuthor }}</p>
-                <p><b>Date du commentaire</b> {{ comment.createdAt }}</p>
+                <p><b>Date du commentaire</b> {{ comment.createdAt|date("d/m/Y \\à h:m:s") }}</p>
                 <p><b>Validé</b> : {% if comment.isEnabled == 1 %} oui {% else %} non {% endif %}</p>
                 <p><b>Titre de la publication</b> : {{ comment.postTitle }}</p>
                 <div class="d-flex justify-content-end">

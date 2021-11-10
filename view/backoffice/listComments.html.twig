@@ -34,8 +34,8 @@
                         <tr>
                             <td>{{ comment.content }}</td>
                             <td>{{ comment.postTitle }}</td>
-                            <td>{{ comment.lastnameAuthor }} {{ comment.firstnameAuthor }}</td>
-                            <td>{{ comment.createdAt }}</td>
+                            <td>{{ comment.lastnameVisitor }} {{ comment.firstnameVisitor }}</td>
+                            <td>{{ comment.createdAt|date("d/m/Y \\à h:m:s") }}</td>
                             <td>
                                 <div class="form-check form-switch">
                                     {% if comment.isEnabled == 1 %}

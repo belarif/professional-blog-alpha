@@ -37,7 +37,7 @@
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.email }}</td>
                         <td>{% if user.role == 1 %} administrateur {% else %} visiteur {% endif %}</td>
-                        <td>{{ user.createdAt }}</td>
+                        <td>{{ user.createdAt|date("d/m/Y \\à h:m:s") }}</td>
                         <td>
                             <a href="index.php?action=dashboard/readUser&id={{ user.id }}">Afficher</a>
                             <a href="index.php?action=dashboard/editUser&id={{ user.id }}">modifier</a>

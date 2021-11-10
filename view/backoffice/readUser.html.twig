@@ -24,7 +24,7 @@
                 <p><b>Prénom</b> : {{ user.firstName }}</p>
                 <p><b>E-mail</b> : {{ user.email }}</p>
                 <p><b>Rôle</b> : {% if user.role == 1 %} administrateur {% else %} visiteur {% endif %}</p>
-                <p><b>Date d'inscription</b> : {{ user.createdAt }}</p>
+                <p><b>Date d'inscription</b> : {{ user.createdAt|date("d/m/Y \\à h:m:s") }}</p>
                 <div class="d-flex justify-content-end">
                     <div class="justify-content-between">
                         <a href="index.php?action=dashboard/listUsers"><button class="btn btn-primary">Retour liste</button></a>
