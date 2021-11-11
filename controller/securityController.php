@@ -20,11 +20,11 @@ class SecurityController
                 if(!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email'])
                     && !empty($_POST['password']) && !empty($_POST['role']))
                 {
-                    $lastName = $_POST['lastName'];
-                    $firstName = $_POST['firstName'];
-                    $email = $_POST['email'];
-                    $password = $_POST['password'];
-                    $role = $_POST['role'];
+                    $lastName = strip_tags($_POST['lastName']);
+                    $firstName = strip_tags($_POST['firstName']);
+                    $email = strip_tags($_POST['email']);
+                    $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
+                    $role = strip_tags($_POST['role']);
 
                     if(isset($_POST['submit']))
                     {
