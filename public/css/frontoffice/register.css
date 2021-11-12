@@ -63,3 +63,7 @@
 .back-admin {
     margin-top: 150px;
 }
+
+p > a {
+    color: #ffffff;
+}
