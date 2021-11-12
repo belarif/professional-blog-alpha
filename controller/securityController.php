@@ -26,9 +26,18 @@ class SecurityController
                         if($user)
                         {
                             $hashPassword = $user['password'];
+                            $role = $user['role'];
                             if(password_verify($password,$hashPassword))
                             {
-                                header("Location:index.php?action=listPosts");
+                                if($role == 1)
+                                {
+                                    header("Location:index.php?action=dashboard");
+                                }
+                                else
+                                {
+                                    header("Location:index.php?action=listPosts");
+                                }
+
                             }
                             else
                             {
@@ -61,17 +70,17 @@ class SecurityController
         try
         {
             if(isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email'])
-                && isset($_POST['password']) && isset($_POST['role']))
+                && isset($_POST['password']))
             {
                 if(!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email'])
-                    && !empty($_POST['password']) && !empty($_POST['role']))
+                    && !empty($_POST['password']))
                 {
                     $lastName = strip_tags($_POST['lastName']);
                     $firstName = strip_tags($_POST['firstName']);
                     $email = strip_tags($_POST['email']);
                     $password = strip_tags($_POST['password']);
                     $hashPassword = password_hash($password,PASSWORD_BCRYPT);
-                    $role = strip_tags($_POST['role']);
+                    $role = '2';
 
                     if(isset($_POST['submit']))
                     {
@@ -99,5 +108,11 @@ class SecurityController
         }
 
     }
+
+    public function dashboardAction($template)
+    {
+        echo $template->render(['d' => 'f']);
+    }
+
 
 }
