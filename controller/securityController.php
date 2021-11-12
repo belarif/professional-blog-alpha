@@ -10,6 +10,38 @@ require_once 'model/SecurityManager.php';
 class SecurityController
 {
 
+    public function loginAction($template)
+    {
+
+        if(isset($_POST['email']) && isset($_POST['password']))
+        {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $UserManager = new UserManager();
+            $users = $UserManager->getLoginUser($email);
+
+            foreach ($users as $user)
+            {
+                if(
+                    $user['email'] === $email &&
+                    $user['password'] === $password
+                )
+                {
+                        header("Location:index.php?action=listPosts");
+
+                }
+                else
+                {
+                    $identificationError = "votre email ou mot de passe est incorrecte !";
+                    echo $template->render(['identificationError' => $identificationError]);
+                }
+            }
+
+        }
+
+        echo $template->render();
+    }
+
     public function registerAction($template)
     {
         try
@@ -23,7 +55,8 @@ class SecurityController
                     $lastName = strip_tags($_POST['lastName']);
                     $firstName = strip_tags($_POST['firstName']);
                     $email = strip_tags($_POST['email']);
-                    $password = password_hash($_POST['password'],PASSWORD_BCRYPT);
+                    $pass = strip_tags($_POST['password']);
+                    $password = password_hash($pass,PASSWORD_BCRYPT);
                     $role = strip_tags($_POST['role']);
 
                     if(isset($_POST['submit']))
@@ -51,5 +84,6 @@ class SecurityController
         echo $template->render();
 
     }
+
 
 }
