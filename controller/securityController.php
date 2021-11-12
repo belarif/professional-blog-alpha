@@ -2,44 +2,58 @@
 
 namespace ProfessionalBlog\Controller;
 
-use ProfessionalBlog\Model\SecurityManager;
 use ProfessionalBlog\Model\UserManager;
-
-require_once 'model/SecurityManager.php';
 
 class SecurityController
 {
 
     public function loginAction($template)
     {
-
-        if(isset($_POST['email']) && isset($_POST['password']))
+        try
         {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $UserManager = new UserManager();
-            $users = $UserManager->getLoginUser($email);
-
-            foreach ($users as $user)
+            if(isset($_POST['email']) && isset($_POST['password']))
             {
-                if(
-                    $user['email'] === $email &&
-                    $user['password'] === $password
-                )
+                if(!empty($_POST['email']) && !empty($_POST['password']))
                 {
-                        header("Location:index.php?action=listPosts");
+                    $email = strip_tags($_POST['email']);
+                    $password = strip_tags($_POST['password']);
 
+                    if(isset($_POST['submit']))
+                    {
+                        $UserManager = new UserManager();
+                        $user = $UserManager->getLoginUser($email);
+
+                        if($user)
+                        {
+                            $hashPassword = $user['password'];
+                            if(password_verify($password,$hashPassword))
+                            {
+                                header("Location:index.php?action=listPosts");
+                            }
+                            else
+                            {
+                                throw new \Exception("Mot de passe invalide !!");
+                            }
+                        }
+                        else
+                        {
+                            throw new \Exception("Aucun compte existant avec l'adresse : $email");
+                        }
+                    }
                 }
                 else
                 {
-                    $identificationError = "votre email ou mot de passe est incorrecte !";
-                    echo $template->render(['identificationError' => $identificationError]);
+                    throw new \Exception("Veuillez renseigner votre email et/ou mot de passe");
                 }
             }
-
+            echo $template->render();
+        }
+        catch (\Exception $e)
+        {
+            $identificationError = $e->getMessage();
+            echo $template->render(['identificationError' => $identificationError]);
         }
 
-        echo $template->render();
     }
 
     public function registerAction($template)
@@ -55,14 +69,14 @@ class SecurityController
                     $lastName = strip_tags($_POST['lastName']);
                     $firstName = strip_tags($_POST['firstName']);
                     $email = strip_tags($_POST['email']);
-                    $pass = strip_tags($_POST['password']);
-                    $password = password_hash($pass,PASSWORD_BCRYPT);
+                    $password = strip_tags($_POST['password']);
+                    $hashPassword = password_hash($password,PASSWORD_BCRYPT);
                     $role = strip_tags($_POST['role']);
 
                     if(isset($_POST['submit']))
                     {
                         $UserManager = new UserManager();
-                        $UserManager->createUser($lastName,$firstName,$email,$password,$role);
+                        $UserManager->createUser($lastName,$firstName,$email,$hashPassword,$role);
 
                         $successMessage = "Vous vous êtes inscrit avec succès";
                         echo $template->render(['successMessage' => $successMessage]);
