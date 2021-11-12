@@ -30,12 +30,13 @@ class UserController
                     $firstName = $_POST['firstName'];
                     $email = $_POST['email'];
                     $password = $_POST['password'];
+                    $hashPassword = password_hash($password,PASSWORD_BCRYPT);
                     $role = $_POST['role'];
 
                     if(isset($_POST['submit']))
                     {
                         $UserManager = new UserManager();
-                        $UserManager->createUser($lastName,$firstName,$email,$password,$role);
+                        $UserManager->createUser($lastName,$firstName,$email,$hashPassword,$role);
                         header("Location: index.php?action=dashboard/listUsers");
                     }
                 }
@@ -75,12 +76,13 @@ class UserController
                 $firstName = $_POST['firstName'];
                 $email = $_POST['email'];
                 $password = $_POST['password'];
+                $hashPassword = password_hash($password,PASSWORD_BCRYPT);
                 $role = $_POST['role'];
 
                 if(isset($_POST['submit']))
                 {
                     $UserManager = new UserManager();
-                    $UserManager->updateUser($id,$lastName,$firstName,$email,$password,$role);
+                    $UserManager->updateUser($id,$lastName,$firstName,$email,$hashPassword,$role);
 
                     header("Location: index.php?action=dashboard/listUsers");
                 }
