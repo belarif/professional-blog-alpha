@@ -26,6 +26,20 @@ class UserManager extends Manager {
         return $user;
     }
 
+    public function getLoginUser($email)
+    {
+        $db = $this->dbConnect();
+        $query = $db->prepare("
+                        SELECT * FROM user
+                        WHERE email = :email
+                        ");
+        $query->execute([
+            'email' => $email,
+        ]);
+        $users = $query->fetch();
+        return $users;
+    }
+
     public function createUser($lastName,$firstName,$email,$password,$role)
     {
         $db = $this->dbConnect();
