@@ -32,12 +32,6 @@ try
         $login = new \ProfessionalBlog\Controller\SecurityController();
         $login->loginAction($template);
     }
-    elseif($_GET['action'] == 'adminLogin')
-    {
-        $template = $twig->load('login.html.twig');
-
-        loginAction($template);
-    }
     elseif ($_GET['action'] == 'register')
     {
         $template = $twig->load('register.html.twig');
