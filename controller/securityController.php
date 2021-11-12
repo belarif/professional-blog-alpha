@@ -88,16 +88,16 @@ class SecurityController
                     throw new \Exception("tous les champs sont obligatoires");
                 }
             }
+
+            echo $template->render();
+
         }
         catch (\Exception $e)
         {
-            $errorMessage = $e->getMessage();
-            echo $template->render(['errorMessage' => $errorMessage]);
+            $identificationError = $e->getMessage();
+            echo $template->render(['identificationError' => $identificationError]);
         }
 
-        echo $template->render();
-
     }
-
 
 }
