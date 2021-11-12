@@ -40,7 +40,7 @@ class UserManager extends Manager {
         return $users;
     }
 
-    public function createUser($lastName,$firstName,$email,$password,$role)
+    public function createUser($lastName,$firstName,$email,$hashPassword,$role)
     {
         $db = $this->dbConnect();
         $query = $db->prepare(
@@ -50,7 +50,7 @@ class UserManager extends Manager {
            'lastName' => $lastName,
            'firstName' => $firstName,
            'email' => $email,
-           'password' => $password,
+           'password' => $hashPassword,
            'role' => $role,
            'createdAt' => date("Y-m-d H:i:s"),
         ]);
