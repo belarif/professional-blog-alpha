@@ -10,14 +10,39 @@ class UserController
 {
     public function listUsersAction($template)
     {
-        $UserManager = new UserManager();
-        $listUsers = $UserManager->getUsers();
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['listUsers' => $listUsers]);
+        if ($logged_user && $role == 1)
+        {
+            $UserManager = new UserManager();
+            $listUsers = $UserManager->getUsers();
+
+            echo $template->render(['listUsers' => $listUsers, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function addUserAction($template)
     {
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
+
+        if ($logged_user && $role == 1)
+        {
+
+            echo $template->render(['logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
+
         try
         {
             if(isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email'])
@@ -51,16 +76,28 @@ class UserController
             $errorMessage = $e->getMessage();
             echo $template->render(['errorMessage' => $errorMessage]);
         }
-        echo $template->render();
+
+
     }
 
     public function editUserAction($template)
     {
-        $id = $_GET['id'];
-        $UserManager = new UserManager();
-        $user = $UserManager->getUser($id);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['user' => $user]);
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $UserManager = new UserManager();
+            $user = $UserManager->getUser($id);
+
+            echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function updateUserAction()
@@ -92,20 +129,43 @@ class UserController
 
     public function readUserAction($template)
     {
-        $id = $_GET['id'];
-        $UserManager = new UserManager();
-        $user = $UserManager->getUser($id);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['user' => $user]);
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $UserManager = new UserManager();
+            $user = $UserManager->getUser($id);
+
+            echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function deleteUserAction()
     {
-        $id = $_GET['id'];
-        $deleteUser = new UserManager();
-        $deleteUser->deleteUser($id);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        header("Location: index.php?action=dashboard/listUsers");
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $deleteUser = new UserManager();
+            $deleteUser->deleteUser($id);
+
+            header("Location: index.php?action=dashboard/listUsers");
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
+
     }
 }
 
