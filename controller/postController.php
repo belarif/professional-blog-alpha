@@ -176,9 +176,13 @@ class PostController {
     {
         try
         {
+            session_start();
+            $logged_user = $_SESSION['logged_user'];
+
             $id = $_GET['id'];
             $postManager = new PostManager();
             $post = $postManager->getPost($id);
+
             $commentManager = new CommentManager();
             $comments = $commentManager->getCommentsPost($id);
 
@@ -189,8 +193,17 @@ class PostController {
 
                 if(isset($_POST['submit']))
                 {
-                    $commentManager->createComment($content,$post_id);
+                    $user_id = $_SESSION['id'];
+
+                    if ($logged_user)
+                    {
+                    $commentManager->createComment($content,$post_id,$user_id);
                     header("Location:index.php?action=post&id=".$id);
+                    }
+                    else
+                    {
+                        header("Location:index.php?action=login");
+                    }
                 }
                 else
                 {
@@ -203,15 +216,19 @@ class PostController {
             die('Error : '.$e->getMessage());
         }
 
-        echo $template->render(['post' => $post, 'comments' => $comments]);
+        echo $template->render(['post' => $post, 'comments' =>$comments, 'logged_user' => $logged_user]);
+
     }
 
     public function postsAction($template)
     {
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts();
 
-        echo $template->render(['listPosts' => $listPosts]);
+        echo $template->render(['listPosts' => $listPosts, 'logged_user' => $logged_user]);
     }
 
 }
