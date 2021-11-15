@@ -7,7 +7,7 @@ require_once 'model/Manager.php';
 class CommentManager extends Manager
 {
 
-    public function createComment($content,$post_id)
+    public function createComment($content,$post_id,$user_id)
     {
         $db = $this->dbConnect();
         $query = $db->prepare("
@@ -18,7 +18,7 @@ class CommentManager extends Manager
             'content' => $content,
             'createdAt' => date("Y-m-d H:i:s"),
             'isEnabled' => 0,
-            'user_id' => 11,
+            'user_id' => $user_id,
             'post_id' => $post_id,
         ]);
     }
