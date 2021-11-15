@@ -32,6 +32,11 @@ try
         $login = new \ProfessionalBlog\Controller\SecurityController();
         $login->loginAction($template);
     }
+    elseif($_GET['action'] == 'logout')
+    {
+        $logout = new \ProfessionalBlog\Controller\SecurityController();
+        $logout->logoutAction();
+    }
     elseif ($_GET['action'] == 'register')
     {
         $template = $twig->load('register.html.twig');
