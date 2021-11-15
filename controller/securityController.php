@@ -31,6 +31,7 @@ class SecurityController
                                 session_start();
                                 $_SESSION['logged_user'] = $user['lastName'];
                                 $_SESSION['role'] = $user['role'];
+                                $_SESSION['id'] = $user['id'];
 
                                 if($_SESSION['logged_user'] && $_SESSION['role'] == 1)
                                 {
