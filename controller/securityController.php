@@ -26,16 +26,19 @@ class SecurityController
                         if($user)
                         {
                             $hashPassword = $user['password'];
-                            $role = $user['role'];
                             if(password_verify($password,$hashPassword))
                             {
-                                if($role == 1)
+                                session_start();
+                                $_SESSION['logged_user'] = $user['lastName'];
+                                $_SESSION['role'] = $user['role'];
+
+                                if($_SESSION['logged_user'] && $_SESSION['role'] == 1)
                                 {
                                     header("Location:index.php?action=dashboard");
                                 }
                                 else
                                 {
-                                    header("Location:index.php?action=listPosts");
+                                    header("Location:index.php?action=home");
                                 }
 
                             }
@@ -111,8 +114,25 @@ class SecurityController
 
     public function dashboardAction($template)
     {
-        echo $template->render(['d' => 'f']);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+
+        if ($logged_user && $_SESSION['role'] == 1)
+        {
+            echo $template->render(['logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
+
     }
 
+    public function logoutAction()
+    {
+        session_start();
+        session_destroy();
+        header("location:index.php?action=login");
+    }
 
 }
