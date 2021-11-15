@@ -9,30 +9,62 @@ require_once 'model\CommentManager.php';
 
 class CommentController
 {
+
     public function listCommentsAction($template)
     {
-        $commentManager = new CommentManager();
-        $listComments = $commentManager->getComments();
 
-        echo $template->render(['listComments' => $listComments]);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
+
+        if ($logged_user && $role == 1)
+        {
+            $commentManager = new CommentManager();
+            $listComments = $commentManager->getComments();
+            echo $template->render(['listComments' => $listComments, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function readCommentAction($template)
     {
-        $id = $_GET['id'];
-        $commentManager = new CommentManager();
-        $comment = $commentManager->getComment($id);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['comment' => $comment]);
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $commentManager = new CommentManager();
+            $comment = $commentManager->getComment($id);
+            echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function editCommentAction($template)
     {
-        $id = $_GET['id'];
-        $commentManager = new CommentManager();
-        $comment = $commentManager->getComment($id);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['comment' => $comment]);
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $commentManager = new CommentManager();
+            $comment = $commentManager->getComment($id);
+            echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function updateCommentAction()
@@ -57,12 +89,24 @@ class CommentController
 
     public function deleteCommentAction()
     {
-        $id = $_GET['id'];
-        $commentManager = new CommentManager();
-        $commentManager->deleteComment($id);
 
-        header("Location:index.php?action=dashboard/listComments");
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
+
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $commentManager = new CommentManager();
+            $commentManager->deleteComment($id);
+            header("Location:index.php?action=dashboard/listComments");
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
+
 }
 
 
