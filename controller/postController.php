@@ -43,39 +43,88 @@ class PostController {
             echo $template->render(['errorMessage' => $errorMessage]);
         }
 
-        $UserManager = new UserManager();
-        $users = $UserManager->getUsers();
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['users' => $users]);
+        if ($logged_user && $role == 1)
+        {
+
+            $UserManager = new UserManager();
+            $users = $UserManager->getUsers();
+
+            echo $template->render(['users' => $users, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
+
     }
 
     public function listPostsAction($template)
     {
-        $postManager = new PostManager();
-        $listPosts = $postManager->getPosts();
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['listPosts' => $listPosts]);
+        if ($logged_user && $role == 1)
+        {
+
+            $postManager = new PostManager();
+            $listPosts = $postManager->getPosts();
+
+            echo $template->render(['listPosts' => $listPosts, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function readPostAction($template)
     {
-        $postManager = new PostManager();
-        $id = $_GET['id'];
-        $post = $postManager->getPost($id);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        echo $template->render(['post' => $post]);
+        if ($logged_user && $role == 1)
+        {
+            $postManager = new PostManager();
+            $id = $_GET['id'];
+            $post = $postManager->getPost($id);
+
+            echo $template->render(['post' => $post, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
     }
 
     public function editPostAction($template)
     {
-        $id = $_GET['id'];
-        $postManager = new PostManager();
-        $post = $postManager->getPost($id);
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
 
-        $UserManager = new UserManager();
-        $users = $UserManager->getUsers();
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $postManager = new PostManager();
+            $post = $postManager->getPost($id);
 
-        echo $template->render(['post' => $post, 'users' => $users]);
+            $UserManager = new UserManager();
+            $users = $UserManager->getUsers();
+
+            echo $template->render(['post' => $post, 'logged_user' => $logged_user, 'users' => $users]);
+
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
+
     }
 
     public function updatePostAction()
@@ -102,11 +151,25 @@ class PostController {
 
     public function deletePostAction($template)
     {
-        $id = $_GET['id'];
-        $postManager = new PostManager();
-        $postManager->deletePost($id);
-        $listPosts = $postManager->getPosts();
-        echo $template->render(['listPosts' => $listPosts]);
+
+        session_start();
+        $logged_user = $_SESSION['logged_user'];
+        $role = $_SESSION['role'];
+
+        if ($logged_user && $role == 1)
+        {
+            $id = $_GET['id'];
+            $postManager = new PostManager();
+            $postManager->deletePost($id);
+            $listPosts = $postManager->getPosts();
+
+            echo $template->render(['listPosts' => $listPosts, 'logged_user' => $logged_user]);
+        }
+        else
+        {
+            header("Location:index.php?action=login");
+        }
+
     }
 
     public function postAction($template)
