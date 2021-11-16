@@ -10,12 +10,9 @@ class HomeController
         $logged_user = $_SESSION['logged_user'];
 
         echo $template->render(['logged_user' => $logged_user]);
-    }
-
-    public function sendMessageAction()
-    {
 
     }
+
 }
 
 
