@@ -90,7 +90,7 @@ class SecurityController
                     {
                         $UserManager = new UserManager();
                         $UserManager->createUser($lastName,$firstName,$email,$hashPassword,$role);
-
+                        /* redirection à changer */
                         $successMessage = "Vous vous êtes inscrit avec succès";
                         echo $template->render(['successMessage' => $successMessage]);
 
