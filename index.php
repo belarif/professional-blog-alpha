@@ -8,6 +8,7 @@ require('controller/userController.php');
 require('controller/commentController.php');
 
 require_once 'vendor/autoload.php';
+
 $loader = new \Twig\Loader\FilesystemLoader(['view/frontoffice','view/backoffice']);
 $twig = new \Twig\Environment($loader, [
     'cache' => '/var/cache',
@@ -25,6 +26,12 @@ try
         $template = $twig->load('home.html.twig');
         $homePage = new \professionalBlog\controller\HomeController();
         $homePage->homeAction($template);
+    }
+    elseif($_GET['action'] == 'sendMessage')
+    {
+        $template = $twig->load('login.html.twig');
+        $homePage = new \professionalBlog\controller\HomeController();
+        $homePage->sendMessage();
     }
     elseif($_GET['action'] == 'login')
     {
