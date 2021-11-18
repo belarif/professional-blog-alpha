@@ -2,47 +2,61 @@
 
 namespace ProfessionalBlog\Controller;
 
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailer;
+
+require 'vendor/autoload.php';
+
 class HomeController
 {
     public function homeAction($template)
     {
+        echo $template->render();
+    }
 
+    public function sendMessage()
+    {
         try {
-            if(isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['message']))
+            if(isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['subject']) && isset($_POST['message']))
             {
-                if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['email']) && !empty($_POST['message']))
+                if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['email']) && !empty($_POST['subject']) && !empty($_POST['message']))
                 {
-                    $firstName = $_POST['firstName'];
-                    $lastName = $_POST['lastName'];
-                    $message = $_POST['message'];
-                    $email = $_POST['email'];
-                    $content = "<html>
-                                    <head>
-                                        <title>Message visiteur</title>
-                                    </head>
-                                    <body>
-                                        <p>".$firstName."</p>
-                                        <p>".$lastName."</p>
-                                        <p>".$message."</p>
-                                        <p>".$email."</p>
-                                    </body>
-                                </html>";
-
                     if(isset($_POST['submit']))
                     {
-                        if (
-                            mail("b.ocine@live.fr","test d'envoi d'e-mails",$content,"",
-                                "From:hocine.belarif1@gmail.com".'\r\n'
-                            )
-                        )
-                        {
-                            throw new \Exception("l'email a été envoyé avec succès");
-                        }
-                        else
-                        {
-                            throw new \Exception("erreur d'envoi d'email");
-                        }
+                        $firstName = $_POST['firstName'];
+                        $lastName = $_POST['lastName'];
+                        $message = $_POST['message'];
+                        $email = $_POST['email'];
+                        $subject = $_POST['subject'];
+                        $content = "<p><b>Nom : </b>".$lastName."</p>
+                            <p><b>Pr&eacute;nom : </b>".$firstName."</p>
+                            <p><b>Message : </b>".$message."</p>
+                            <p><b>E-mail : </b>".$email."</p>
+                            ";
 
+                        $mail = new PHPMailer(true);
+
+                        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                        $mail->isSMTP();
+                        $mail->Host       = 'smtp.gmail.com';
+                        $mail->SMTPAuth   = true;
+                        $mail->Username   = 'belarif.test@gmail.com';
+                        $mail->Password   = 'EmailTest';
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                        $mail->Port       = 465;        //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                        $mail->setFrom($email,$lastName);
+                        $mail->addAddress('belarif.test@gmail.com');
+                        $mail->isHTML(true);
+                        $mail->Subject = $subject;
+                        $mail->Body    = $content;
+
+                        if ($mail->send())
+                        {
+                            header("location:index.php?action=home");
+                        }
+                        else{
+                            echo 'error';
+                        }
                     }
                 }
                 else
@@ -50,13 +64,11 @@ class HomeController
                     throw new \Exception("Veuillez renseigner tous les champs");
                 }
             }
-
-            echo $template->render();
         }
         catch (\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            echo $template->render(['errorMessage' => $errorMessage]);
+            /*echo $template->render(['errorMessage' => $errorMessage]);*/
         }
     }
 
