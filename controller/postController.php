@@ -188,7 +188,7 @@ class PostController {
             if(isset($_POST['content']) && !empty($_POST['content']))
             {
                 $post_id = $id;
-                $content = htmlspecialchars($_POST['content']);
+                $content = strip_tags($_POST['content']);
 
                 if(isset($_POST['submit']))
                 {
@@ -222,7 +222,6 @@ class PostController {
                     'post' => $post,
                     'comments' =>$comments,
                     'logged_user' => $logged_user
-
                 ]);
             }
 
