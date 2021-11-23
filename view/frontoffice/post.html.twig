@@ -23,12 +23,25 @@
             <section class="mb-5">
                 <div class="card bg-light">
                     <div class="card-body">
-                        <form class="mb-4" method="post" action="index.php?action=post&id={{ post.id }}">
-                            <textarea class="form-control" rows="3" placeholder="laisser un commentaire" name="content"></textarea>
-                            <div class="d-flex justify-content-end mt-2">
-                                <input type="submit" value="Commenter" name="submit">
-                            </div>
-                        </form>
+                        {% if logged_user is defined and logged_user is not null %}
+                            {% if successComment is defined and successComment is not null %}
+                                <div id="message" class="alert alert-success alert-dismissible" role="alert">
+                                    {{ successComment }}
+                                </div>
+                            {% endif %}
+                            <form class="mb-4" method="post" action="index.php?action=post&id={{ post.id }}">
+                                <textarea class="form-control" rows="3" placeholder="laisser un commentaire" name="content"></textarea>
+                                <div class="d-flex justify-content-end mt-2">
+                                    <input type="submit" value="Commenter" name="submit">
+                                </div>
+                            </form>
+                        {% else %}
+                            <p>Pour commenter la publication, vous devez vous authentifier :
+                                <a class="btn btn-primary" href="index.php?action=login" role="button">
+                                    se connecter
+                                </a>
+                            </p>
+                        {% endif %}
                         {% for comment in comments %}
                             {% if comment.isEnabled == 1 %}
                                 <div class="d-flex mb-4">
@@ -48,3 +61,6 @@
 </div>
 {% endblock content %}
 
+{% block script %}
+
+{% endblock script %}

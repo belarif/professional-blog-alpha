@@ -89,26 +89,31 @@ class SecurityController
                     if(isset($_POST['submit']))
                     {
                         $UserManager = new UserManager();
-                        $UserManager->createUser($lastName,$firstName,$email,$hashPassword,$role);
-                        /* redirection à changer */
-                        $successMessage = "Vous vous êtes inscrit avec succès";
-                        echo $template->render(['successMessage' => $successMessage]);
 
+                        $user = $UserManager->getLoginUser($email);
+                        if(!$user)
+                        {
+                            $UserManager->createUser($lastName,$firstName,$email,$hashPassword,$role);
+                            header("Location:index.php?action=login");
+                        }
+                        else
+                        {
+                            throw new \Exception("Un compte existe déjà avec l'adresse email : ".$email);
+                        }
                     }
                 }
                 else
                 {
-                    throw new \Exception("tous les champs sont obligatoires");
+                    throw new \Exception("Tous les champs sont obligatoires");
                 }
             }
-
             echo $template->render();
 
         }
         catch (\Exception $e)
         {
-            $identificationError = $e->getMessage();
-            echo $template->render(['identificationError' => $identificationError]);
+            $registerError = $e->getMessage();
+            echo $template->render(['registerError' => $registerError]);
         }
 
     }

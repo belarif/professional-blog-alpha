@@ -177,7 +177,6 @@ class PostController {
         try
         {
             session_start();
-            $logged_user = $_SESSION['logged_user'];
 
             $id = $_GET['id'];
             $postManager = new PostManager();
@@ -194,11 +193,12 @@ class PostController {
                 if(isset($_POST['submit']))
                 {
                     $user_id = $_SESSION['id'];
-
-                    if ($logged_user)
+                    if (isset($_SESSION['logged_user']))
                     {
-                    $commentManager->createComment($content,$post_id,$user_id);
-                    header("Location:index.php?action=post&id=".$id);
+                        $commentManager->createComment($content,$post_id,$user_id);
+                        header("Location:index.php?action=post&id=".$id);
+                        /*$_SESSION['successComment'] = "Votre commentaire est en attente de validation";*/
+
                     }
                     else
                     {
@@ -210,25 +210,45 @@ class PostController {
                     throw new \Exception("veuillez écrire votre commentaire");
                 }
             }
+
+            if (!isset($_SESSION['logged_user']))
+            {
+                echo $template->render(['post' => $post, 'comments' =>$comments]);
+            }
+            else
+            {
+                $logged_user = $_SESSION['logged_user'];
+                echo $template->render([
+                    'post' => $post,
+                    'comments' =>$comments,
+                    'logged_user' => $logged_user
+
+                ]);
+            }
+
         }
         catch (\Exception $e)
         {
             die('Error : '.$e->getMessage());
         }
 
-        echo $template->render(['post' => $post, 'comments' =>$comments, 'logged_user' => $logged_user]);
-
     }
 
     public function postsAction($template)
     {
-        session_start();
-        $logged_user = $_SESSION['logged_user'];
-
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts();
 
-        echo $template->render(['listPosts' => $listPosts, 'logged_user' => $logged_user]);
+        session_start();
+        if (!isset($_SESSION['logged_user']))
+        {
+            echo $template->render(['listPosts' => $listPosts]);
+        }
+        else
+        {
+            $logged_user = $_SESSION['logged_user'];
+            echo $template->render(['listPosts' => $listPosts, 'logged_user' => $logged_user]);
+        }
     }
 
 }

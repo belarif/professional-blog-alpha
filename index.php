@@ -29,9 +29,9 @@ try
     }
     elseif($_GET['action'] == 'sendMessage')
     {
-        $template = $twig->load('login.html.twig');
+        $template = $twig->load('home.html.twig');
         $homePage = new \professionalBlog\controller\HomeController();
-        $homePage->sendMessage();
+        $homePage->sendMessage($template);
     }
     elseif($_GET['action'] == 'login')
     {

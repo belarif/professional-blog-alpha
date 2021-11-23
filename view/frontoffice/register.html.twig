@@ -9,9 +9,9 @@
 {% block content %}
     <div class="container">
         <div id="error-addUser-message">
-            {% if identificationError is defined and identificationError is not null %}
+            {% if registerError is defined and registerError is not null %}
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ identificationError }}
+                    {{ registerError }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endif %}

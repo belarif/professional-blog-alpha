@@ -12,11 +12,18 @@ class HomeController
     public function homeAction($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        echo $template->render(['logged_user' => $logged_user]);
+        if (!isset($_SESSION['logged_user']))
+        {
+            echo $template->render();
+        }
+        else
+        {
+            $logged_user = $_SESSION['logged_user'];
+            echo $template->render(['logged_user' => $logged_user]);
+        }
     }
 
-    public function sendMessage()
+    public function sendMessage($template)
     {
         try {
             if(isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['subject']) && isset($_POST['message']))
@@ -25,11 +32,11 @@ class HomeController
                 {
                     if(isset($_POST['submit']))
                     {
-                        $firstName = $_POST['firstName'];
-                        $lastName = $_POST['lastName'];
-                        $message = $_POST['message'];
-                        $email = $_POST['email'];
-                        $subject = $_POST['subject'];
+                        $firstName = strip_tags($_POST['firstName']);
+                        $lastName = strip_tags($_POST['lastName']);
+                        $message = strip_tags($_POST['message']);
+                        $email = strip_tags($_POST['email']);
+                        $subject = strip_tags($_POST['subject']);
                         $content = "<p><b>Nom : </b>".$lastName."</p>
                             <p><b>Pr&eacute;nom : </b>".$firstName."</p>
                             <p><b>Message : </b>".$message."</p>
@@ -55,9 +62,11 @@ class HomeController
                         if ($mail->send())
                         {
                             header("location:index.php?action=home");
+                            unset($mail);
                         }
-                        else{
-                            echo 'error';
+                        else
+                        {
+                            throw new \Exception("Echec d'envoi de votre email");
                         }
                     }
                 }
@@ -66,11 +75,13 @@ class HomeController
                     throw new \Exception("Veuillez renseigner tous les champs");
                 }
             }
+            echo $template->render();
         }
         catch (\Exception $e)
         {
             $errorMessage = $e->getMessage();
-            /*echo $template->render(['errorMessage' => $errorMessage]);*/
+            echo $template->render(['errorMessage' => $errorMessage]);
+
         }
     }
 
