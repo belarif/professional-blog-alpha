@@ -61,23 +61,23 @@
                     {% endif %}
                     <form method="post" action="index.php?action=sendMessage">
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="lastName" type="text" name="lastName"/>
+                            <input class="form-control" id="lastName" type="text" name="lastName" required/>
                             <label for="lastName">Nom</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="firstName" type="text" name="firstName"/>
+                            <input class="form-control" id="firstName" type="text" name="firstName" required/>
                             <label for="firstName">Prénom</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="email" type="email" name="email"/>
+                            <input class="form-control" id="email" type="email" name="email" required/>
                             <label for="email">Email</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="subject" type="text" name="subject"/>
+                            <input class="form-control" id="subject" type="text" name="subject" required/>
                             <label for="subject">Objet</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" id="message" type="text" style="height: 10rem" name="message"></textarea>
+                            <textarea class="form-control" id="message" type="text" style="height: 10rem" name="message" required></textarea>
                             <label for="message">Message</label>
                         </div>
                         <button class="btn btn-primary btn-xl" type="submit" name="submit">Envoyer</button>
