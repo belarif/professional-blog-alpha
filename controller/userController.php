@@ -8,7 +8,7 @@ require_once 'model/UserManager.php';
 
 class UserController
 {
-    public function listUsersAction($template)
+    public function listUsers($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -27,7 +27,7 @@ class UserController
         }
     }
 
-    public function addUserAction($template)
+    public function addUser($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -80,7 +80,7 @@ class UserController
 
     }
 
-    public function editUserAction($template)
+    public function editUser($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -100,7 +100,7 @@ class UserController
         }
     }
 
-    public function updateUserAction()
+    public function updateUser()
     {
         if(isset($_POST['id']) && isset($_POST['lastName']) && isset($_POST['firstName'])
             && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role']))
@@ -127,7 +127,7 @@ class UserController
         }
     }
 
-    public function readUserAction($template)
+    public function readUser($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -147,7 +147,7 @@ class UserController
         }
     }
 
-    public function deleteUserAction()
+    public function deleteUser()
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];

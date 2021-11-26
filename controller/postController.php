@@ -12,7 +12,7 @@ require_once 'model/CommentManager.php';
 
 class PostController {
 
-    public function addPostAction($template)
+    public function addPost($template)
     {
         try
         {
@@ -62,7 +62,7 @@ class PostController {
 
     }
 
-    public function listPostsAction($template)
+    public function listPosts($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -82,7 +82,7 @@ class PostController {
         }
     }
 
-    public function readPostAction($template)
+    public function readPost($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -102,7 +102,7 @@ class PostController {
         }
     }
 
-    public function editPostAction($template)
+    public function editPost($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -127,7 +127,7 @@ class PostController {
 
     }
 
-    public function updatePostAction()
+    public function updatePost()
     {
         if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
             && isset($_POST['content']) && isset($_POST['published']))
@@ -149,7 +149,7 @@ class PostController {
         }
     }
 
-    public function deletePostAction($template)
+    public function deletePost($template)
     {
 
         session_start();
@@ -172,7 +172,7 @@ class PostController {
 
     }
 
-    public function postAction($template)
+    public function post($template)
     {
         try
         {
@@ -233,7 +233,7 @@ class PostController {
 
     }
 
-    public function postsAction($template)
+    public function posts($template)
     {
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts();

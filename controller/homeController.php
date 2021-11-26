@@ -9,7 +9,7 @@ require 'vendor/autoload.php';
 
 class HomeController
 {
-    public function homeAction($template)
+    public function home($template)
     {
         session_start();
         if (!isset($_SESSION['logged_user']))

@@ -25,7 +25,7 @@ try
     {
         $template = $twig->load('home.html.twig');
         $homePage = new \professionalBlog\controller\HomeController();
-        $homePage->homeAction($template);
+        $homePage->home($template);
     }
     elseif($_GET['action'] == 'sendMessage')
     {
@@ -37,25 +37,25 @@ try
     {
         $template = $twig->load('login.html.twig');
         $login = new \ProfessionalBlog\Controller\SecurityController();
-        $login->loginAction($template);
+        $login->login($template);
     }
     elseif($_GET['action'] == 'logout')
     {
         $logout = new \ProfessionalBlog\Controller\SecurityController();
-        $logout->logoutAction();
+        $logout->logout();
     }
     elseif ($_GET['action'] == 'register')
     {
         $template = $twig->load('register.html.twig');
         $register = new \ProfessionalBlog\Controller\SecurityController();
-        $register->registerAction($template);
+        $register->register($template);
 
     }
     elseif($_GET['action'] == 'listPosts')
     {
         $template = $twig->load('posts.html.twig');
         $postsPage = new \ProfessionalBlog\Controller\PostController();
-        $postsPage->postsAction($template);
+        $postsPage->posts($template);
     }
     elseif ($_GET['action'] == 'post')
     {
@@ -63,7 +63,7 @@ try
         {
             $template = $twig->load('post.html.twig');
             $postPage = new \ProfessionalBlog\Controller\PostController();
-            $postPage->postAction($template);
+            $postPage->post($template);
         }
         else
         {
@@ -78,21 +78,21 @@ try
     {
         $template = $twig->load('dashboard.html.twig');
         $dashboard = new \ProfessionalBlog\Controller\SecurityController();
-        $dashboard->dashboardAction($template);
+        $dashboard->dashboard($template);
     }
 
     /*** routes posts management ***/
     elseif($_GET['action'] == 'dashboard/listPosts')
     {
         $template = $twig->load('listPosts.html.twig');
-        $listPostsPage = new \ProfessionalBlog\Controller\PostController();
-        $listPostsPage->listPostsAction($template);
+        $listPosts = new \ProfessionalBlog\Controller\PostController();
+        $listPosts->listPosts($template);
     }
     elseif($_GET['action'] == 'dashboard/addPost')
     {
         $template = $twig->load('addPost.html.twig');
         $addPost = new ProfessionalBlog\Controller\PostController();
-        $addPost->addPostAction($template);
+        $addPost->addPost($template);
     }
     elseif ($_GET['action'] == 'dashboard/editPost')
     {
@@ -100,7 +100,7 @@ try
         {
             $template = $twig->load('editPost.html.twig');
             $editPost = new \ProfessionalBlog\Controller\PostController();
-            $editPost->editPostAction($template);
+            $editPost->editPost($template);
 
         }
         else
@@ -113,7 +113,7 @@ try
         if(isset($_POST['id']) && $_POST['id'] > 0)
         {
             $updatePost = new \ProfessionalBlog\Controller\PostController();
-            $updatePost->updatePostAction();
+            $updatePost->updatePost();
         }
         else
         {
@@ -126,7 +126,7 @@ try
         {
             $template = $twig->load('readPost.html.twig');
             $readPost = new \ProfessionalBlog\Controller\PostController();
-            $readPost->readPostAction($template);
+            $readPost->readPost($template);
         }
         else
         {
@@ -139,7 +139,7 @@ try
         {
             $template = $twig->load('listPosts.html.twig');
             $deletePost = new \ProfessionalBlog\Controller\PostController();
-            $deletePost->deletePostAction($template);
+            $deletePost->deletePost($template);
         }
         else
         {
@@ -153,7 +153,7 @@ try
     {
         $template = $twig->load('listComments.html.twig');
         $listComments = new \ProfessilnalBlog\Controller\CommentController();
-        $listComments->listCommentsAction($template);
+        $listComments->listComments($template);
     }
     elseif($_GET['action'] == 'dashboard/readComment')
     {
@@ -161,7 +161,7 @@ try
         {
             $template = $twig->load('readComment.html.twig');
             $readComment = new \ProfessilnalBlog\Controller\CommentController();
-            $readComment->readCommentAction($template);
+            $readComment->readComment($template);
         }
         else
         {
@@ -174,7 +174,7 @@ try
         {
             $template = $twig->load('editComment.html.twig');
             $editComment = new \ProfessilnalBlog\Controller\CommentController();
-            $editComment->editCommentAction($template);
+            $editComment->editComment($template);
         }
         else
         {
@@ -186,7 +186,7 @@ try
         if(isset($_POST['id']) && $_POST['id'] > 0)
         {
             $updateComment = new \ProfessilnalBlog\Controller\CommentController();
-            $updateComment->updateCommentAction();
+            $updateComment->updateComment();
         }
         else
         {
@@ -198,7 +198,7 @@ try
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $deleteComment = new \ProfessilnalBlog\Controller\CommentController();
-            $deleteComment->deleteCommentAction();
+            $deleteComment->deleteComment();
         }
         else
         {
@@ -212,26 +212,26 @@ try
     {
         $template = $twig->load('listUsers.html.twig');
         $listUsers = new \ProfessionalBlog\Controller\UserController();
-        $listUsers->listUsersAction($template);
+        $listUsers->listUsers($template);
     }
     elseif($_GET['action'] == 'dashboard/addUser')
     {
         $template = $twig->load('addUser.html.twig');
         $addUser = new \ProfessionalBlog\Controller\UserController();
-        $addUser->addUserAction($template);
+        $addUser->addUser($template);
     }
     elseif($_GET['action'] == 'dashboard/editUser')
     {
         $template = $twig->load('editUser.html.twig');
         $editUser = new \ProfessionalBlog\Controller\UserController();
-        $editUser->editUserAction($template);
+        $editUser->editUser($template);
     }
     elseif($_GET['action'] == 'dashboard/updateUser')
     {
         if(isset($_POST['id']) && $_POST['id'] > 0)
         {
             $updateUser = new \ProfessionalBlog\Controller\UserController();
-            $updateUser->updateUserAction();
+            $updateUser->updateUser();
         }
         else
         {
@@ -244,7 +244,7 @@ try
         {
             $template = $twig->load('readUser.html.twig');
             $readUser = new \ProfessionalBlog\Controller\UserController();
-            $readUser->readUserAction($template);
+            $readUser->readUser($template);
         }
         else
         {
@@ -256,7 +256,7 @@ try
         if(isset($_GET['id']) && $_GET['id'] > 0)
         {
             $deleteUser = new \ProfessionalBlog\Controller\UserController();
-            $deleteUser->deleteUserAction();
+            $deleteUser->deleteUser();
         }
         else
         {

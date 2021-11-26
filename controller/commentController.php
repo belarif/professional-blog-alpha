@@ -10,7 +10,7 @@ require_once 'model\CommentManager.php';
 class CommentController
 {
 
-    public function listCommentsAction($template)
+    public function listComments($template)
     {
 
         session_start();
@@ -29,7 +29,7 @@ class CommentController
         }
     }
 
-    public function readCommentAction($template)
+    public function readComment($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -48,7 +48,7 @@ class CommentController
         }
     }
 
-    public function editCommentAction($template)
+    public function editComment($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -67,7 +67,7 @@ class CommentController
         }
     }
 
-    public function updateCommentAction()
+    public function updateComment()
     {
         if(!isset($_POST['id']) || !isset($_POST['isEnabled']))
         {
@@ -87,7 +87,7 @@ class CommentController
         }
     }
 
-    public function deleteCommentAction()
+    public function deleteComment()
     {
 
         session_start();

@@ -7,7 +7,7 @@ use ProfessionalBlog\Model\UserManager;
 class SecurityController
 {
 
-    public function loginAction($template)
+    public function login($template)
     {
         try
         {
@@ -69,7 +69,7 @@ class SecurityController
 
     }
 
-    public function registerAction($template)
+    public function register($template)
     {
         try
         {
@@ -118,7 +118,7 @@ class SecurityController
 
     }
 
-    public function dashboardAction($template)
+    public function dashboard($template)
     {
         session_start();
         $logged_user = $_SESSION['logged_user'];
@@ -134,7 +134,7 @@ class SecurityController
 
     }
 
-    public function logoutAction()
+    public function logout()
     {
         session_start();
         session_destroy();
