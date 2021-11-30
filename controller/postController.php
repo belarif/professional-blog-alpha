@@ -211,18 +211,17 @@ class PostController {
                 }
             }
 
+
             if (!isset($_SESSION['logged_user']))
             {
+                $_SESSION['current_post_id'] = $id;
+
                 echo $template->render(['post' => $post, 'comments' =>$comments]);
             }
             else
             {
                 $logged_user = $_SESSION['logged_user'];
-                echo $template->render([
-                    'post' => $post,
-                    'comments' =>$comments,
-                    'logged_user' => $logged_user
-                ]);
+                echo $template->render(['post' => $post, 'comments' =>$comments, 'logged_user' => $logged_user]);
             }
 
         }
