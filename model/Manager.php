@@ -8,7 +8,7 @@ class Manager
 {
     protected function dbConnect()
     {
-        $db = new \PDO('mysql:host=localhost;dbname=blog-hocine;charset=utf8','root','',
+        $db = new \PDO('mysql:host=localhost;dbname='.$_ENV['DATABASE'].';charset=utf8',$_ENV['USERNAME'],$_ENV['PASSWORD'],
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
         return $db;
     }

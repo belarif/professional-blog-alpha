@@ -1,8 +1,7 @@
 {
     "require": {
         "twig/twig": "3.0",
-        "ext-http": "*",
-        "ext-pdo": "*",
-        "phpmailer/phpmailer": "^6.5"
+        "phpmailer/phpmailer": "^6.5",
+        "vlucas/phpdotenv": "^5.4"
     }
 }
