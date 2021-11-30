@@ -39,9 +39,18 @@ class SecurityController
                                 }
                                 else
                                 {
-                                    header("Location:index.php?action=home");
-                                }
+                                    if(isset($_SESSION['current_post_id']) && $_SESSION['current_post_id'] != null)
+                                    {
+                                        $post_id = $_SESSION['current_post_id'];
+                                        $_SESSION['current_post_id'] = null;
+                                        header("Location:index.php?action=post&id=$post_id");
 
+                                    }
+                                    else
+                                    {
+                                        header("Location:index.php?action=listPosts");
+                                    }
+                                }
                             }
                             else
                             {
