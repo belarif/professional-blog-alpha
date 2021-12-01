@@ -12,20 +12,25 @@ class HomeController
     public function home($template)
     {
         session_start();
+        $successSendMessage = $_SESSION['successSendMessage'];
+        $_SESSION['successSendMessage'] = null;
+
         if (!isset($_SESSION['logged_user']))
         {
-            echo $template->render();
+            echo $template->render(['successSendMessage' => $successSendMessage]);
         }
         else
         {
             $logged_user = $_SESSION['logged_user'];
-            echo $template->render(['logged_user' => $logged_user]);
+            echo $template->render(['logged_user' => $logged_user, 'successSendMessage' => $successSendMessage]);
         }
     }
 
     public function sendMessage($template)
     {
         try {
+            session_start();
+
             if(isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['subject']) && isset($_POST['message']))
             {
                 if(!empty($_POST['firstName']) && !empty($_POST['lastName']) && !empty($_POST['email']) && !empty($_POST['subject']) && !empty($_POST['message']))
@@ -61,6 +66,7 @@ class HomeController
 
                         if ($mail->send())
                         {
+                            $_SESSION['successSendMessage'] = "Votre message a été transmis avec succès";
                             header("location:index.php?action=home");
                             unset($mail);
                         }
@@ -81,7 +87,6 @@ class HomeController
         {
             $errorMessage = $e->getMessage();
             echo $template->render(['errorMessage' => $errorMessage]);
-
         }
     }
 

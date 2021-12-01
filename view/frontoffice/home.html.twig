@@ -53,9 +53,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     {% endif %}
-                    {% if successMessage is defined and successMessage is not null %}
+                    {% if successSendMessage is defined and successSendMessage is not null %}
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ successMessage }}
+                            {{ successSendMessage }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
