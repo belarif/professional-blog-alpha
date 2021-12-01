@@ -25,8 +25,9 @@
                     <div class="card-body">
                         {% if logged_user is defined and logged_user is not null %}
                             {% if successComment is defined and successComment is not null %}
-                                <div id="message" class="alert alert-success alert-dismissible" role="alert">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ successComment }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             {% endif %}
                             <form class="mb-4" method="post" action="index.php?action=post&id={{ post.id }}">

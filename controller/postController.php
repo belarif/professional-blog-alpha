@@ -193,16 +193,20 @@ class PostController {
                 if(isset($_POST['submit']))
                 {
                     $user_id = $_SESSION['id'];
-                    if (isset($_SESSION['logged_user']))
-                    {
-                        $commentManager->createComment($content,$post_id,$user_id);
-                        header("Location:index.php?action=post&id=".$id);
-                        /*$_SESSION['successComment'] = "Votre commentaire est en attente de validation";*/
+                    $commentManager->createComment($content,$post_id,$user_id);
+                    $_SESSION['successComment'] = "Votre commentaire a bien été transmis pour validation";
 
+                    if(isset($_SESSION['successComment']) && isset($_SESSION['logged_user']))
+                    {
+                        $successComment = $_SESSION['successComment'];
+                        $logged_user = $_SESSION['logged_user'];
+
+                        echo $template->render(['post' => $post, 'comments' =>$comments, 'logged_user' => $logged_user, 'successComment' => $successComment]);
+                        exit();
                     }
                     else
                     {
-                        header("Location:index.php?action=login");
+                        header("Location:index.php?action=post&id=".$post_id);
                     }
                 }
                 else
@@ -221,13 +225,14 @@ class PostController {
             else
             {
                 $logged_user = $_SESSION['logged_user'];
+
                 echo $template->render(['post' => $post, 'comments' =>$comments, 'logged_user' => $logged_user]);
             }
 
         }
         catch (\Exception $e)
         {
-            die('Error : '.$e->getMessage());
+            die('error:' .$e->getMessage());
         }
 
     }
