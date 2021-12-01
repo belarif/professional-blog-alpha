@@ -143,11 +143,25 @@ class SecurityController
 
     }
 
+    public function error($template)
+    {
+        session_start();
+        if (!isset($_SESSION['logged_user']))
+        {
+            echo $template->render();
+        }
+        else
+        {
+            $logged_user = $_SESSION['logged_user'];
+            echo $template->render(['logged_user' => $logged_user]);
+        }
+    }
+
     public function logout()
     {
         session_start();
         session_destroy();
-        header("location:index.php?action=login");
+        header("location:index.php?action=home");
     }
 
 }
