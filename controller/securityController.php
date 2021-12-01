@@ -11,6 +11,8 @@ class SecurityController
     {
         try
         {
+            session_start();
+
             if(isset($_POST['email']) && isset($_POST['password']))
             {
                 if(!empty($_POST['email']) && !empty($_POST['password']))
@@ -28,7 +30,6 @@ class SecurityController
                             $hashPassword = $user['password'];
                             if(password_verify($password,$hashPassword))
                             {
-                                session_start();
                                 $_SESSION['logged_user'] = $user['lastName'];
                                 $_SESSION['role'] = $user['role'];
                                 $_SESSION['id'] = $user['id'];
@@ -68,7 +69,18 @@ class SecurityController
                     throw new \Exception("Veuillez renseigner votre email et/ou mot de passe");
                 }
             }
-            echo $template->render();
+
+            if(isset($_SESSION['successRegister']) && $_SESSION['successRegister'] != null)
+            {
+                $successRegister = $_SESSION['successRegister'];
+                $_SESSION['successRegister'] = null;
+                echo $template->render(['successRegister' => $successRegister]);
+            }
+            else
+            {
+                echo $template->render();
+            }
+
         }
         catch (\Exception $e)
         {
@@ -98,11 +110,15 @@ class SecurityController
                     if(isset($_POST['submit']))
                     {
                         $UserManager = new UserManager();
-
                         $user = $UserManager->getLoginUser($email);
+
                         if(!$user)
                         {
                             $UserManager->createUser($lastName,$firstName,$email,$hashPassword,$role);
+
+                            session_start();
+                            $_SESSION['successRegister'] = "Vous vous êtes inscrit avec succès. Désomais,vous pouvez vous connecter";
+
                             header("Location:index.php?action=login");
                         }
                         else
