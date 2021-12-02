@@ -40,7 +40,14 @@ class CommentController
             $id = $_GET['id'];
             $commentManager = new CommentManager();
             $comment = $commentManager->getComment($id);
-            echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
+            if($comment)
+            {
+                echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
+            }
+            else
+            {
+                header('Location:index.php?action=non-existent-backoffice-page');
+            }
         }
         else
         {
@@ -59,7 +66,15 @@ class CommentController
             $id = $_GET['id'];
             $commentManager = new CommentManager();
             $comment = $commentManager->getComment($id);
-            echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
+            if($comment)
+            {
+                echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
+            }
+            else
+            {
+                header('Location:index.php?action=non-existent-backoffice-page');
+            }
+
         }
         else
         {
