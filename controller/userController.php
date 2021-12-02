@@ -29,19 +29,7 @@ class UserController
 
     public function addUser($template)
     {
-        session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
 
-        if ($logged_user && $role == 1)
-        {
-
-            echo $template->render(['logged_user' => $logged_user]);
-        }
-        else
-        {
-            header("Location:index.php?action=login");
-        }
 
         try
         {
@@ -70,6 +58,21 @@ class UserController
                     throw new \Exception("tous les champs sont obligatoires");
                 }
             }
+
+            session_start();
+            $logged_user = $_SESSION['logged_user'];
+            $role = $_SESSION['role'];
+
+            if ($logged_user && $role == 1)
+            {
+
+                echo $template->render(['logged_user' => $logged_user]);
+            }
+            else
+            {
+                header("Location:index.php?action=login");
+            }
+
         }
         catch (\Exception $e)
         {
@@ -92,7 +95,15 @@ class UserController
             $UserManager = new UserManager();
             $user = $UserManager->getUser($id);
 
-            echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+            if($user)
+            {
+                echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+            }
+            else
+            {
+                header('Location:index.php?action=non-existent-backoffice-page');
+            }
+
         }
         else
         {
@@ -139,7 +150,14 @@ class UserController
             $UserManager = new UserManager();
             $user = $UserManager->getUser($id);
 
-            echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+            if($user)
+            {
+                echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+            }
+            else
+            {
+                header('Location:index.php?action=non-existent-backoffice-page');
+            }
         }
         else
         {
