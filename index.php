@@ -72,11 +72,11 @@ elseif ($_GET['action'] == 'post')
     }
 
 }
-elseif($_GET['action'] == 'non-existent-page')
+elseif($_GET['action'] == 'non-existent-frontoffice-page')
 {
-    $template = $twig->load('404.html.twig');
+    $template = $twig->load('frontoffice-404.html.twig');
     $error404 = new \ProfessionalBlog\Controller\SecurityController();
-    $error404->error($template);
+    $error404->frontofficeError($template);
 }
 /*** front office routes ***/
 
@@ -86,6 +86,12 @@ elseif($_GET['action'] == 'dashboard')
     $template = $twig->load('dashboard.html.twig');
     $dashboard = new \ProfessionalBlog\Controller\SecurityController();
     $dashboard->dashboard($template);
+}
+elseif($_GET['action'] == 'non-existent-backoffice-page')
+{
+    $template = $twig->load('backoffice-404.html.twig');
+    $error404 = new \ProfessionalBlog\Controller\SecurityController();
+    $error404->backofficeError($template);
 }
 
 /*** routes posts management ***/
@@ -275,7 +281,7 @@ elseif($_GET['action'] == 'dashboard/deleteUser')
 
 else
 {
-    header("Location:index.php?action=non-existent-page");
+    header("Location:index.php?action=non-existent-frontoffice-page");
 }
 
 
