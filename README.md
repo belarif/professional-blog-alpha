@@ -25,8 +25,8 @@ Installation du projet :
 4. Connexion à la base de données : 
   A la racine du projet, créez un fichier : .env ,dans lequel vous insérez les variables suivantes:
 
-  DATABASE="dbname".
-  USERNAME="user".
+  DATABASE="dbname"
+  USERNAME="user"
   PASSWORD="password"
 
   Remplacez les valeurs des variables USERNAME et PASSWORD par les identifiants que vous utilisez pour vous connecter à votre SGBD 
