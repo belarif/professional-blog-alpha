@@ -210,7 +210,7 @@ class PostController {
                         $user_id = $_SESSION['id'];
 
                         $commentManager->createComment($content,$post_id,$user_id);
-                        /*$_SESSION['successComment'] = "Votre commentaire a bien été transmis pour validation";*/
+
                         header("Location:index.php?action=post&id=".$post_id);
 
                     }
