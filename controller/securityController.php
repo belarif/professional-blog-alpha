@@ -70,7 +70,7 @@ class SecurityController
                 }
             }
 
-            if(isset($_SESSION['successRegister']) && $_SESSION['successRegister'] != null)
+            if(isset($_SESSION['successRegister']) && $_SESSION['successRegister'] !== null)
             {
                 $successRegister = $_SESSION['successRegister'];
                 $_SESSION['successRegister'] = null;
