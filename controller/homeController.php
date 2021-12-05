@@ -9,6 +9,10 @@ require 'vendor/autoload.php';
 
 class HomeController
 {
+
+    /**
+     * @param $template
+     */
     public function home($template)
     {
         session_start();
@@ -23,6 +27,9 @@ class HomeController
         }
     }
 
+    /**
+     * @param $template
+     */
     public function sendMessage($template)
     {
         try {
@@ -83,5 +90,4 @@ class HomeController
             echo $template->render(['errorMessage' => $errorMessage]);
         }
     }
-
 }

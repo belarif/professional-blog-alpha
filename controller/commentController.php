@@ -10,9 +10,11 @@ require_once 'model\CommentManager.php';
 class CommentController
 {
 
+    /**
+     * @param $template
+     */
     public function listComments($template)
     {
-
         session_start();
         $logged_user = $_SESSION['logged_user'];
         $role = $_SESSION['role'];
@@ -29,6 +31,9 @@ class CommentController
         }
     }
 
+    /**
+     * @param $template
+     */
     public function readComment($template)
     {
         session_start();
@@ -55,6 +60,9 @@ class CommentController
         }
     }
 
+    /**
+     * @param $template
+     */
     public function editComment($template)
     {
         session_start();
@@ -82,6 +90,9 @@ class CommentController
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     public function updateComment()
     {
         if(!isset($_POST['id']) || !isset($_POST['isEnabled']))
@@ -104,7 +115,6 @@ class CommentController
 
     public function deleteComment()
     {
-
         session_start();
         $logged_user = $_SESSION['logged_user'];
         $role = $_SESSION['role'];

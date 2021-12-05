@@ -8,6 +8,9 @@ require_once 'model/UserManager.php';
 
 class UserController
 {
+    /**
+     * @param $template
+     */
     public function listUsers($template)
     {
         session_start();
@@ -27,10 +30,11 @@ class UserController
         }
     }
 
+    /**
+     * @param $template
+     */
     public function addUser($template)
     {
-
-
         try
         {
             if(isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email'])
@@ -65,24 +69,23 @@ class UserController
 
             if ($logged_user && $role == 1)
             {
-
                 echo $template->render(['logged_user' => $logged_user]);
             }
             else
             {
                 header("Location:index.php?action=login");
             }
-
         }
         catch (\Exception $e)
         {
             $errorMessage = $e->getMessage();
             echo $template->render(['errorMessage' => $errorMessage]);
         }
-
-
     }
 
+    /**
+     * @param $template
+     */
     public function editUser($template)
     {
         session_start();
@@ -103,7 +106,6 @@ class UserController
             {
                 header('Location:index.php?action=non-existent-backoffice-page');
             }
-
         }
         else
         {
@@ -138,6 +140,9 @@ class UserController
         }
     }
 
+    /**
+     * @param $template
+     */
     public function readUser($template)
     {
         session_start();
@@ -176,14 +181,12 @@ class UserController
             $id = $_GET['id'];
             $deleteUser = new UserManager();
             $deleteUser->deleteUser($id);
-
             header("Location: index.php?action=dashboard/listUsers");
         }
         else
         {
             header("Location:index.php?action=login");
         }
-
     }
 }
 

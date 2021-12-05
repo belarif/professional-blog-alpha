@@ -12,6 +12,9 @@ require_once 'model/CommentManager.php';
 
 class PostController {
 
+    /**
+     * @param $template
+     */
     public function addPost($template)
     {
         try
@@ -36,32 +39,35 @@ class PostController {
                     throw new \Exception('Tous les champs sont obligatoires');
                 }
             }
+
+            session_start();
+            $logged_user = $_SESSION['logged_user'];
+            $role = $_SESSION['role'];
+
+            if ($logged_user && $role == 1)
+            {
+
+                $UserManager = new UserManager();
+                $users = $UserManager->getUsers();
+
+                echo $template->render(['users' => $users, 'logged_user' => $logged_user]);
+            }
+            else
+            {
+                header("Location:index.php?action=login");
+            }
+
         }
         catch(\Exception $e)
         {
             $errorMessage = $e->getMessage();
             echo $template->render(['errorMessage' => $errorMessage]);
         }
-
-        session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
-
-        if ($logged_user && $role == 1)
-        {
-
-            $UserManager = new UserManager();
-            $users = $UserManager->getUsers();
-
-            echo $template->render(['users' => $users, 'logged_user' => $logged_user]);
-        }
-        else
-        {
-            header("Location:index.php?action=login");
-        }
-
     }
 
+    /**
+     * @param $template
+     */
     public function listPosts($template)
     {
         session_start();
@@ -82,6 +88,9 @@ class PostController {
         }
     }
 
+    /**
+     * @param $template
+     */
     public function readPost($template)
     {
         session_start();
@@ -110,6 +119,9 @@ class PostController {
         }
     }
 
+    /**
+     * @param $template
+     */
     public function editPost($template)
     {
         session_start();
@@ -133,16 +145,16 @@ class PostController {
             {
                 header('Location:index.php?action=non-existent-backoffice-page');
             }
-
-
         }
         else
         {
             header("Location:index.php?action=login");
         }
-
     }
 
+    /**
+     * @param $template
+     */
     public function updatePost()
     {
         if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
@@ -165,9 +177,8 @@ class PostController {
         }
     }
 
-    public function deletePost($template)
+    public function deletePost()
     {
-
         session_start();
         $logged_user = $_SESSION['logged_user'];
         $role = $_SESSION['role'];
@@ -177,23 +188,22 @@ class PostController {
             $id = $_GET['id'];
             $postManager = new PostManager();
             $postManager->deletePost($id);
-            $listPosts = $postManager->getPosts();
-
-            echo $template->render(['listPosts' => $listPosts, 'logged_user' => $logged_user]);
+            header("Location:index.php?action=dashboard/listPosts");
         }
         else
         {
             header("Location:index.php?action=login");
         }
-
     }
 
+    /**
+     * @param $template
+     */
     public function post($template)
     {
         try
         {
             session_start();
-
             $id = $_GET['id'];
             $commentManager = new CommentManager();
             $comments = $commentManager->getCommentsPost($id);
@@ -218,7 +228,6 @@ class PostController {
                     {
                         header("Location:index.php?action=post&id=".$post_id);
                     }
-
                 }
                 else
                 {
@@ -229,11 +238,8 @@ class PostController {
             $postManager = new PostManager();
             $post = $postManager->getPost($id);
 
-
             if($post)
             {
-
-
                 if (!isset($_SESSION['logged_user']))
                 {
                     $_SESSION['current_post_id'] = $id;
@@ -251,22 +257,22 @@ class PostController {
             {
                 header('Location:index.php?action=non-existent-frontoffice-page');
             }
-
-
         }
         catch (\Exception $e)
         {
             die('error:' .$e->getMessage());
         }
-
     }
 
+    /**
+     * @param $template
+     */
     public function posts($template)
     {
+        session_start();
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts();
 
-        session_start();
         if (!isset($_SESSION['logged_user']))
         {
             echo $template->render(['listPosts' => $listPosts]);
@@ -277,5 +283,4 @@ class PostController {
             echo $template->render(['listPosts' => $listPosts, 'logged_user' => $logged_user]);
         }
     }
-
 }

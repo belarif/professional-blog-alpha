@@ -7,12 +7,14 @@ use ProfessionalBlog\Model\UserManager;
 class SecurityController
 {
 
+    /**
+     * @param $template
+     */
     public function login($template)
     {
         try
         {
             session_start();
-
             if(isset($_POST['email']) && isset($_POST['password']))
             {
                 if(!empty($_POST['email']) && !empty($_POST['password']))
@@ -45,7 +47,6 @@ class SecurityController
                                         $post_id = $_SESSION['current_post_id'];
                                         $_SESSION['current_post_id'] = null;
                                         header("Location:index.php?action=post&id=$post_id");
-
                                     }
                                     else
                                     {
@@ -90,6 +91,9 @@ class SecurityController
 
     }
 
+    /**
+     * @param $template
+     */
     public function register($template)
     {
         try
@@ -132,6 +136,7 @@ class SecurityController
                     throw new \Exception("Tous les champs sont obligatoires");
                 }
             }
+
             echo $template->render();
 
         }
@@ -140,9 +145,11 @@ class SecurityController
             $registerError = $e->getMessage();
             echo $template->render(['registerError' => $registerError]);
         }
-
     }
 
+    /**
+     * @param $template
+     */
     public function dashboard($template)
     {
         session_start();
@@ -156,9 +163,11 @@ class SecurityController
         {
             header("Location:index.php?action=login");
         }
-
     }
 
+    /**
+     * @param $template
+     */
     public function frontofficeError($template)
     {
         session_start();
@@ -173,6 +182,9 @@ class SecurityController
         }
     }
 
+    /**
+     * @param $template
+     */
     public function backofficeError($template)
     {
         session_start();
