@@ -1,6 +1,6 @@
 /vendor
 .env
-!var/cache
-/var/cache/*
 /.idea
 composer.lock
+!var/cache
+/var/cache/*
