@@ -3,7 +3,7 @@ Installation du projet :
 1. Copie du projet en local :
 
   1.1- Cliquez sur le bouton "code", puis sur la section HTTPS qui affiche l'url suivante : 
-          `https://github.com/belarif/professional-blog.git`
+          https://github.com/belarif/professional-blog.git
   copiez cette url à utiliser pour installer le projet en local.
 
   1.2- Ouvrez le terminal de votre IDE. Si vous utilisez le server WampServer64, positionnez vous sur le chemin : `c:/wamp64/www` 
@@ -12,7 +12,7 @@ Installation du projet :
   Si vous utilisez un server autre que WampServer64, positionnez vous sur le chemin qui permettra l'exécution du site.
 
   1.3- Sur le meme chemin, tapez la commande suivante pour cloner le projet :
-          `git clone https://github.com/belarif/professional-blog.git`
+          git clone https://github.com/belarif/professional-blog.git
   Après exécution de la commande, le projet sera copié sur votre ordinateur
 
 2. Installation des dépendances : 
