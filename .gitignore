@@ -3,3 +3,4 @@
 !var/cache
 /var/cache/*
 /.idea
+composer.lock
