@@ -35,4 +35,4 @@ Installation du projet :
 5. Accès au site :
 
   Page d'accueil :  http://localhost/professional-blog/index.php?action=home
-  Aspace administration du site :   http://localhost/professional-blog/index.php?action=dashboard
+  Espace administration du site :   http://localhost/professional-blog/index.php?action=dashboard
