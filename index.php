@@ -65,7 +65,7 @@ elseif ($_GET['action'] == 'post') {
         $postPage = new PostController();
         $postPage->post($template);
     } else {
-        throw new Exception('Aucun blog post trouvé');
+        header("Location:index.php?action=non-existent-frontoffice-page");
     }
 
 }
@@ -86,7 +86,8 @@ elseif ($_GET['action'] == 'non-existent-backoffice-page') {
     $template = $twig->load('backoffice-404.html.twig');
     $error404 = new SecurityController();
     $error404->backOfficeError($template);
-} // routes posts management
+}
+// routes posts management
 elseif ($_GET['action'] == 'dashboard/listPosts') {
     $template = $twig->load('listPosts.html.twig');
     $listPosts = new PostController();
