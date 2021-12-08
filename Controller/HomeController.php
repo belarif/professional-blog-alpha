@@ -8,7 +8,6 @@ use PHPMailer\PHPMailer\SMTP;
 
 class HomeController
 {
-
     /**
      * @param $template
      */
