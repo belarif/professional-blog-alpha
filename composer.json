@@ -1,4 +1,16 @@
 {
+    "name": "hocine/project5",
+    "authors": [
+        {
+            "name": "hocine",
+            "email": "hocine.belarif1@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "./"
+        }
+    },
     "require": {
         "twig/twig": "3.0",
         "phpmailer/phpmailer": "^6.5",
