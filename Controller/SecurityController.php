@@ -6,7 +6,6 @@ use App\Model\UserManager;
 
 class SecurityController
 {
-
     /**
      * @param $template
      */
@@ -30,7 +29,7 @@ class SecurityController
                                 $_SESSION['role'] = $user['role'];
                                 $_SESSION['id'] = $user['id'];
 
-                                if ($_SESSION['logged_user'] && $_SESSION['role'] == 1) {
+                                if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
                                     header("Location:index.php?action=dashboard");
                                 } else {
                                     if (isset($_SESSION['current_post_id']) && $_SESSION['current_post_id'] != null) {
@@ -60,12 +59,10 @@ class SecurityController
             } else {
                 echo $template->render();
             }
-
         } catch (\Exception $e) {
             $identificationError = $e->getMessage();
             echo $template->render(['identificationError' => $identificationError]);
         }
-
     }
 
     /**
@@ -91,10 +88,8 @@ class SecurityController
 
                         if (!$user) {
                             $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-
                             session_start();
                             $_SESSION['successRegister'] = "Vous vous êtes inscrit avec succès. Désomais,vous pouvez vous connecter";
-
                             header("Location:index.php?action=login");
                         } else {
                             throw new \Exception("Un compte existe déjà avec l'adresse email : " . $email);
@@ -104,7 +99,6 @@ class SecurityController
                     throw new \Exception("Tous les champs sont obligatoires");
                 }
             }
-
             echo $template->render();
 
         } catch (\Exception $e) {
@@ -119,9 +113,9 @@ class SecurityController
     public function dashboard($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
 
-        if ($logged_user && $_SESSION['role'] == 1) {
             echo $template->render(['logged_user' => $logged_user]);
         } else {
             header("Location:index.php?action=login");
@@ -131,7 +125,7 @@ class SecurityController
     /**
      * @param $template
      */
-    public function frontofficeError($template)
+    public function frontOfficeError($template)
     {
         session_start();
         if (!isset($_SESSION['logged_user'])) {
@@ -145,7 +139,7 @@ class SecurityController
     /**
      * @param $template
      */
-    public function backofficeError($template)
+    public function backOfficeError($template)
     {
         session_start();
         if (!isset($_SESSION['logged_user'])) {
@@ -162,5 +156,4 @@ class SecurityController
         session_destroy();
         header("location:index.php?action=home");
     }
-
 }
