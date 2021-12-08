@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\CommentManager;
 use App\Model\PostManager;
 use App\Model\UserManager;
+use Exception;
 
 
 class PostController
@@ -18,27 +19,24 @@ class PostController
         try {
             if (isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
                 && isset($_POST['content']) && isset($_POST['published'])) {
-                $title = $_POST['title'];
-                $chapo = $_POST['chapo'];
-                $user_id = $_POST['user_id'];
-                $content = $_POST['content'];
-                $published = $_POST['published'];
+                $title = strip_tags($_POST['title']);
+                $chapo = strip_tags($_POST['chapo']);
+                $user_id = strip_tags($_POST['user_id']);
+                $content = strip_tags($_POST['content']);
+                $published = strip_tags($_POST['published']);
 
                 if (isset($_POST['submit'])) {
-                    $PostManager = new \ProfessionalBlog\Model\PostManager();
+                    $PostManager = new PostManager();
                     $PostManager->createPost($title, $chapo, $user_id, $content, $published);
                     header("Location:index.php?action=dashboard/listPosts");
                 } else {
-                    throw new \Exception('Tous les champs sont obligatoires');
+                    throw new Exception('Tous les champs sont obligatoires');
                 }
             }
 
             session_start();
-            $logged_user = $_SESSION['logged_user'];
-            $role = $_SESSION['role'];
-
-            if ($logged_user && $role == 1) {
-
+            if (isset($_SESSION['logged_user']) && $_SESSION['role' == 1]) {
+                $logged_user = $_SESSION['logged_user'];
                 $UserManager = new UserManager();
                 $users = $UserManager->getUsers();
 
@@ -46,8 +44,7 @@ class PostController
             } else {
                 header("Location:index.php?action=login");
             }
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errorMessage = $e->getMessage();
             echo $template->render(['errorMessage' => $errorMessage]);
         }
@@ -59,11 +56,8 @@ class PostController
     public function listPosts($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
-
-        if ($logged_user && $role == 1) {
-
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
             $postManager = new PostManager();
             $listPosts = $postManager->getPosts();
 
@@ -79,19 +73,19 @@ class PostController
     public function readPost($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
 
-        if ($logged_user && $role == 1) {
-            $postManager = new PostManager();
-            $id = $_GET['id'];
+            $logged_user = $_SESSION['logged_user'];
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $postManager = new PostManager();
+                $post = $postManager->getPost($id);
 
-            $post = $postManager->getPost($id);
-
-            if ($post) {
-                echo $template->render(['post' => $post, 'logged_user' => $logged_user]);
-            } else {
-                header('Location:index.php?action=non-existent-backoffice-page');
+                if ($post) {
+                    echo $template->render(['post' => $post, 'logged_user' => $logged_user]);
+                } else {
+                    header('Location:index.php?action=non-existent-backoffice-page');
+                }
             }
         } else {
             header("Location:index.php?action=login");
@@ -104,45 +98,42 @@ class PostController
     public function editPost($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
+            if (isset($_GET['id'])) {
 
-        if ($logged_user && $role == 1) {
-            $id = $_GET['id'];
-            $postManager = new PostManager();
-            $post = $postManager->getPost($id);
+                $id = $_GET['id'];
+                $postManager = new PostManager();
+                $post = $postManager->getPost($id);
 
-            if ($post) {
-                $UserManager = new UserManager();
-                $users = $UserManager->getUsers();
+                if ($post) {
+                    $UserManager = new UserManager();
+                    $users = $UserManager->getUsers();
 
-                echo $template->render(['post' => $post, 'logged_user' => $logged_user, 'users' => $users]);
-            } else {
-                header('Location:index.php?action=non-existent-backoffice-page');
+                    echo $template->render(['post' => $post, 'logged_user' => $logged_user, 'users' => $users]);
+                } else {
+                    header('Location:index.php?action=non-existent-backoffice-page');
+                }
             }
         } else {
             header("Location:index.php?action=login");
         }
     }
 
-    /**
-     * @param $template
-     */
     public function updatePost()
     {
         if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
             && isset($_POST['content']) && isset($_POST['published'])) {
             $id = $_POST['id'];
-            $title = $_POST['title'];
-            $chapo = $_POST['chapo'];
-            $user_id = $_POST['user_id'];
-            $content = $_POST['content'];
+            $title = strip_tags($_POST['title']);
+            $chapo = strip_tags($_POST['chapo']);
+            $user_id = strip_tags($_POST['user_id']);
+            $content = strip_tags($_POST['content']);
             $published = $_POST['published'];
 
             if (isset($_POST['submit'])) {
                 $postManager = new PostManager();
                 $postManager->updatePost($id, $title, $chapo, $user_id, $content, $published);
-
                 header("Location:index.php?action=dashboard/listPosts");
             }
         }
@@ -151,16 +142,15 @@ class PostController
     public function deletePost()
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
-
-        if ($logged_user && $role == 1) {
-            $id = $_GET['id'];
-            $postManager = new PostManager();
-            $postManager->deletePost($id);
-            header("Location:index.php?action=dashboard/listPosts");
-        } else {
-            header("Location:index.php?action=login");
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $postManager = new PostManager();
+                $postManager->deletePost($id);
+                header("Location:index.php?action=dashboard/listPosts");
+            } else {
+                header("Location:index.php?action=login");
+            }
         }
     }
 
@@ -171,47 +161,42 @@ class PostController
     {
         try {
             session_start();
-            $id = $_GET['id'];
-            $commentManager = new CommentManager();
-            $comments = $commentManager->getCommentsPost($id);
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $commentManager = new CommentManager();
+                $comments = $commentManager->getCommentsPost($id);
 
-            if (isset($_POST['content']) && !empty($_POST['content'])) {
-                $post_id = $id;
-                $content = strip_tags($_POST['content']);
+                $postManager = new PostManager();
+                $post = $postManager->getPost($id);
 
-                if (isset($_POST['submit'])) {
-                    if (isset($_SESSION['logged_user'])) {
-                        $user_id = $_SESSION['id'];
+                if ($post) {
+                    if (!isset($_SESSION['logged_user'])) {
+                        $_SESSION['current_post_id'] = $id;
 
-                        $commentManager->createComment($content, $post_id, $user_id);
-
-                        header("Location:index.php?action=post&id=" . $post_id);
-
+                        echo $template->render(['post' => $post, 'comments' => $comments]);
                     } else {
-                        header("Location:index.php?action=post&id=" . $post_id);
+                        $logged_user = $_SESSION['logged_user'];
+
+                        echo $template->render(['post' => $post, 'comments' => $comments, 'logged_user' => $logged_user]);
                     }
                 } else {
-                    throw new \Exception("veuillez écrire votre commentaire");
+                    header('Location:index.php?action=non-existent-frontoffice-page');
+                }
+
+                if (isset($_POST['content']) && !empty($_POST['content'])) {
+                    $post_id = $id;
+                    $content = strip_tags($_POST['content']);
+                    if (isset($_POST['submit'])) {
+
+                        $user_id = $_SESSION['id'];
+                        $commentManager->createComment($content, $post_id, $user_id);
+                        header("Location:index.php?action=post&id=" . $post_id);
+                    } else {
+                        throw new Exception("veuillez écrire votre commentaire");
+                    }
                 }
             }
-
-            $postManager = new PostManager();
-            $post = $postManager->getPost($id);
-
-            if ($post) {
-                if (!isset($_SESSION['logged_user'])) {
-                    $_SESSION['current_post_id'] = $id;
-
-                    echo $template->render(['post' => $post, 'comments' => $comments]);
-                } else {
-                    $logged_user = $_SESSION['logged_user'];
-
-                    echo $template->render(['post' => $post, 'comments' => $comments, 'logged_user' => $logged_user]);
-                }
-            } else {
-                header('Location:index.php?action=non-existent-frontoffice-page');
-            }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             die('error:' . $e->getMessage());
         }
     }
