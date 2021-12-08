@@ -31,10 +31,13 @@ Installation du projet :
 
   `PASSWORD="password"`
 
-  Remplacez les valeurs des variables USERNAME et PASSWORD par les identifiants que vous utilisez pour vous connecter à votre SGBD 
-  et la valeur de la variable DATABASE par le nom du fichier .sql fourni.
+  `DB_HOST="127.0.0.1"`
+    
+   Remplacez les valeurs des variables USERNAME et PASSWORD par les identifiants que vous utilisez pour vous connecter à votre SGBD
+   ,la valeur de la variable DATABASE par le nom du fichier .sql fourni et la variable DB_HOST par la valeur de votre server de base de données (pour mon cas : 127.0.0.1)
  
 5. Accès au site :
 
   Page d'accueil :  http://localhost/professional-blog/index.php?action=home
+
   Espace administration du site :   http://localhost/professional-blog/index.php?action=dashboard
