@@ -1,10 +1,8 @@
 <?php
 
-namespace ProfessilnalBlog\Controller;
+namespace App\Controller;
 
-use ProfessionalBlog\Model\CommentManager;
-
-require_once 'model\CommentManager.php';
+use App\Model\CommentManager;
 
 
 class CommentController
@@ -19,14 +17,11 @@ class CommentController
         $logged_user = $_SESSION['logged_user'];
         $role = $_SESSION['role'];
 
-        if ($logged_user && $role == 1)
-        {
+        if ($logged_user && $role == 1) {
             $commentManager = new CommentManager();
             $listComments = $commentManager->getComments();
             echo $template->render(['listComments' => $listComments, 'logged_user' => $logged_user]);
-        }
-        else
-        {
+        } else {
             header("Location:index.php?action=login");
         }
     }
@@ -40,22 +35,16 @@ class CommentController
         $logged_user = $_SESSION['logged_user'];
         $role = $_SESSION['role'];
 
-        if ($logged_user && $role == 1)
-        {
+        if ($logged_user && $role == 1) {
             $id = $_GET['id'];
             $commentManager = new CommentManager();
             $comment = $commentManager->getComment($id);
-            if($comment)
-            {
+            if ($comment) {
                 echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
-            }
-            else
-            {
+            } else {
                 header('Location:index.php?action=non-existent-backoffice-page');
             }
-        }
-        else
-        {
+        } else {
             header("Location:index.php?action=login");
         }
     }
@@ -69,23 +58,17 @@ class CommentController
         $logged_user = $_SESSION['logged_user'];
         $role = $_SESSION['role'];
 
-        if ($logged_user && $role == 1)
-        {
+        if ($logged_user && $role == 1) {
             $id = $_GET['id'];
             $commentManager = new CommentManager();
             $comment = $commentManager->getComment($id);
-            if($comment)
-            {
+            if ($comment) {
                 echo $template->render(['comment' => $comment, 'logged_user' => $logged_user]);
-            }
-            else
-            {
+            } else {
                 header('Location:index.php?action=non-existent-backoffice-page');
             }
 
-        }
-        else
-        {
+        } else {
             header("Location:index.php?action=login");
         }
     }
@@ -95,18 +78,14 @@ class CommentController
      */
     public function updateComment()
     {
-        if(!isset($_POST['id']) || !isset($_POST['isEnabled']))
-        {
+        if (!isset($_POST['id']) || !isset($_POST['isEnabled'])) {
             throw new \Exception("tous les champs sont obligatoires");
-        }
-        else
-        {
+        } else {
             $id = $_POST['id'];
             $isEnabled = $_POST['isEnabled'];
-            if(isset($_POST['submit']))
-            {
+            if (isset($_POST['submit'])) {
                 $commentManager = new CommentManager();
-                $commentManager->updateComment($id,$isEnabled);
+                $commentManager->updateComment($id, $isEnabled);
 
                 header("Location:index.php?action=dashboard/listComments");
             }
@@ -119,15 +98,12 @@ class CommentController
         $logged_user = $_SESSION['logged_user'];
         $role = $_SESSION['role'];
 
-        if ($logged_user && $role == 1)
-        {
+        if ($logged_user && $role == 1) {
             $id = $_GET['id'];
             $commentManager = new CommentManager();
             $commentManager->deleteComment($id);
             header("Location:index.php?action=dashboard/listComments");
-        }
-        else
-        {
+        } else {
             header("Location:index.php?action=login");
         }
     }

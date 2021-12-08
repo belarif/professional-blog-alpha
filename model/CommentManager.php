@@ -1,13 +1,11 @@
 <?php
 
-namespace ProfessionalBlog\Model;
-
-require_once 'model/Manager.php';
+namespace App\Model;
 
 class CommentManager extends Manager
 {
 
-    public function createComment($content,$post_id,$user_id)
+    public function createComment($content, $post_id, $user_id)
     {
         $db = $this->dbConnect();
         $query = $db->prepare("
@@ -80,7 +78,7 @@ class CommentManager extends Manager
         return $post;
     }
 
-    public function updateComment($id,$isEnabled)
+    public function updateComment($id, $isEnabled)
     {
         $db = $this->dbConnect();
         $query = $db->prepare("UPDATE comment SET isEnabled = :isEnabled WHERE id = :id");

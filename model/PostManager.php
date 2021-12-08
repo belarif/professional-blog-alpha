@@ -1,13 +1,11 @@
 <?php
 
-namespace ProfessionalBlog\Model;
+namespace App\Model;
 
-require_once 'model/Manager.php';
+class PostManager extends Manager
+{
 
-
-class PostManager extends Manager {
-
-    public function createPost($title,$chapo,$user_id,$content,$published)
+    public function createPost($title, $chapo, $user_id, $content, $published)
     {
         $db = $this->dbConnect();
 
@@ -60,7 +58,7 @@ class PostManager extends Manager {
         return $post;
     }
 
-    public function updatePost($id,$title,$chapo,$user_id,$content,$published)
+    public function updatePost($id, $title, $chapo, $user_id, $content, $published)
     {
         $db = $this->dbConnect();
         $query = $db->prepare(

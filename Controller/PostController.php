@@ -1,14 +1,11 @@
 <?php
 
-namespace ProfessionalBlog\Controller;
+namespace App\Controller;
 
-use ProfessionalBlog\Model\CommentManager;
-use ProfessionalBlog\Model\PostManager;
-use ProfessionalBlog\Model\UserManager;
+use App\Model\CommentManager;
+use App\Model\PostManager;
+use App\Model\UserManager;
 
-require_once 'model/PostManager.php';
-require_once 'model/UserManager.php';
-require_once 'model/CommentManager.php';
 
 class PostController
 {

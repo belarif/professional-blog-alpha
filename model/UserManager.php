@@ -1,10 +1,9 @@
 <?php
 
-namespace ProfessionalBlog\Model;
+namespace App\Model;
 
-require_once 'model/Manager.php';
-
-class UserManager extends Manager {
+class UserManager extends Manager
+{
 
     public function getUsers()
     {
@@ -40,23 +39,23 @@ class UserManager extends Manager {
         return $users;
     }
 
-    public function createUser($lastName,$firstName,$email,$hashPassword,$role)
+    public function createUser($lastName, $firstName, $email, $hashPassword, $role)
     {
         $db = $this->dbConnect();
         $query = $db->prepare(
             "INSERT INTO user(lastName, firstName, email, password, role, createdAt) 
             VALUES (:lastName, :firstName, :email, :password, :role, :createdAt)");
         $query->execute([
-           'lastName' => $lastName,
-           'firstName' => $firstName,
-           'email' => $email,
-           'password' => $hashPassword,
-           'role' => $role,
-           'createdAt' => date("Y-m-d H:i:s"),
+            'lastName' => $lastName,
+            'firstName' => $firstName,
+            'email' => $email,
+            'password' => $hashPassword,
+            'role' => $role,
+            'createdAt' => date("Y-m-d H:i:s"),
         ]);
     }
 
-    public function updateUser($id,$lastName,$firstName,$email,$password,$role)
+    public function updateUser($id, $lastName, $firstName, $email, $password, $role)
     {
         $db = $this->dbConnect();
         $query = $db->prepare("UPDATE user SET lastName = :lastName, firstName = :firstName, 
@@ -77,7 +76,7 @@ class UserManager extends Manager {
         $db = $this->dbConnect();
         $query = $db->prepare("DELETE FROM user WHERE id = :id");
         $query->execute([
-           'id' => $id,
+            'id' => $id,
         ]);
     }
 }
