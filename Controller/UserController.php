@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\UserManager;
+use Exception;
 
 
 class UserController
@@ -13,10 +14,8 @@ class UserController
     public function listUsers($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
-
-        if ($logged_user && $role == 1) {
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
             $UserManager = new UserManager();
             $listUsers = $UserManager->getUsers();
 
@@ -36,10 +35,10 @@ class UserController
                 && isset($_POST['password']) && isset($_POST['role'])) {
                 if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email'])
                     && !empty($_POST['password']) && !empty($_POST['role'])) {
-                    $lastName = $_POST['lastName'];
-                    $firstName = $_POST['firstName'];
-                    $email = $_POST['email'];
-                    $password = $_POST['password'];
+                    $lastName = strip_tags($_POST['lastName']);
+                    $firstName = strip_tags($_POST['firstName']);
+                    $email = strip_tags($_POST['email']);
+                    $password = strip_tags($_POST['password']);
                     $hashPassword = password_hash($password, PASSWORD_BCRYPT);
                     $role = $_POST['role'];
 
@@ -49,20 +48,18 @@ class UserController
                         header("Location: index.php?action=dashboard/listUsers");
                     }
                 } else {
-                    throw new \Exception("tous les champs sont obligatoires");
+                    throw new Exception("tous les champs sont obligatoires");
                 }
             }
 
             session_start();
-            $logged_user = $_SESSION['logged_user'];
-            $role = $_SESSION['role'];
-
-            if ($logged_user && $role == 1) {
+            if ($_SESSION['logged_user'] && $_SESSION['role'] == 1) {
+                $logged_user = $_SESSION['logged_user'];
                 echo $template->render(['logged_user' => $logged_user]);
             } else {
                 header("Location:index.php?action=login");
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $errorMessage = $e->getMessage();
             echo $template->render(['errorMessage' => $errorMessage]);
         }
@@ -74,18 +71,18 @@ class UserController
     public function editUser($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
+        if ($_SESSION['logged_user'] && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $UserManager = new UserManager();
+                $user = $UserManager->getUser($id);
 
-        if ($logged_user && $role == 1) {
-            $id = $_GET['id'];
-            $UserManager = new UserManager();
-            $user = $UserManager->getUser($id);
-
-            if ($user) {
-                echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
-            } else {
-                header('Location:index.php?action=non-existent-backoffice-page');
+                if ($user) {
+                    echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+                } else {
+                    header('Location:index.php?action=non-existent-backoffice-page');
+                }
             }
         } else {
             header("Location:index.php?action=login");
@@ -99,10 +96,10 @@ class UserController
             if (!empty($_POST['id']) && !empty($_POST['lastName']) && !empty($_POST['firstName'])
                 && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['role'])) {
                 $id = $_POST['id'];
-                $lastName = $_POST['lastName'];
-                $firstName = $_POST['firstName'];
-                $email = $_POST['email'];
-                $password = $_POST['password'];
+                $lastName = strip_tags($_POST['lastName']);
+                $firstName = strip_tags($_POST['firstName']);
+                $email = strip_tags($_POST['email']);
+                $password = strip_tags($_POST['password']);
                 $hashPassword = password_hash($password, PASSWORD_BCRYPT);
                 $role = $_POST['role'];
 
@@ -122,18 +119,18 @@ class UserController
     public function readUser($template)
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
+            if (isset($_GET['id'])) {
+                $id = $_GET['id'];
+                $UserManager = new UserManager();
+                $user = $UserManager->getUser($id);
 
-        if ($logged_user && $role == 1) {
-            $id = $_GET['id'];
-            $UserManager = new UserManager();
-            $user = $UserManager->getUser($id);
-
-            if ($user) {
-                echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
-            } else {
-                header('Location:index.php?action=non-existent-backoffice-page');
+                if ($user) {
+                    echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+                } else {
+                    header('Location:index.php?action=non-existent-backoffice-page');
+                }
             }
         } else {
             header("Location:index.php?action=login");
@@ -143,16 +140,15 @@ class UserController
     public function deleteUser()
     {
         session_start();
-        $logged_user = $_SESSION['logged_user'];
-        $role = $_SESSION['role'];
-
-        if ($logged_user && $role == 1) {
-            $id = $_GET['id'];
-            $deleteUser = new UserManager();
-            $deleteUser->deleteUser($id);
-            header("Location: index.php?action=dashboard/listUsers");
-        } else {
-            header("Location:index.php?action=login");
+        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+            if (isset($_GET)) {
+                $id = $_GET['id'];
+                $deleteUser = new UserManager();
+                $deleteUser->deleteUser($id);
+                header("Location: index.php?action=dashboard/listUsers");
+            } else {
+                header("Location:index.php?action=login");
+            }
         }
     }
 }
