@@ -4,7 +4,6 @@ namespace App\Model;
 
 class CommentManager extends Manager
 {
-
     public function createComment($content, $post_id, $user_id)
     {
         $db = $this->dbConnect();
@@ -35,8 +34,8 @@ class CommentManager extends Manager
             ORDER BY comment.createdAt DESC"
         );
         $query->execute();
-        $comments = $query->fetchAll();
-        return $comments;
+
+        return $query->fetchAll();
     }
 
     public function getCommentsPost($id)
@@ -51,9 +50,8 @@ class CommentManager extends Manager
         ORDER BY comment.createdAt DESC
         ");
         $query->execute(['id' => $id]);
-        $comments = $query->fetchAll();
 
-        return $comments;
+        return $query->fetchAll();
     }
 
     public function getComment($id)
@@ -73,9 +71,8 @@ class CommentManager extends Manager
         $query->execute([
             'id' => $id,
         ]);
-        $post = $query->fetch();
 
-        return $post;
+        return $query->fetch();
     }
 
     public function updateComment($id, $isEnabled)
@@ -94,5 +91,4 @@ class CommentManager extends Manager
         $query = $db->prepare("DELETE FROM comment WHERE id = :id");
         $query->execute(['id' => $id]);
     }
-
 }
