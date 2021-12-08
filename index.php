@@ -72,7 +72,7 @@ elseif ($_GET['action'] == 'post') {
 elseif ($_GET['action'] == 'non-existent-frontoffice-page') {
     $template = $twig->load('frontoffice-404.html.twig');
     $error404 = new SecurityController();
-    $error404->frontofficeError($template);
+    $error404->frontOfficeError($template);
 }
 // front office routes
 
@@ -85,7 +85,7 @@ elseif ($_GET['action'] == 'dashboard') {
 elseif ($_GET['action'] == 'non-existent-backoffice-page') {
     $template = $twig->load('backoffice-404.html.twig');
     $error404 = new SecurityController();
-    $error404->backofficeError($template);
+    $error404->backOfficeError($template);
 } // routes posts management
 elseif ($_GET['action'] == 'dashboard/listPosts') {
     $template = $twig->load('listPosts.html.twig');
@@ -104,7 +104,7 @@ elseif ($_GET['action'] == 'dashboard/editPost') {
         $editPost->editPost($template);
 
     } else {
-        throw new Exception('Aucun blog post trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/updatePost') {
@@ -112,7 +112,7 @@ elseif ($_GET['action'] == 'dashboard/updatePost') {
         $updatePost = new PostController();
         $updatePost->updatePost();
     } else {
-        throw new Exception('Aucun blog post trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/readPost') {
@@ -121,16 +121,15 @@ elseif ($_GET['action'] == 'dashboard/readPost') {
         $readPost = new PostController();
         $readPost->readPost($template);
     } else {
-        throw new Exception('Aucun blog post trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/deletePost') {
     if (isset($_GET['id']) && $_GET['id'] > 0) {
-        $template = $twig->load('listPosts.html.twig');
         $deletePost = new PostController();
-        $deletePost->deletePost($template);
+        $deletePost->deletePost();
     } else {
-        throw new Exception('Aucun blog post trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 // routes posts management
@@ -146,7 +145,7 @@ elseif ($_GET['action'] == 'dashboard/readComment') {
         $readComment = new CommentController();
         $readComment->readComment($template);
     } else {
-        throw new Exception('Aucun commentaire trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/editComment') {
@@ -155,7 +154,7 @@ elseif ($_GET['action'] == 'dashboard/editComment') {
         $editComment = new CommentController();
         $editComment->editComment($template);
     } else {
-        throw new Exception('Aucun commentaire trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/updateComment') {
@@ -163,7 +162,7 @@ elseif ($_GET['action'] == 'dashboard/updateComment') {
         $updateComment = new CommentController();
         $updateComment->updateComment();
     } else {
-        throw new Exception('Aucun commentaire trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/deleteComment') {
@@ -171,7 +170,7 @@ elseif ($_GET['action'] == 'dashboard/deleteComment') {
         $deleteComment = new CommentController();
         $deleteComment->deleteComment();
     } else {
-        throw new Exception('Aucun commentaire trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 // routes comments management
@@ -196,7 +195,7 @@ elseif ($_GET['action'] == 'dashboard/updateUser') {
         $updateUser = new UserController();
         $updateUser->updateUser();
     } else {
-        throw new Exception('Aucun blog post trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/readUser') {
@@ -205,7 +204,7 @@ elseif ($_GET['action'] == 'dashboard/readUser') {
         $readUser = new UserController();
         $readUser->readUser($template);
     } else {
-        throw new Exception('Aucun blog post trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/deleteUser') {
