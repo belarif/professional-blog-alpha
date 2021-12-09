@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\UserManager;
+use Exception;
 
 class SecurityController
 {
@@ -28,27 +29,34 @@ class SecurityController
                                 $_SESSION['logged_user'] = $user['lastName'];
                                 $_SESSION['role'] = $user['role'];
                                 $_SESSION['id'] = $user['id'];
+                                if (!isset($_SESSION['token'])) {
+                                    $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(12));
+                                }
 
-                                if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
-                                    header("Location:index.php?action=dashboard");
-                                } else {
-                                    if (isset($_SESSION['current_post_id']) && $_SESSION['current_post_id'] != null) {
-                                        $post_id = $_SESSION['current_post_id'];
-                                        $_SESSION['current_post_id'] = null;
-                                        header("Location:index.php?action=post&id=$post_id");
+                                if (isset($_SESSION['logged_user'])) {
+                                    if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
+                                        header("Location:index.php?action=dashboard");
                                     } else {
-                                        header("Location:index.php?action=listPosts");
+                                        if (isset($_SESSION['current_post_id']) && $_SESSION['current_post_id'] != null) {
+                                            $post_id = $_SESSION['current_post_id'];
+                                            $_SESSION['current_post_id'] = null;
+                                            header("Location:index.php?action=post&id=$post_id");
+                                        } else {
+                                            header("Location:index.php?action=listPosts");
+                                        }
                                     }
+                                } else {
+                                    header("Location:index.php?action=login");
                                 }
                             } else {
-                                throw new \Exception("Mot de passe invalide !!");
+                                throw new Exception("Mot de passe invalide !!");
                             }
                         } else {
-                            throw new \Exception("Aucun compte existant avec l'adresse : $email");
+                            throw new Exception("Aucun compte existant avec l'adresse : $email");
                         }
                     }
                 } else {
-                    throw new \Exception("Veuillez renseigner votre email et/ou mot de passe");
+                    throw new Exception("Veuillez renseigner votre email et/ou mot de passe");
                 }
             }
 
@@ -59,7 +67,7 @@ class SecurityController
             } else {
                 echo $template->render();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $identificationError = $e->getMessage();
             echo $template->render(['identificationError' => $identificationError]);
         }
@@ -92,16 +100,16 @@ class SecurityController
                             $_SESSION['successRegister'] = "Vous vous êtes inscrit avec succès. Désomais,vous pouvez vous connecter";
                             header("Location:index.php?action=login");
                         } else {
-                            throw new \Exception("Un compte existe déjà avec l'adresse email : " . $email);
+                            throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
                         }
                     }
                 } else {
-                    throw new \Exception("Tous les champs sont obligatoires");
+                    throw new Exception("Tous les champs sont obligatoires");
                 }
             }
             echo $template->render();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $registerError = $e->getMessage();
             echo $template->render(['registerError' => $registerError]);
         }
