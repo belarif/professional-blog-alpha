@@ -93,14 +93,21 @@ class CommentController
     {
         session_start();
         if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
-            if (isset($_GET['id'])) {
+            if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $id = $_GET['id'];
                 $commentManager = new CommentManager();
-                $commentManager->deleteComment($id);
-                header("Location:index.php?action=dashboard/listComments");
-            } else {
-                header("Location:index.php?action=login");
+                $comment = $commentManager->getComment($id);
+                if($comment){
+                    $commentManager->deleteComment($id);
+                    header("Location:index.php?action=dashboard/listComments");
+                }else {
+                    header("Location:index.php?action=non-existent-backoffice-page");
+                }
+            }else {
+                header("Location:index.php?action=non-existent-backoffice-page");
             }
+        }else {
+            header("Location:index.php?action=login");
         }
     }
 }
