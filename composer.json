@@ -15,6 +15,7 @@
         "twig/twig": "3.0",
         "phpmailer/phpmailer": "^6.5",
         "vlucas/phpdotenv": "^5.4",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+      "ext-openssl": "*"
     }
 }
