@@ -141,14 +141,21 @@ class UserController
     {
         session_start();
         if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
-            if (isset($_GET)) {
+            if (isset($_GET['token']) && ($_GET['token'] == $_SESSION['token'])) {
                 $id = $_GET['id'];
-                $deleteUser = new UserManager();
-                $deleteUser->deleteUser($id);
-                header("Location: index.php?action=dashboard/listUsers");
+                $userManager = new UserManager();
+                $user = $userManager->getUser($id);
+                if ($user) {
+                    $userManager->deleteUser($id);
+                    header("Location: index.php?action=dashboard/listUsers");
+                } else {
+                    header("Location:index.php?action=non-existent-backoffice-page");
+                }
             } else {
-                header("Location:index.php?action=login");
+                header("Location:index.php?action=non-existent-backoffice-page");
             }
+        } else {
+            header("Location:index.php?action=login");
         }
     }
 }
