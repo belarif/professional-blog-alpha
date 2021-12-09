@@ -158,43 +158,37 @@ class PostController
      */
     public function post($template)
     {
-        try {
-            session_start();
-            if (isset($_GET['id'])) {
-                $id = $_GET['id'];
-                $commentManager = new CommentManager();
-                $comments = $commentManager->getCommentsPost($id);
+        session_start();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $commentManager = new CommentManager();
+            $comments = $commentManager->getCommentsPost($id);
 
-                if (isset($_POST['content']) && !empty($_POST['content'])) {
-                    $post_id = $id;
-                    $content = strip_tags($_POST['content']);
+            if (isset($_POST['content']) && !empty($_POST['content'])) {
+                $post_id = $id;
+                $content = strip_tags($_POST['content']);
 
-                    if (isset($_POST['submit'])) {
-                        $user_id = $_SESSION['id'];
-                        $commentManager->createComment($content, $post_id, $user_id);
-                        header("Location:index.php?action=post&id=" . $post_id);
-                    } else {
-                        throw new Exception("veuillez écrire votre commentaire");
-                    }
-                }
-                $postManager = new PostManager();
-                $post = $postManager->getPost($id);
-                if ($post) {
-                    if (!isset($_SESSION['logged_user'])) {
-                        $_SESSION['current_post_id'] = $id;
-
-                        echo $template->render(['post' => $post, 'comments' => $comments]);
-                    } else {
-                        $logged_user = $_SESSION['logged_user'];
-
-                        echo $template->render(['post' => $post, 'comments' => $comments, 'logged_user' => $logged_user]);
-                    }
-                } else {
-                    header('Location:index.php?action=non-existent-frontoffice-page');
+                if (isset($_POST['submit'])) {
+                    $user_id = $_SESSION['id'];
+                    $commentManager->createComment($content, $post_id, $user_id);
+                    header("Location:index.php?action=post&id=" . $post_id);
                 }
             }
-        } catch (Exception $e) {
-            die('error:' . $e->getMessage());
+            $postManager = new PostManager();
+            $post = $postManager->getPost($id);
+            if ($post) {
+                if (!isset($_SESSION['logged_user'])) {
+                    $_SESSION['current_post_id'] = $id;
+
+                    echo $template->render(['post' => $post, 'comments' => $comments]);
+                } else {
+                    $logged_user = $_SESSION['logged_user'];
+
+                    echo $template->render(['post' => $post, 'comments' => $comments, 'logged_user' => $logged_user]);
+                }
+            } else {
+                header('Location:index.php?action=non-existent-frontoffice-page');
+            }
         }
     }
 
