@@ -34,7 +34,6 @@ class PostController
                 }
             }
             if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
-                var_dump($_SESSION["role"]);
                 $logged_user = $_SESSION['logged_user'];
                 $UserManager = new UserManager();
                 $users = $UserManager->getUsers();
