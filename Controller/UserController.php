@@ -14,12 +14,13 @@ class UserController
     public function listUsers($template)
     {
         session_start();
-        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
+            $token = $_SESSION['token'];
             $UserManager = new UserManager();
             $listUsers = $UserManager->getUsers();
 
-            echo $template->render(['listUsers' => $listUsers, 'logged_user' => $logged_user]);
+            echo $template->render(['listUsers' => $listUsers, 'logged_user' => $logged_user, 'token' => $token]);
         } else {
             header("Location:index.php?action=login");
         }
@@ -31,31 +32,40 @@ class UserController
     public function addUser($template)
     {
         try {
-            if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email'])
-                && isset($_POST['password']) && isset($_POST['role'])) {
-                if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email'])
-                    && !empty($_POST['password']) && !empty($_POST['role'])) {
-                    $lastName = strip_tags($_POST['lastName']);
-                    $firstName = strip_tags($_POST['firstName']);
-                    $email = strip_tags($_POST['email']);
-                    $password = strip_tags($_POST['password']);
-                    $hashPassword = password_hash($password, PASSWORD_BCRYPT);
-                    $role = $_POST['role'];
-
+            session_start();
+            if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
+                if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['role'])) {
                     if (isset($_POST['submit'])) {
-                        $UserManager = new UserManager();
-                        $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-                        header("Location: index.php?action=dashboard/listUsers");
+
+                        $lastName = strip_tags($_POST['lastName']);
+                        $firstName = strip_tags($_POST['firstName']);
+                        $email = strip_tags($_POST['email']);
+                        $password = strip_tags($_POST['password']);
+                        $hashPassword = password_hash($password, PASSWORD_BCRYPT);
+                        $role = $_POST['role'];
+
+                        $userManager = new UserManager();
+                        $user = $userManager->getLoginUser($email);
+                        if (!$user) {
+                            $userManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
+                            header("Location:index.php?action=dashboard/listUsers");
+                        } else {
+                            throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
+                        }
                     }
                 } else {
                     throw new Exception("tous les champs sont obligatoires");
                 }
             }
 
-            session_start();
-            if ($_SESSION['logged_user'] && $_SESSION['role'] == 1) {
+            if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                 $logged_user = $_SESSION['logged_user'];
-                echo $template->render(['logged_user' => $logged_user]);
+                $token = $_SESSION['token'];
+                if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                    echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
+                } else {
+                    header('Location:index.php?action=non-existent-backoffice-page');
+                }
             } else {
                 header("Location:index.php?action=login");
             }
@@ -71,18 +81,21 @@ class UserController
     public function editUser($template)
     {
         session_start();
-        if ($_SESSION['logged_user'] && $_SESSION['role'] == 1) {
-            $logged_user = $_SESSION['logged_user'];
-            if (isset($_GET['id'])) {
+        if (isset($_SESSION['logged_user']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
+            if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                $logged_user = $_SESSION['logged_user'];
+                $token = $_SESSION['token'];
                 $id = $_GET['id'];
                 $UserManager = new UserManager();
                 $user = $UserManager->getUser($id);
 
                 if ($user) {
-                    echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+                    echo $template->render(['user' => $user, 'logged_user' => $logged_user, 'token' => $token]);
                 } else {
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
+            } else {
+                header('Location:index.php?action=non-existent-backoffice-page');
             }
         } else {
             header("Location:index.php?action=login");
@@ -119,15 +132,16 @@ class UserController
     public function readUser($template)
     {
         session_start();
-        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
+            $token = $_SESSION['token'];
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
                 $UserManager = new UserManager();
                 $user = $UserManager->getUser($id);
 
                 if ($user) {
-                    echo $template->render(['user' => $user, 'logged_user' => $logged_user]);
+                    echo $template->render(['user' => $user, 'logged_user' => $logged_user, 'token' => $token]);
                 } else {
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
