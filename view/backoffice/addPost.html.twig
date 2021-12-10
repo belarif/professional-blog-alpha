@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 {% endif %}
-                <form method="post" action="index.php?action=dashboard/addPost">
+                <form method="post" action="index.php?action=dashboard/addPost&amp;token={{ token }}">
                     <div class="mb-3 row">
                         <label for="title" class="col-sm-2 col-form-label">Titre<span>*</span></label>
                         <div class="col-sm-10">
