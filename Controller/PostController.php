@@ -19,13 +19,13 @@ class PostController
             session_start();
             if (isset($_POST['title']) && isset($_POST['chapo']) && isset($_POST['user_id'])
                 && isset($_POST['content']) && isset($_POST['published'])) {
-                $title = strip_tags($_POST['title']);
-                $chapo = strip_tags($_POST['chapo']);
-                $user_id = strip_tags($_POST['user_id']);
-                $content = strip_tags($_POST['content']);
-                $published = strip_tags($_POST['published']);
-
                 if (isset($_POST['submit'])) {
+                    $title = strip_tags($_POST['title']);
+                    $chapo = strip_tags($_POST['chapo']);
+                    $user_id = strip_tags($_POST['user_id']);
+                    $content = strip_tags($_POST['content']);
+                    $published = strip_tags($_POST['published']);
+
                     $PostManager = new PostManager();
                     $PostManager->createPost($title, $chapo, $user_id, $content, $published);
                     header("Location:index.php?action=dashboard/listPosts");
@@ -33,12 +33,18 @@ class PostController
                     throw new Exception('Tous les champs sont obligatoires');
                 }
             }
-            if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
-                $logged_user = $_SESSION['logged_user'];
-                $UserManager = new UserManager();
-                $users = $UserManager->getUsers();
+            if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
+                if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
 
-                echo $template->render(['users' => $users, 'logged_user' => $logged_user]);
+                    $logged_user = $_SESSION['logged_user'];
+                    $token = $_SESSION['token'];
+                    $UserManager = new UserManager();
+                    $users = $UserManager->getUsers();
+
+                    echo $template->render(['users' => $users, 'logged_user' => $logged_user, 'token' => $token]);
+                } else {
+                    header("Location:index.php?action=non-existent-backoffice-page");
+                }
             } else {
                 header("Location:index.php?action=login");
             }
@@ -71,16 +77,16 @@ class PostController
     public function readPost($template)
     {
         session_start();
-        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
-
+        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
+            $token = $_SESSION['token'];
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
                 $postManager = new PostManager();
                 $post = $postManager->getPost($id);
 
                 if ($post) {
-                    echo $template->render(['post' => $post, 'logged_user' => $logged_user]);
+                    echo $template->render(['post' => $post, 'logged_user' => $logged_user, 'token' => $token]);
                 } else {
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
@@ -96,22 +102,23 @@ class PostController
     public function editPost($template)
     {
         session_start();
-        if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
+        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
-            if (isset($_GET['id'])) {
-
+            if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                $token = $_SESSION['token'];
                 $id = $_GET['id'];
                 $postManager = new PostManager();
                 $post = $postManager->getPost($id);
-
                 if ($post) {
                     $UserManager = new UserManager();
                     $users = $UserManager->getUsers();
 
-                    echo $template->render(['post' => $post, 'logged_user' => $logged_user, 'users' => $users]);
+                    echo $template->render(['post' => $post, 'logged_user' => $logged_user, 'users' => $users, 'token' => $token]);
                 } else {
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
+            } else {
+                header("Location:index.php?action=non-existent-backoffice-page");
             }
         } else {
             header("Location:index.php?action=login");
