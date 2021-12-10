@@ -8,10 +8,7 @@ class UserManager extends Manager
     public function getUsers()
     {
         $db = $this->dbConnect();
-        $users = $db->query('SELECT * FROM user');
-
-        return $users;
-
+        return $db->query('SELECT * FROM user');
     }
 
     public function getUser($id)
@@ -21,8 +18,7 @@ class UserManager extends Manager
         $query->execute([
             'id' => $id,
         ]);
-        $user = $query->fetch();
-        return $user;
+        return $query->fetch();
     }
 
     public function getLoginUser($email)
@@ -35,8 +31,7 @@ class UserManager extends Manager
         $query->execute([
             'email' => $email,
         ]);
-        $users = $query->fetch();
-        return $users;
+        return $query->fetch();
     }
 
     public function createUser($lastName, $firstName, $email, $hashPassword, $role)
