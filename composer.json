@@ -6,6 +6,7 @@
           "email": "hocine.belarif1@gmail.com"
         }
     ],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
           "App\\": "./"
