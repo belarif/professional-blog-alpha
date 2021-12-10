@@ -30,7 +30,7 @@ class SecurityController
                                 $_SESSION['role'] = $user['role'];
                                 $_SESSION['id'] = $user['id'];
                                 if (!isset($_SESSION['token'])) {
-                                    $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(12));
+                                    $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(20));
                                 }
 
                                 if (isset($_SESSION['logged_user'])) {
@@ -79,10 +79,9 @@ class SecurityController
     public function register($template)
     {
         try {
-            if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email'])
-                && isset($_POST['password'])) {
-                if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email'])
-                    && !empty($_POST['password'])) {
+            if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password'])) {
+                if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+
                     $lastName = strip_tags($_POST['lastName']);
                     $firstName = strip_tags($_POST['firstName']);
                     $email = strip_tags($_POST['email']);
@@ -93,7 +92,6 @@ class SecurityController
                     if (isset($_POST['submit'])) {
                         $UserManager = new UserManager();
                         $user = $UserManager->getLoginUser($email);
-
                         if (!$user) {
                             $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
                             session_start();
@@ -123,8 +121,8 @@ class SecurityController
         session_start();
         if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
-
-            echo $template->render(['logged_user' => $logged_user]);
+            $token = $_SESSION['token'];
+            echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
         } else {
             header("Location:index.php?action=login");
         }
@@ -154,7 +152,8 @@ class SecurityController
             echo $template->render();
         } else {
             $logged_user = $_SESSION['logged_user'];
-            echo $template->render(['logged_user' => $logged_user]);
+            $token = $_SESSION['token'];
+            echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
         }
     }
 
