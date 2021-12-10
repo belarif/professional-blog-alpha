@@ -126,7 +126,7 @@ elseif ($_GET['action'] == 'dashboard/readPost') {
     }
 }
 elseif ($_GET['action'] == 'dashboard/deletePost') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $deletePost = new PostController();
         $deletePost->deletePost();
     } else {
@@ -167,7 +167,7 @@ elseif ($_GET['action'] == 'dashboard/updateComment') {
     }
 }
 elseif ($_GET['action'] == 'dashboard/deleteComment') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $deleteComment = new CommentController();
         $deleteComment->deleteComment();
     } else {
@@ -209,11 +209,11 @@ elseif ($_GET['action'] == 'dashboard/readUser') {
     }
 }
 elseif ($_GET['action'] == 'dashboard/deleteUser') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $deleteUser = new UserController();
         $deleteUser->deleteUser();
     } else {
-        throw new Exception('Aucun commentaire trouvé');
+        header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 // routes users management
