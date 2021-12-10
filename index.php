@@ -94,16 +94,21 @@ elseif ($_GET['action'] == 'dashboard/listPosts') {
     $listPosts->listPosts($template);
 }
 elseif ($_GET['action'] == 'dashboard/addPost') {
-    $template = $twig->load('addPost.html.twig');
-    $addPost = new PostController();
-    $addPost->addPost($template);
+    if(isset($_GET['token'])){
+        $template = $twig->load('addPost.html.twig');
+        $addPost = new PostController();
+        $addPost->addPost($template);
+    }
+    else{
+        header("Location:index.php?action=non-existent-backoffice-page");
+    }
+
 }
 elseif ($_GET['action'] == 'dashboard/editPost') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $template = $twig->load('editPost.html.twig');
         $editPost = new PostController();
         $editPost->editPost($template);
-
     } else {
         header("Location:index.php?action=non-existent-backoffice-page");
     }
@@ -150,7 +155,7 @@ elseif ($_GET['action'] == 'dashboard/readComment') {
     }
 }
 elseif ($_GET['action'] == 'dashboard/editComment') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $template = $twig->load('editComment.html.twig');
         $editComment = new CommentController();
         $editComment->editComment($template);
@@ -182,14 +187,24 @@ elseif ($_GET['action'] == 'dashboard/listUsers') {
     $listUsers->listUsers($template);
 }
 elseif ($_GET['action'] == 'dashboard/addUser') {
-    $template = $twig->load('addUser.html.twig');
-    $addUser = new UserController();
-    $addUser->addUser($template);
+    if(isset($_GET['token'])){
+        $template = $twig->load('addUser.html.twig');
+        $addUser = new UserController();
+        $addUser->addUser($template);
+    }
+    else{
+        header("Location:index.php?action=non-existent-backoffice-page");
+    }
 }
 elseif ($_GET['action'] == 'dashboard/editUser') {
-    $template = $twig->load('editUser.html.twig');
-    $editUser = new UserController();
-    $editUser->editUser($template);
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
+        $template = $twig->load('editUser.html.twig');
+        $editUser = new UserController();
+        $editUser->editUser($template);
+    }
+    else{
+        header("Location:index.php?action=non-existent-backoffice-page");
+    }
 }
 elseif ($_GET['action'] == 'dashboard/updateUser') {
     if (isset($_POST['id']) && $_POST['id'] > 0) {
