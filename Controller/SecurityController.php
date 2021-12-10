@@ -37,7 +37,7 @@ class SecurityController
                                     if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                                         header("Location:index.php?action=dashboard");
                                     } else {
-                                        if (isset($_SESSION['current_post_id']) && $_SESSION['current_post_id'] != null) {
+                                        if (isset($_SESSION['current_post_id']) && $_SESSION['current_post_id'] !== null) {
                                             $post_id = $_SESSION['current_post_id'];
                                             $_SESSION['current_post_id'] = null;
                                             header("Location:index.php?action=post&id=$post_id");
