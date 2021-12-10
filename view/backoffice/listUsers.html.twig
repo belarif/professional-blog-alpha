@@ -2,10 +2,7 @@
 
 {% block title %} Liste des utilisateurs  {% endblock title %}
 
-{% block stylesheet %} {% endblock stylesheet %}
-
 {% block content %}
-<main>
     <div class="container-fluid px-4">
         <h4 class="mt-4">Gestion des utilisateurs</h4>
         <ol class="breadcrumb mb-4">
@@ -32,36 +29,33 @@
                     </thead>
                     <tbody>
                     {% for user in listUsers %}
-                    <tr>
-                        <td>{{ user.lastName }}</td>
-                        <td>{{ user.firstName }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{% if user.role == 1 %} administrateur {% else %} visiteur {% endif %}</td>
-                        <td>{{ user.createdAt|date("d/m/Y \\à h:m:s") }}</td>
-                        <td>
-                            <a href="index.php?action=dashboard/readUser&id={{ user.id }}">Afficher</a>
-                            <a href="index.php?action=dashboard/editUser&id={{ user.id }}">modifier</a>
-                            <a href="javascript:void(0)" onclick="deleteUser({{ user.id }})">supprimer</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ user.lastName }}</td>
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{% if user.role == 1 %} administrateur {% else %} visiteur {% endif %}</td>
+                            <td>{{ user.createdAt|date("d/m/Y \\à h:m:s") }}</td>
+                            <td>
+                                <a href="index.php?action=dashboard/readUser&id={{ user.id }}">Afficher</a>
+                                <a href="index.php?action=dashboard/editUser&id={{ user.id }}">modifier</a>
+                                <a href="javascript:void(0)" onclick="deleteUser({{ user.id }})">supprimer</a>
+                            </td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</main>
 {% endblock content %}
 
 {% block javascript %}
-    function deleteUser(id)
-    {
-        if(confirm("Êtes vous sûr de vouloir supprimer l'utilisateur ?")){
-            window.location.href = "index.php?action=dashboard/deleteUser&id=" + id;
-        }
-        else {
-            alert("Vous avez annulé la suppression");
-        }
+function deleteUser(id) {
+    if (confirm("Êtes vous sûr de vouloir supprimer l'utilisateur ?")) {
+        window.location.href = "index.php?action=dashboard/deleteUser&id=" + id;
+    } else {
+        alert("Vous avez annulé la suppression");
     }
-    window.deleteUser = deleteUser;
-{% endblock %}
+}
+window.deleteUser = deleteUser;
+{% endblock javascript %}

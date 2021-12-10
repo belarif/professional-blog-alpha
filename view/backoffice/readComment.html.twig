@@ -2,12 +2,7 @@
 
 {% block title %} Détails du commentaire {% endblock title %}
 
-{% block stylesheet %}
-    <link href="public/css/backoffice/readComment.css" rel="stylesheet"/>
-{% endblock stylesheet %}
-
 {% block content %}
-<main>
     <div class="container-fluid px-4">
         <h4 class="mt-4"> Gestion des commentaires </h4>
         <ol class="breadcrumb mb-4">
@@ -27,12 +22,15 @@
                 <p><b>Titre de la publication</b> : {{ comment.postTitle }}</p>
                 <div class="d-flex justify-content-end">
                     <div class="justify-content-between">
-                        <a href="index.php?action=dashboard/listComments"><button class="btn btn-primary">Retour liste</button></a>
-                        <a href="index.php?action=dashboard/editComment&amp;id={{ comment.id }}"><button class="btn btn-primary">Modifier</button></a>
+                        <a href="index.php?action=dashboard/listComments">
+                            <button class="btn btn-primary">Retour liste</button>
+                        </a>
+                        <a href="index.php?action=dashboard/editComment&amp;id={{ comment.id }}">
+                            <button class="btn btn-primary">Modifier</button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</main>
 {% endblock content %}

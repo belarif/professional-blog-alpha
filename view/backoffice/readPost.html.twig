@@ -2,12 +2,7 @@
 
 {% block title %} Détails de la publication {% endblock title %}
 
-{% block stylesheet %}
-    <link href="public/css/backoffice/readPost.css" rel="stylesheet"/>
-{% endblock stylesheet %}
-
 {% block content %}
-<main>
     <div class="container-fluid px-4">
         <h4 class="mt-4"> Gestion des publications </h4>
         <ol class="breadcrumb mb-4">
@@ -33,12 +28,14 @@
                 <p><b>Date de dernière modification</b> : {{ post.lastUpdate|date("d/m/Y \\à h:m:s") }}</p>
                 <div class="d-flex justify-content-end">
                     <div class="justify-content-between">
-                        <a class="btn btn-primary" href="index.php?action=dashboard/listPosts" role="button">Retour liste</a>
-                        <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}"><button class="btn btn-primary">Modifier</button></a>
+                        <a class="btn btn-primary" href="index.php?action=dashboard/listPosts" role="button">Retour
+                            liste</a>
+                        <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}">
+                            <button class="btn btn-primary">Modifier</button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</main>
 {% endblock content %}

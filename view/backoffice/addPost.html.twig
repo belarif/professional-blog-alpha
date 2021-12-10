@@ -2,12 +2,7 @@
 
 {% block title %} Créer une publication {% endblock title %}
 
-{% block stylesheet %}
-    <link href="public/css/backoffice/addPost.css" rel="stylesheet" />
-{% endblock stylesheet %}
-
 {% block content %}
-<main>
     <div class="container-fluid px-4">
         <h4 class="mt-4"> Gestion des publications </h4>
         <ol class="breadcrumb mb-4">
@@ -21,11 +16,11 @@
             </div>
             <div class="card-body">
                 {% if errorMessage is defined and errorMessage is not null %}
-                <div id="flash-danger">
-                    <div class="alert alert-danger text-center">
-                        <p>{{ errorMessage }}</p>
+                    <div id="flash-danger">
+                        <div class="alert alert-danger text-center">
+                            <p>{{ errorMessage }}</p>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
                 <form method="post" action="index.php?action=dashboard/addPost">
                     <div class="mb-3 row">
@@ -43,11 +38,13 @@
                     <div class="mb-3 row">
                         <label for="user_id" class="col-sm-2 col-form-label">Author<span>*</span></label>
                         <div class="col-sm-10">
-                            <select class="form-select" aria-label=".form-select-lg example" id="user_id" name="user_id" required>
+                            <select class="form-select" aria-label=".form-select-lg example" id="user_id" name="user_id"
+                                    required>
                                 <option selected>-- sélectionner un utilisateur --</option>
                                 {% for user in users %}
                                     {% if user.role == 1 %}
-                                    <option value="{{ user.id }}" name="user_id">{{ user.lastName }} {{ user.firstName }}</option>
+                                        <option value="{{ user.id }}"
+                                                name="user_id">{{ user.lastName }} {{ user.firstName }}</option>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -63,13 +60,15 @@
                         <label for="published" class="col-sm-2 col-form-label">Publiée<span>*</span></label>
                         <div class="col-sm-10">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="published" id="flexRadioDefault1" value="1" required>
+                                <input class="form-check-input" type="radio" name="published" id="flexRadioDefault1"
+                                       value="1" required>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     oui
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="published" id="flexRadioDefault2" value="0" required>
+                                <input class="form-check-input" type="radio" name="published" id="flexRadioDefault2"
+                                       value="0" required>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     non
                                 </label>
@@ -78,7 +77,9 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <div class="justify-content-between">
-                            <a href="index.php?action=dashboard/listPosts"><button class="btn btn-primary">Retour liste</button></a>
+                            <a href="index.php?action=dashboard/listPosts">
+                                <button class="btn btn-primary">Retour liste</button>
+                            </a>
                             <button class="btn btn-primary" type="submit" name="submit">Créer</button>
                         </div>
                     </div>
@@ -86,5 +87,4 @@
             </div>
         </div>
     </div>
-</main>
 {% endblock content %}

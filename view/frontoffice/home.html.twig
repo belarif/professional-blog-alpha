@@ -5,7 +5,7 @@
 {% block content %}
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <img class="masthead-avatar mb-5" src="public/assets/img/logo/logo.jpg" alt="logo" />
+            <img class="masthead-avatar mb-5" src="public/assets/img/logo/logo.jpg" alt="logo"/>
             <h1 class="masthead-heading text-uppercase mb-0">BELARIF Hocine</h1>
 
             <div class="divider-custom divider-light">
@@ -13,7 +13,8 @@
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-            <p class="masthead-subheading font-weight-light mb-0">Hocine est disponible pour vos projets Php, Symfony et Wordpress</p>
+            <p class="masthead-subheading font-weight-light mb-0">Hocine est disponible pour vos projets Php, Symfony et
+                Wordpress</p>
         </div>
     </header>
 
@@ -47,10 +48,10 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-xl-7">
                     {% if errorMessage is defined and errorMessage is not null %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ errorMessage }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ errorMessage }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     {% endif %}
                     {% if successSendMessage is defined and successSendMessage is not null %}
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -76,7 +77,8 @@
                             <label for="subject">Objet</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" id="message" type="text" style="height: 10rem" name="message" required></textarea>
+                            <textarea class="form-control" id="message" type="text" style="height: 10rem" name="message"
+                                      required></textarea>
                             <label for="message">Message</label>
                         </div>
                         <button class="btn btn-primary btn-xl" type="submit" name="submit">Envoyer</button>

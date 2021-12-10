@@ -2,10 +2,7 @@
 
 {% block title %} Liste des publications  {% endblock title %}
 
-{% block stylesheet %} {% endblock stylesheet %}
-
 {% block content %}
-<main>
     <div class="container-fluid px-4">
         <h4 class="mt-4">Gestion des publications</h4>
         <ol class="breadcrumb mb-4">
@@ -31,48 +28,47 @@
                     </thead>
                     <tbody>
                     {% for post in listPosts %}
-                    <tr>
-                        <td>{{ post.title }}</td>
-                        <td>{{ post.lastName }} {{ post.firstName }}</td>
-                        <td>{{ post.chapo }}</td>
-                        <td>{{ post.lastUpdate|date("d/m/Y \\à h:m:s") }}</td>
-                        <td>
-                            {% if post.published == 1 %}
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                    <label for="flexSwitchCheckChecked"></label>
-                                </div>
-                            {% else %}
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
-                                    <label for="flexSwitchCheckChecked"></label>
-                                </div>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="index.php?action=dashboard/readPost&amp;id={{ post.id }}"> Afficher</a>
-                            <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}"> modifier</a>
-                            <a href="javascript:void(0)" onclick="deletePost({{ post.id }})"> supprimer</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.lastName }} {{ post.firstName }}</td>
+                            <td>{{ post.chapo }}</td>
+                            <td>{{ post.lastUpdate|date("d/m/Y \\à h:m:s") }}</td>
+                            <td>
+                                {% if post.published == 1 %}
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                               checked>
+                                        <label for="flexSwitchCheckChecked"></label>
+                                    </div>
+                                {% else %}
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                                        <label for="flexSwitchCheckChecked"></label>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="index.php?action=dashboard/readPost&amp;id={{ post.id }}"> Afficher</a>
+                                <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}"> modifier</a>
+                                <a href="javascript:void(0)" onclick="deletePost({{ post.id }})"> supprimer</a>
+                            </td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</main>
 {% endblock content %}
 
 {% block javascript %}
-    function deletePost(id)
-    {
-        if(confirm("Êtes vous sûr de vouloir supprimer le post ?")){
-            window.location.href = "index.php?action=dashboard/deletePost&id=" + id ;
-        }
-        else {
-            alert("Vous avez annulé la suppression");
-        }
+function deletePost(id) {
+    if (confirm("Êtes vous sûr de vouloir supprimer le post ?")) {
+        window.location.href = "index.php?action=dashboard/deletePost&id=" + id;
+    } else {
+        alert("Vous avez annulé la suppression");
     }
-    window.deletePost = deletePost;
-{% endblock %}
+}
+
+window.deletePost = deletePost;
+{% endblock javascript %}

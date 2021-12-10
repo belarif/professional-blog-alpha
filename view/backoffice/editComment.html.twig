@@ -3,52 +3,55 @@
 {% block title %} Validation du commentaire {% endblock title %}
 
 {% block content %}
-    <main>
-        <div class="container-fluid px-4">
-            <h4 class="mt-4"> Gestion des commentaires </h4>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a href="index.php?action=dashboard">Tableau de bord</a></li>
-                <li class="breadcrumb-item active"> validation du commentaire</li>
-            </ol>
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="me-1"></i>
-                    Validation du commentaire
-                </div>
-                <div class="card-body">
-                    <form method="post" action="index.php?action=dashboard/updateComment">
-                        <div class="mb-3 row visually-hidden">
-                            <label for="id" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <input id="id" class="form-control" type="hidden" name="id" value="{{ comment.id }}">
+    <div class="container-fluid px-4">
+        <h4 class="mt-4"> Gestion des commentaires </h4>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.php?action=dashboard">Tableau de bord</a></li>
+            <li class="breadcrumb-item active"> validation du commentaire</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="me-1"></i>
+                Validation du commentaire
+            </div>
+            <div class="card-body">
+                <form method="post" action="index.php?action=dashboard/updateComment">
+                    <div class="mb-3 row visually-hidden">
+                        <label for="id" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <input id="id" class="form-control" type="hidden" name="id" value="{{ comment.id }}">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="isEnabled" class="col-sm-2 col-form-label">Valider<span>*</span></label>
+                        <div class="col-sm-10">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="isEnabled"
+                                       id="flexRadioDefault1" {% if comment.isEnabled == 1 %} checked {% endif %}
+                                       value="1" required>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    oui
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="isEnabled"
+                                       id="flexRadioDefault2" {% if comment.isEnabled == 0 %} checked {% endif %}
+                                       value="0" required>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    non
+                                </label>
                             </div>
                         </div>
-                        <div class="mb-3 row">
-                            <label for="isEnabled" class="col-sm-2 col-form-label">Valider<span>*</span></label>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isEnabled" id="flexRadioDefault1" {% if comment.isEnabled == 1 %} checked {% endif %} value="1" required>
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        oui
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isEnabled" id="flexRadioDefault2" {% if comment.isEnabled == 0 %} checked {% endif %} value="0" required>
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        non
-                                    </label>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="justify-content-between">
+                            <a class="btn btn-primary" href="index.php?action=dashboard/listComments" role="button">Retour
+                                liste</a>
+                            <button class="btn btn-primary" type="submit" name="submit">Valider</button>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <div class="justify-content-between">
-                                <a class="btn btn-primary" href="index.php?action=dashboard/listComments" role="button">Retour liste</a>
-                                <button class="btn btn-primary" type="submit" name="submit">Valider</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </main>
+    </div>
 {% endblock content %}
