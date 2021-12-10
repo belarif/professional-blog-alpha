@@ -1,0 +1,10 @@
+{
+  "lang": "en-US",
+  "name": "Professional blog",
+  "short_name": "Blog",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+  "start_url": "http://localhost/professional-blog/index.php?action=home",
+  "orientation": "landscape",
+  "display": "fullscreen",
+  "background_color": "#42a7ff"
+}
