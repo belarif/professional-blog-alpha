@@ -30,7 +30,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             {% endif %}
-                            <form class="mb-4" method="post" action="index.php?action=post&id={{ post.id }}">
+                            <form class="mb-4" method="post" action="index.php?action=commentPost&id={{ post.id }}&amp;token={{ token }}">
                                 <textarea class="form-control" rows="3" placeholder="laisser un commentaire" name="content" required></textarea>
                                 <div class="d-flex justify-content-end mt-2">
                                     <input type="submit" value="Commenter" name="submit">
