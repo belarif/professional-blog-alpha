@@ -29,7 +29,7 @@ if (!isset($_GET['action'])) {
 }
 
 /*** front office routes ***/
-if ($_GET['action'] == 'home') {
+elseif ($_GET['action'] == 'home') {
     $template = $twig->load('home.html.twig');
     $homePage = new HomeController();
     $homePage->home($template);
@@ -67,7 +67,15 @@ elseif ($_GET['action'] == 'post') {
     } else {
         header("Location:index.php?action=non-existent-frontoffice-page");
     }
-
+}
+elseif ($_GET['action'] == 'commentPost') {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
+        $template = $twig->load('post.html.twig');
+        $postPage = new PostController();
+        $postPage->post($template);
+    } else {
+        header("Location:index.php?action=non-existent-frontoffice-page");
+    }
 }
 elseif ($_GET['action'] == 'non-existent-frontoffice-page') {
     $template = $twig->load('frontoffice-404.html.twig');
@@ -89,9 +97,13 @@ elseif ($_GET['action'] == 'non-existent-backoffice-page') {
 }
 // routes posts management
 elseif ($_GET['action'] == 'dashboard/listPosts') {
-    $template = $twig->load('listPosts.html.twig');
-    $listPosts = new PostController();
-    $listPosts->listPosts($template);
+    if (isset($_GET['token'])) {
+        $template = $twig->load('listPosts.html.twig');
+        $listPosts = new PostController();
+        $listPosts->listPosts($template);
+    }else{
+        header("Location:index.php?action=non-existent-backoffice-page");
+    }
 }
 elseif ($_GET['action'] == 'dashboard/addPost') {
     if(isset($_GET['token'])){
@@ -117,12 +129,12 @@ elseif ($_GET['action'] == 'dashboard/updatePost') {
     if (isset($_POST['id']) && $_POST['id'] > 0) {
         $updatePost = new PostController();
         $updatePost->updatePost();
-    } else {
+    }else {
         header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/readPost') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $template = $twig->load('readPost.html.twig');
         $readPost = new PostController();
         $readPost->readPost($template);
@@ -141,12 +153,16 @@ elseif ($_GET['action'] == 'dashboard/deletePost') {
 // routes posts management
 // routes comments management
 elseif ($_GET['action'] == 'dashboard/listComments') {
+    if (isset($_GET['token'])) {
     $template = $twig->load('listComments.html.twig');
     $listComments = new CommentController();
     $listComments->listComments($template);
+    }else{
+        header("Location:index.php?action=non-existent-backoffice-page");
+    }
 }
 elseif ($_GET['action'] == 'dashboard/readComment') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $template = $twig->load('readComment.html.twig');
         $readComment = new CommentController();
         $readComment->readComment($template);
@@ -182,9 +198,13 @@ elseif ($_GET['action'] == 'dashboard/deleteComment') {
 // routes comments management
 // routes users management
 elseif ($_GET['action'] == 'dashboard/listUsers') {
+    if (isset($_GET['token'])) {
     $template = $twig->load('listUsers.html.twig');
     $listUsers = new UserController();
     $listUsers->listUsers($template);
+    }else{
+        header("Location:index.php?action=non-existent-backoffice-page");
+    }
 }
 elseif ($_GET['action'] == 'dashboard/addUser') {
     if(isset($_GET['token'])){
@@ -210,12 +230,12 @@ elseif ($_GET['action'] == 'dashboard/updateUser') {
     if (isset($_POST['id']) && $_POST['id'] > 0) {
         $updateUser = new UserController();
         $updateUser->updateUser();
-    } else {
+    }else {
         header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
 elseif ($_GET['action'] == 'dashboard/readUser') {
-    if (isset($_GET['id']) && $_GET['id'] > 0) {
+    if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $template = $twig->load('readUser.html.twig');
         $readUser = new UserController();
         $readUser->readUser($template);
