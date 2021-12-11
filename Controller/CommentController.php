@@ -14,11 +14,15 @@ class CommentController
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
-            $logged_user = $_SESSION['logged_user'];
-            $token = $_SESSION['token'];
-            $commentManager = new CommentManager();
-            $listComments = $commentManager->getComments();
-            echo $template->render(['listComments' => $listComments, 'logged_user' => $logged_user, 'token' => $token]);
+            if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                $logged_user = $_SESSION['logged_user'];
+                $token = $_SESSION['token'];
+                $commentManager = new CommentManager();
+                $listComments = $commentManager->getComments();
+                echo $template->render(['listComments' => $listComments, 'logged_user' => $logged_user, 'token' => $token]);
+            } else {
+                header("Location:index.php?action=non-existent-backoffice-page");
+            }
         } else {
             header("Location:index.php?action=login");
         }
@@ -32,8 +36,8 @@ class CommentController
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
-            $token = $_SESSION['token'];
-            if (isset($_GET['id'])) {
+            if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                $token = $_SESSION['token'];
                 $id = $_GET['id'];
                 $commentManager = new CommentManager();
                 $comment = $commentManager->getComment($id);
@@ -43,8 +47,10 @@ class CommentController
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
             } else {
-                header("Location:index.php?action=login");
+                header('Location:index.php?action=non-existent-backoffice-page');
             }
+        } else {
+            header("Location:index.php?action=login");
         }
     }
 
@@ -79,16 +85,18 @@ class CommentController
      */
     public function updateComment()
     {
+        session_start();
         if (!isset($_POST['id']) || !isset($_POST['isEnabled'])) {
             throw new Exception("tous les champs sont obligatoires");
         } else {
             $id = strip_tags($_POST['id']);
             $isEnabled = strip_tags($_POST['isEnabled']);
+            $token = $_SESSION['token'];
             if (isset($_POST['submit'])) {
                 $commentManager = new CommentManager();
                 $commentManager->updateComment($id, $isEnabled);
 
-                header("Location:index.php?action=dashboard/listComments");
+                header("Location:index.php?action=dashboard/listComments&token=" . $token);
             }
         }
     }

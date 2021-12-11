@@ -15,12 +15,16 @@ class UserController
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
+            if(isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
             $logged_user = $_SESSION['logged_user'];
             $token = $_SESSION['token'];
             $UserManager = new UserManager();
             $listUsers = $UserManager->getUsers();
 
             echo $template->render(['listUsers' => $listUsers, 'logged_user' => $logged_user, 'token' => $token]);
+        }else{
+            header("Location:index.php?action=non-existent-backoffice-page");
+        }
         } else {
             header("Location:index.php?action=login");
         }
@@ -44,11 +48,12 @@ class UserController
                         $hashPassword = password_hash($password, PASSWORD_BCRYPT);
                         $role = $_POST['role'];
 
+                        $token = $_SESSION['token'];
                         $userManager = new UserManager();
                         $user = $userManager->getLoginUser($email);
                         if (!$user) {
                             $userManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-                            header("Location:index.php?action=dashboard/listUsers");
+                            header("Location:index.php?action=dashboard/listUsers&token=$token");
                         } else {
                             throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
                         }
@@ -60,9 +65,13 @@ class UserController
 
             if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                 $logged_user = $_SESSION['logged_user'];
+                if(isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $token = $_SESSION['token'];
-                if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
-                    echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
+                    if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                        echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
+                    } else {
+                        header('Location:index.php?action=non-existent-backoffice-page');
+                    }
                 } else {
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
@@ -104,6 +113,7 @@ class UserController
 
     public function updateUser()
     {
+        session_start();
         if (isset($_POST['id']) && isset($_POST['lastName']) && isset($_POST['firstName'])
             && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
             if (!empty($_POST['id']) && !empty($_POST['lastName']) && !empty($_POST['firstName'])
@@ -116,11 +126,12 @@ class UserController
                 $hashPassword = password_hash($password, PASSWORD_BCRYPT);
                 $role = $_POST['role'];
 
+                $token = $_SESSION['token'];
                 if (isset($_POST['submit'])) {
                     $UserManager = new UserManager();
                     $UserManager->updateUser($id, $lastName, $firstName, $email, $hashPassword, $role);
 
-                    header("Location: index.php?action=dashboard/listUsers");
+                    header("Location:index.php?action=dashboard/listUsers&token=$token");
                 }
             }
         }
@@ -133,20 +144,21 @@ class UserController
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
-            $logged_user = $_SESSION['logged_user'];
-            $token = $_SESSION['token'];
-            if (isset($_GET['id'])) {
+            if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                $logged_user = $_SESSION['logged_user'];
+                $token = $_SESSION['token'];
                 $id = $_GET['id'];
                 $UserManager = new UserManager();
                 $user = $UserManager->getUser($id);
-
                 if ($user) {
                     echo $template->render(['user' => $user, 'logged_user' => $logged_user, 'token' => $token]);
                 } else {
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
-            }
-        } else {
+            }else {
+                    header('Location:index.php?action=non-existent-backoffice-page');
+                }
+        }else {
             header("Location:index.php?action=login");
         }
     }
@@ -156,12 +168,13 @@ class UserController
         session_start();
         if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
             if (isset($_GET['token']) && ($_GET['token'] == $_SESSION['token'])) {
+                $token = $_SESSION['token'];
                 $id = $_GET['id'];
                 $userManager = new UserManager();
                 $user = $userManager->getUser($id);
                 if ($user) {
                     $userManager->deleteUser($id);
-                    header("Location: index.php?action=dashboard/listUsers");
+                    header("Location: index.php?action=dashboard/listUsers&token=$token");
                 } else {
                     header("Location:index.php?action=non-existent-backoffice-page");
                 }
