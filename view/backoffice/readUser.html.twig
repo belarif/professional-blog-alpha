@@ -27,8 +27,8 @@
                 <p><b>Date d'inscription</b> : {{ user.createdAt|date("d/m/Y \\à h:m:s") }}</p>
                 <div class="d-flex justify-content-end">
                     <div class="justify-content-between">
-                        <a href="index.php?action=dashboard/listUsers"><button class="btn btn-primary">Retour liste</button></a>
-                        <a href="index.php?action=dashboard/editUser&amp;id={{ user.id }}"><button class="btn btn-primary">Modifier</button></a>
+                        <a href="index.php?action=dashboard/listUsers&amp;token={{ token }}"><button class="btn btn-primary">Retour liste</button></a>
+                        <a href="index.php?action=dashboard/editUser&amp;id={{ user.id }}&amp;token={{ token }}"><button class="btn btn-primary">Modifier</button></a>
                     </div>
                 </div>
             </div>

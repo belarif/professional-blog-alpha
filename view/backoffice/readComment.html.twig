@@ -22,10 +22,10 @@
                 <p><b>Titre de la publication</b> : {{ comment.postTitle }}</p>
                 <div class="d-flex justify-content-end">
                     <div class="justify-content-between">
-                        <a href="index.php?action=dashboard/listComments">
+                        <a href="index.php?action=dashboard/listComments&amp;token={{ token }}">
                             <button class="btn btn-primary">Retour liste</button>
                         </a>
-                        <a href="index.php?action=dashboard/editComment&amp;id={{ comment.id }}">
+                        <a href="index.php?action=dashboard/editComment&amp;id={{ comment.id }}&amp;token={{ token }}">
                             <button class="btn btn-primary">Modifier</button>
                         </a>
                     </div>

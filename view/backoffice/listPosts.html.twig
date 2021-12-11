@@ -48,9 +48,9 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="index.php?action=dashboard/readPost&amp;id={{ post.id }}"> Afficher</a>
+                                <a href="index.php?action=dashboard/readPost&amp;id={{ post.id }}&amp;token={{ token }}"> Afficher</a>
                                 <a href="index.php?action=dashboard/editPost&amp;id={{ post.id }}&amp;token={{ token }}"> modifier</a>
-                                <a href="javascript:void(0)" onclick="deletePost({{ post.id }})"> supprimer</a>
+                                <a href="javascript:void(0)" onclick="deletePost({{ post.id }},{{ token }})"> supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -62,13 +62,12 @@
 {% endblock content %}
 
 {% block javascript %}
-function deletePost(id) {
-    if (confirm("Êtes vous sûr de vouloir supprimer le post ?")) {
-        window.location.href = "index.php?action=dashboard/deletePost&id=" + id;
-    } else {
-        alert("Vous avez annulé la suppression");
+    function deletePost(id,token) {
+        if (confirm("Êtes vous sûr de vouloir supprimer le post ?")) {
+            window.location.href = "index.php?action=dashboard/deletePost&id=" + id + "&token=" + token;
+        } else {
+            alert("Vous avez annulé la suppression");
+        }
     }
-}
-
 window.deletePost = deletePost;
 {% endblock javascript %}
