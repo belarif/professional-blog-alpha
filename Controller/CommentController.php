@@ -83,8 +83,8 @@ class CommentController
     }
 
     /**
-     * @throws Exception
      * @param $token
+     * @throws Exception
      */
     private function updateComment($token)
     {
@@ -101,8 +101,8 @@ class CommentController
             } else {
                 throw new Exception("tous les champs sont obligatoires");
             }
+        } catch (Exception $e) {
         }
-        catch (Exception $e){}
     }
 
     public function deleteComment()
