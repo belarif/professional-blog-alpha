@@ -13,9 +13,9 @@ class CommentController
     public function listComments($template)
     {
         session_start();
-        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
+        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
-                $logged_user = $_SESSION['logged_user'];
                 $token = $_SESSION['token'];
                 $commentManager = new CommentManager();
                 $listComments = $commentManager->getComments();
@@ -34,7 +34,7 @@ class CommentController
     public function readComment($template)
     {
         session_start();
-        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
+        if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $token = $_SESSION['token'];
@@ -61,12 +61,14 @@ class CommentController
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
+            $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
-                $logged_user = $_SESSION['logged_user'];
                 $token = $_SESSION['token'];
                 $id = $_GET['id'];
                 $commentManager = new CommentManager();
                 $comment = $commentManager->getComment($id);
+                $this->updateComment($token);
+
                 if ($comment) {
                     echo $template->render(['comment' => $comment, 'logged_user' => $logged_user, 'token' => $token]);
                 } else {
@@ -82,23 +84,25 @@ class CommentController
 
     /**
      * @throws Exception
+     * @param $token
      */
-    public function updateComment()
+    private function updateComment($token)
     {
-        session_start();
-        if (!isset($_POST['id']) || !isset($_POST['isEnabled'])) {
-            throw new Exception("tous les champs sont obligatoires");
-        } else {
-            $id = strip_tags($_POST['id']);
-            $isEnabled = strip_tags($_POST['isEnabled']);
-            $token = $_SESSION['token'];
-            if (isset($_POST['submit'])) {
-                $commentManager = new CommentManager();
-                $commentManager->updateComment($id, $isEnabled);
+        try {
+            if (isset($_POST['id']) && isset($_POST['isEnabled'])) {
+                if (isset($_POST['submit'])) {
+                    $id = $_POST['id'];
+                    $isEnabled = $_POST['isEnabled'];
+                    $commentManager = new CommentManager();
+                    $commentManager->updateComment($id, $isEnabled);
 
-                header("Location:index.php?action=dashboard/listComments&token=" . $token);
+                    header("Location:index.php?action=dashboard/listComments&token=$token");
+                }
+            } else {
+                throw new Exception("tous les champs sont obligatoires");
             }
         }
+        catch (Exception $e){}
     }
 
     public function deleteComment()
