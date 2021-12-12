@@ -21,8 +21,8 @@
                                         <div class="small text-muted">{{ post.lastUpdate }}</div>
                                         <h2 class="card-title h4">{{ post.title }}</h2>
                                         <p class="card-text">{{ post.chapo }}....</p>
-                                        {% if token is defined and token is not null %}
-                                        <a class="btn btn-primary" href="index.php?action=post&id={{ post.id }}&amp;token={{ token }}">Lire plus →</a>
+                                        {% if logged_user is defined and logged_user is not null %}
+                                        <a class="btn btn-primary" href="index.php?action=commentPost&id={{ post.id }}&amp;token={{ token }}">Lire plus →</a>
                                         {% else %}
                                         <a class="btn btn-primary" href="index.php?action=post&id={{ post.id }}">Lire plus →</a>
                                         {% endif %}
