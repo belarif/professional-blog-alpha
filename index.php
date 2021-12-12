@@ -179,14 +179,6 @@ elseif ($_GET['action'] == 'dashboard/editComment') {
         header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
-elseif ($_GET['action'] == 'dashboard/updateComment') {
-    if (isset($_POST['id']) && $_POST['id'] > 0) {
-        $updateComment = new CommentController();
-        $updateComment->updateComment();
-    } else {
-        header("Location:index.php?action=non-existent-backoffice-page");
-    }
-}
 elseif ($_GET['action'] == 'dashboard/deleteComment') {
     if (isset($_GET['id']) && $_GET['id'] > 0 && isset($_GET['token'])) {
         $deleteComment = new CommentController();
