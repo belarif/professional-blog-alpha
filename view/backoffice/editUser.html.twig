@@ -15,7 +15,7 @@
                 Modifier l'utilisateur
             </div>
             <div class="card-body">
-                <form method="post" action="index.php?action=dashboard/updateUser">
+                <form method="post" action="index.php?action=dashboard/editUser&amp;id={{ user.id }}&amp;token={{ token }}">
                     <div class="mb-3 row visually-hidden">
                         <label for="id" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
