@@ -15,16 +15,16 @@ class UserController
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
-            if(isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
             $logged_user = $_SESSION['logged_user'];
-            $token = $_SESSION['token'];
-            $UserManager = new UserManager();
-            $listUsers = $UserManager->getUsers();
+            if(isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                $token = $_SESSION['token'];
+                $UserManager = new UserManager();
+                $listUsers = $UserManager->getUsers();
 
-            echo $template->render(['listUsers' => $listUsers, 'logged_user' => $logged_user, 'token' => $token]);
-        }else{
+                echo $template->render(['listUsers' => $listUsers, 'logged_user' => $logged_user, 'token' => $token]);
+            }else{
             header("Location:index.php?action=non-existent-backoffice-page");
-        }
+            }
         } else {
             header("Location:index.php?action=login");
         }
@@ -33,45 +33,17 @@ class UserController
     /**
      * @param $template
      */
-    public function addUser($template)
-    {
+    public function addUserForm($template){
+
         try {
             session_start();
-            if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
-                if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['role'])) {
-                    if (isset($_POST['submit'])) {
-
-                        $lastName = strip_tags($_POST['lastName']);
-                        $firstName = strip_tags($_POST['firstName']);
-                        $email = strip_tags($_POST['email']);
-                        $password = strip_tags($_POST['password']);
-                        $hashPassword = password_hash($password, PASSWORD_BCRYPT);
-                        $role = $_POST['role'];
-
-                        $token = $_SESSION['token'];
-                        $userManager = new UserManager();
-                        $user = $userManager->getLoginUser($email);
-                        if (!$user) {
-                            $userManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-                            header("Location:index.php?action=dashboard/listUsers&token=$token");
-                        } else {
-                            throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
-                        }
-                    }
-                } else {
-                    throw new Exception("tous les champs sont obligatoires");
-                }
-            }
-
             if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                 $logged_user = $_SESSION['logged_user'];
-                if(isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $token = $_SESSION['token'];
-                    if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
-                        echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
-                    } else {
-                        header('Location:index.php?action=non-existent-backoffice-page');
-                    }
+                if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
+                    $this->addUser();
+
+                    echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
                 } else {
                     header('Location:index.php?action=non-existent-backoffice-page');
                 }
@@ -79,8 +51,38 @@ class UserController
                 header("Location:index.php?action=login");
             }
         } catch (Exception $e) {
-            $errorMessage = $e->getMessage();
-            echo $template->render(['errorMessage' => $errorMessage]);
+            $registerError = $e->getMessage();
+            echo $template->render(['registerError' => $registerError, 'logged_user' => $logged_user, 'token' => $token]);
+        }
+    }
+
+    public function addUser()
+    {
+        if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
+            if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['role'])) {
+                if (isset($_POST['submit'])) {
+
+                    $lastName = strip_tags($_POST['lastName']);
+                    $firstName = strip_tags($_POST['firstName']);
+                    $email = strip_tags($_POST['email']);
+                    $password = strip_tags($_POST['password']);
+                    $hashPassword = password_hash($password, PASSWORD_BCRYPT);
+                    $role = $_POST['role'];
+
+                    $userManager = new UserManager();
+                    $user = $userManager->getLoginUser($email);
+                    if (!$user) {
+                        $userManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
+                        $token = $_SESSION['token'];
+                        header("Location:index.php?action=dashboard/listUsers&token=$token");
+
+                    } else {
+                        throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
+                    }
+                }
+            } else {
+                throw new Exception("tous les champs sont obligatoires");
+            }
         }
     }
 
