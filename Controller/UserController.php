@@ -35,7 +35,6 @@ class UserController
      */
     public function addUserForm($template)
     {
-
         try {
             session_start();
             if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
