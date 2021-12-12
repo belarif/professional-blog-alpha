@@ -15,7 +15,7 @@
                 Modifier la publication
             </div>
             <div class="card-body">
-                <form method="post" action="index.php?action=dashboard/updatePost">
+                <form method="post" action="index.php?action=dashboard/editPost&amp;id={{ post.id }}&amp;token={{ token }}">
                     <div class="mb-3 row visually-hidden">
                         <label for="id" class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
@@ -38,7 +38,7 @@
                                 {% for user in users %}
                                     {% if user.role == '1' %}
                                         <option value="{{ user.id }}" name="user_id"
-                                                {% if post.user_id == user.id %} selected {% endif %}>{{ user.lastName }} {{ user.firstName }}
+                                            {% if post.user_id == user.id %} selected {% endif %}>{{ user.lastName }} {{ user.firstName }}
                                         </option>
                                     {% endif %}
                                 {% endfor %}
@@ -55,8 +55,7 @@
                     <div class="mb-3 row">
                         <label for="content" class="col-sm-2 col-form-label">Contenu<span>*</span></label>
                         <div class="col-sm-10">
-                            <textarea id="content" class="form-control" name="content"
-                                      required>{{ post.content }}</textarea>
+                            <textarea id="content" class="form-control" name="content" required>{{ post.content }}</textarea>
                         </div>
                     </div>
                     <div class="mb-3 row">
