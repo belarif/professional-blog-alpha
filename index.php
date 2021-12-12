@@ -109,7 +109,7 @@ elseif ($_GET['action'] == 'dashboard/addPost') {
     if(isset($_GET['token'])){
         $template = $twig->load('addPost.html.twig');
         $addPost = new PostController();
-        $addPost->addPost($template);
+        $addPost->addPostForm($template);
     }
     else{
         header("Location:index.php?action=non-existent-backoffice-page");
@@ -122,14 +122,6 @@ elseif ($_GET['action'] == 'dashboard/editPost') {
         $editPost = new PostController();
         $editPost->editPost($template);
     } else {
-        header("Location:index.php?action=non-existent-backoffice-page");
-    }
-}
-elseif ($_GET['action'] == 'dashboard/updatePost') {
-    if (isset($_POST['id']) && $_POST['id'] > 0) {
-        $updatePost = new PostController();
-        $updatePost->updatePost();
-    }else {
         header("Location:index.php?action=non-existent-backoffice-page");
     }
 }
