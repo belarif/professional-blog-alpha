@@ -41,7 +41,7 @@ class UserController
                 $logged_user = $_SESSION['logged_user'];
                 $token = $_SESSION['token'];
                 if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
-                    $this->addUser();
+                    $this->addUser($token);
 
                     echo $template->render(['logged_user' => $logged_user, 'token' => $token]);
                 } else {
@@ -56,7 +56,7 @@ class UserController
         }
     }
 
-    public function addUser()
+    private function addUser($token)
     {
         if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
             if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['role'])) {
@@ -73,7 +73,6 @@ class UserController
                     $user = $userManager->getLoginUser($email);
                     if (!$user) {
                         $userManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-                        $token = $_SESSION['token'];
                         header("Location:index.php?action=dashboard/listUsers&token=$token");
 
                     } else {
@@ -100,6 +99,8 @@ class UserController
                 $UserManager = new UserManager();
                 $user = $UserManager->getUser($id);
 
+                $this->updateUser($token);
+
                 if ($user) {
                     echo $template->render(['user' => $user, 'logged_user' => $logged_user, 'token' => $token]);
                 } else {
@@ -113,9 +114,8 @@ class UserController
         }
     }
 
-    public function updateUser()
+    private function updateUser($token)
     {
-        session_start();
         if (isset($_POST['id']) && isset($_POST['lastName']) && isset($_POST['firstName'])
             && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
             if (!empty($_POST['id']) && !empty($_POST['lastName']) && !empty($_POST['firstName'])
@@ -128,7 +128,6 @@ class UserController
                 $hashPassword = password_hash($password, PASSWORD_BCRYPT);
                 $role = $_POST['role'];
 
-                $token = $_SESSION['token'];
                 if (isset($_POST['submit'])) {
                     $UserManager = new UserManager();
                     $UserManager->updateUser($id, $lastName, $firstName, $email, $hashPassword, $role);
