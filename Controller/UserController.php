@@ -12,7 +12,7 @@ class UserController
     /**
      * @param $template
      */
-    public function listUsers($template)
+    public function listUsers(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
@@ -153,7 +153,7 @@ class UserController
     /**
      * @param $template
      */
-    public function readUser($template)
+    public function readUser(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {

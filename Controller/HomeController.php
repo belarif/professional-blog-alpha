@@ -5,13 +5,14 @@ namespace App\Controller;
 use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use Twig\TemplateWrapper;
 
 class HomeController
 {
     /**
      * @param $template
      */
-    public function home($template)
+    public function home(TemplateWrapper $template)
     {
         session_start();
         if (!isset($_SESSION['logged_user'])) {
@@ -25,7 +26,7 @@ class HomeController
     /**
      * @param $template
      */
-    public function sendMessage($template)
+    public function sendMessage(TemplateWrapper $template)
     {
         try {
             if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['subject']) && isset($_POST['message'])) {

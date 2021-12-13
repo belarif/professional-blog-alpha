@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Model\UserManager;
 use Exception;
+use Twig\TemplateWrapper;
 
 class SecurityController
 {
     /**
      * @param $template
      */
-    public function login($template)
+    public function login(TemplateWrapper $template)
     {
         try {
             session_start();
@@ -77,7 +78,7 @@ class SecurityController
     /**
      * @param $template
      */
-    public function register($template)
+    public function register(TemplateWrapper $template)
     {
         try {
             if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password'])) {
@@ -117,7 +118,7 @@ class SecurityController
     /**
      * @param $template
      */
-    public function dashboard($template)
+    public function dashboard(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
@@ -132,7 +133,7 @@ class SecurityController
     /**
      * @param $template
      */
-    public function frontOfficeError($template)
+    public function frontOfficeError(TemplateWrapper $template)
     {
         session_start();
         if (!isset($_SESSION['logged_user'])) {
@@ -146,7 +147,7 @@ class SecurityController
     /**
      * @param $template
      */
-    public function backOfficeError($template)
+    public function backOfficeError(TemplateWrapper $template)
     {
         session_start();
         if (!isset($_SESSION['logged_user'])) {

@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Model\CommentManager;
 use Exception;
+use Twig\TemplateWrapper;
 
 class CommentController
 {
     /**
      * @param $template
      */
-    public function listComments($template)
+    public function listComments(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
@@ -31,7 +32,7 @@ class CommentController
     /**
      * @param $template
      */
-    public function readComment($template)
+    public function readComment(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
@@ -57,7 +58,7 @@ class CommentController
     /**
      * @param $template
      */
-    public function editComment($template)
+    public function editComment(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {

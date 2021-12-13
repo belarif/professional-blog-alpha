@@ -91,7 +91,7 @@ class PostController
     /**
      * @param $template
      */
-    public function readPost($template)
+    public function readPost(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
@@ -118,7 +118,7 @@ class PostController
     /**
      * @param $template
      */
-    public function editPost($template)
+    public function editPost(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
@@ -198,7 +198,7 @@ class PostController
     /**
      * @param $template
      */
-    public function post($template)
+    public function post(TemplateWrapper $template)
     {
         session_start();
         $id = $_GET['id'];
@@ -251,7 +251,7 @@ class PostController
     /**
      * @param $template
      */
-    public function posts($template)
+    public function posts(TemplateWrapper $template)
     {
         session_start();
         $postManager = new PostManager();
