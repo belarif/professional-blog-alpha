@@ -6,6 +6,7 @@ use App\Model\CommentManager;
 use App\Model\PostManager;
 use App\Model\UserManager;
 use Exception;
+use Twig\TemplateWrapper;
 
 
 class PostController
@@ -13,7 +14,7 @@ class PostController
     /**
      * @param $template
      */
-    public function addPostForm($template)
+    public function addPostForm(TemplateWrapper $template)
     {
         try {
             session_start();
@@ -68,7 +69,7 @@ class PostController
     /**
      * @param $template
      */
-    public function listPosts($template)
+    public function listPosts(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {

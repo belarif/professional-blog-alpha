@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\UserManager;
 use Exception;
+use Twig\TemplateWrapper;
 
 
 class UserController
@@ -33,7 +34,7 @@ class UserController
     /**
      * @param $template
      */
-    public function addUserForm($template)
+    public function addUserForm(TemplateWrapper $template)
     {
         try {
             session_start();
@@ -92,7 +93,7 @@ class UserController
     /**
      * @param $template
      */
-    public function editUser($template)
+    public function editUser(TemplateWrapper $template)
     {
         session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
