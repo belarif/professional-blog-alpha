@@ -9,7 +9,7 @@ use Twig\TemplateWrapper;
 class SecurityController
 {
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function loginForm(TemplateWrapper $template)
     {
@@ -41,12 +41,12 @@ class SecurityController
                     $email = strip_tags($_POST['email']);
                     $password = strip_tags($_POST['password']);
 
-                    $this->verifyUser($email,$password);
+                    $this->verifyLoggedUser($email, $password);
 
                 } else {
                     throw new Exception("Veuillez renseigner votre email et/ou mot de passe");
                 }
-            }else {
+            } else {
                 throw new Exception("tous les champs sont obligatoires");
             }
         }
@@ -57,7 +57,7 @@ class SecurityController
      * @param $password
      * @throws Exception
      */
-    private function verifyUser($email, $password)
+    private function verifyLoggedUser($email, $password)
     {
         $UserManager = new UserManager();
         $user = $UserManager->getLoginUser($email);
@@ -101,32 +101,16 @@ class SecurityController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function register(TemplateWrapper $template)
     {
         try {
             if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password'])) {
                 if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-
-                    $lastName = strip_tags($_POST['lastName']);
-                    $firstName = strip_tags($_POST['firstName']);
-                    $email = strip_tags($_POST['email']);
-                    $password = strip_tags($_POST['password']);
-                    $hashPassword = password_hash($password, PASSWORD_BCRYPT);
-                    $role = '2';
-
                     if (isset($_POST['submit'])) {
-                        $UserManager = new UserManager();
-                        $user = $UserManager->getLoginUser($email);
-                        if (!$user) {
-                            $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-                            session_start();
-                            $_SESSION['successRegister'] = "Vous vous êtes inscrit avec succès. Désomais,vous pouvez vous connecter";
-                            header("Location:index.php?action=login");
-                        } else {
-                            throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
-                        }
+
+                        $this->verifyRegisterUser();
                     }
                 } else {
                     throw new Exception("Tous les champs sont obligatoires");
@@ -141,7 +125,31 @@ class SecurityController
     }
 
     /**
-     * @param $template
+     * @throws Exception
+     */
+    private function verifyRegisterUser()
+    {
+        $lastName = strip_tags($_POST['lastName']);
+        $firstName = strip_tags($_POST['firstName']);
+        $email = strip_tags($_POST['email']);
+        $password = strip_tags($_POST['password']);
+        $hashPassword = password_hash($password, PASSWORD_BCRYPT);
+        $role = '2';
+
+        $UserManager = new UserManager();
+        $user = $UserManager->getLoginUser($email);
+        if (!$user) {
+            $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
+            session_start();
+            $_SESSION['successRegister'] = "Vous vous êtes inscrit avec succès. Désomais,vous pouvez vous connecter";
+            header("Location:index.php?action=login");
+        } else {
+            throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
+        }
+    }
+
+    /**
+     * @param TemplateWrapper $template
      */
     public function dashboard(TemplateWrapper $template)
     {
@@ -156,7 +164,7 @@ class SecurityController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function frontOfficeError(TemplateWrapper $template)
     {
@@ -170,7 +178,7 @@ class SecurityController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function backOfficeError(TemplateWrapper $template)
     {
