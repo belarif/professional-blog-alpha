@@ -42,7 +42,7 @@ elseif ($_GET['action'] == 'sendMessage') {
 elseif ($_GET['action'] == 'login') {
     $template = $twig->load('login.html.twig');
     $login = new SecurityController();
-    $login->login($template);
+    $login->loginForm($template);
 }
 elseif ($_GET['action'] == 'logout') {
     $logout = new SecurityController();
