@@ -64,10 +64,11 @@
 {% block javascript %}
     function deletePost(id,token) {
         if (confirm("Êtes vous sûr de vouloir supprimer le post ?")) {
-            window.location.href = "index.php?action=dashboard/deletePost&id=" + id + "&token=" + token;
+            window.location.href = "index.php?action=dashboard/deletePost&amp;id=" + id + "&amp;token=" + token;
         } else {
             alert("Vous avez annulé la suppression");
         }
     }
 window.deletePost = deletePost;
 {% endblock javascript %}
+
