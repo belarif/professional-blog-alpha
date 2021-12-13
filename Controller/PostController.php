@@ -234,7 +234,7 @@ class PostController
      * @param $id
      * @param $commentManager
      */
-    private function commentPost($token, $id, $commentManager)
+    private function commentPost($token, $id, CommentManager $commentManager)
     {
         if (isset($_POST['content']) && !empty($_POST['content'])) {
             $post_id = $id;
