@@ -109,8 +109,13 @@ class SecurityController
             if (isset($_POST['lastName']) && isset($_POST['firstName']) && isset($_POST['email']) && isset($_POST['password'])) {
                 if (!empty($_POST['lastName']) && !empty($_POST['firstName']) && !empty($_POST['email']) && !empty($_POST['password'])) {
                     if (isset($_POST['submit'])) {
-
-                        $this->verifyRegisterUser();
+                        $lastName = strip_tags($_POST['lastName']);
+                        $firstName = strip_tags($_POST['firstName']);
+                        $email = strip_tags($_POST['email']);
+                        $password = strip_tags($_POST['password']);
+                        $hashPassword = password_hash($password, PASSWORD_BCRYPT);
+                        $role = '2';
+                        $this->verifyRegisterUser($email, $lastName, $firstName, $hashPassword, $role);
                     }
                 } else {
                     throw new Exception("Tous les champs sont obligatoires");
@@ -127,15 +132,8 @@ class SecurityController
     /**
      * @throws Exception
      */
-    private function verifyRegisterUser()
+    private function verifyRegisterUser($email, $lastName, $firstName, $hashPassword, $role)
     {
-        $lastName = strip_tags($_POST['lastName']);
-        $firstName = strip_tags($_POST['firstName']);
-        $email = strip_tags($_POST['email']);
-        $password = strip_tags($_POST['password']);
-        $hashPassword = password_hash($password, PASSWORD_BCRYPT);
-        $role = '2';
-
         $UserManager = new UserManager();
         $user = $UserManager->getLoginUser($email);
         if (!$user) {
