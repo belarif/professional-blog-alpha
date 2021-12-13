@@ -92,3 +92,4 @@ class CommentManager extends Manager
         $query->execute(['id' => $id]);
     }
 }
+
