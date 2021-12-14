@@ -13,7 +13,6 @@ class CommentController
      */
     public function listComments(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
@@ -34,7 +33,6 @@ class CommentController
      */
     public function readComment(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
@@ -60,7 +58,6 @@ class CommentController
      */
     public function editComment(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
@@ -108,7 +105,6 @@ class CommentController
 
     public function deleteComment()
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && $_SESSION['role'] == 1) {
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $id = $_GET['id'];
