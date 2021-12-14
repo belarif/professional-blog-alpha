@@ -17,7 +17,6 @@ class PostController
     public function addPostForm(TemplateWrapper $template)
     {
         try {
-            session_start();
             if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                 if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                     $logged_user = $_SESSION['logged_user'];
@@ -60,9 +59,9 @@ class PostController
                 } else {
                     throw new Exception('Tous les champs sont obligatoires');
                 }
-            } else {
+            } /*else {
                 throw new Exception("tous les champs sont obligatoires");
-            }
+            }*/
         }
     }
 
@@ -71,7 +70,6 @@ class PostController
      */
     public function listPosts(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $logged_user = $_SESSION['logged_user'];
@@ -93,7 +91,6 @@ class PostController
      */
     public function readPost(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
@@ -120,7 +117,7 @@ class PostController
      */
     public function editPost(TemplateWrapper $template)
     {
-        session_start();
+
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
@@ -173,7 +170,6 @@ class PostController
 
     public function deletePost()
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $id = $_GET['id'];
@@ -200,7 +196,6 @@ class PostController
      */
     public function post(TemplateWrapper $template)
     {
-        session_start();
         $id = $_GET['id'];
         $commentManager = new CommentManager();
         $comments = $commentManager->getCommentsPost($id);
@@ -212,6 +207,9 @@ class PostController
                 $logged_user = $_SESSION['logged_user'];
                 if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                     $token = $_SESSION['token'];
+                    if (isset($_SESSION['flash'])) {
+                        unset($_SESSION['flash']);
+                    }
                     $this->commentPost($token, $id, $commentManager);
 
                     echo $template->render(['post' => $post, 'comments' => $comments, 'logged_user' => $logged_user, 'token' => $token]);
@@ -242,6 +240,8 @@ class PostController
             if (isset($_POST['submit'])) {
                 $user_id = $_SESSION['id'];
                 $commentManager->createComment($content, $post_id, $user_id);
+                $flashMessage = new FlashMessageController();
+                $flashMessage->successCommentPost();
 
                 header("Location:index.php?action=commentPost&id=$post_id&token=$token");
             }
@@ -253,7 +253,6 @@ class PostController
      */
     public function posts(TemplateWrapper $template)
     {
-        session_start();
         $postManager = new PostManager();
         $listPosts = $postManager->getPosts();
 
