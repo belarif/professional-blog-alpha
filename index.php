@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use App\Controller\CommentController;
 use App\Controller\HomeController;
@@ -18,8 +19,8 @@ $twig = new Environment($loader, [
     'strict_variables' => true,
     'debug' => true,
 ]);
-
 $twig->addExtension(new DebugExtension());
+$twig->addGlobal('session',$_SESSION);
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
