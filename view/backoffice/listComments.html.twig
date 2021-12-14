@@ -48,7 +48,7 @@
                             <td>
                                 <a href="index.php?action=dashboard/readComment&id={{ comment.id }}&amp;token={{ token }}">Afficher</a>
                                 <a href="index.php?action=dashboard/editComment&id={{ comment.id }}&amp;token={{ token }}">Modifier</a>
-                                <a href="javascript:void(0)" onclick="deleteComment({{ comment.id }})">supprimer</a>
+                                <a href="javascript:void(0)" onclick="deleteComment('{{ comment.id }}','{{ token }}')">supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -60,9 +60,9 @@
 {% endblock content %}
 
 {% block javascript %}
-function deleteComment(id) {
+function deleteComment(id,token) {
     if (confirm("Êtes vous sûr de vouloir supprimer le commentaire ?")) {
-        window.location.href = "index.php?action=dashboard/deleteComment&id=" + id;
+        window.location.href = "index.php?action=dashboard/deleteComment&id=" + id + "&token=" + token;
     } else {
         alert("Vous avez annulé la suppression");
     }
