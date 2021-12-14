@@ -16,12 +16,14 @@
             </div>
             {% endif %}
         </div>
-        <div class="success-register-user">
-            {% if successRegister is defined and successRegister is not null %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ successRegister }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div id="success-addUser-message">
+            {% if session.flash.success is defined and session.flash.success is not null %}
+                {% for message in session.flash.success %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
             {% endif %}
         </div>
         <div class="d-flex justify-content-center">
