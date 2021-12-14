@@ -38,7 +38,7 @@
                             <td>
                                 <a href="index.php?action=dashboard/readUser&id={{ user.id }}&amp;token={{ token }}">Afficher</a>
                                 <a href="index.php?action=dashboard/editUser&id={{ user.id }}&amp;token={{ token }}">modifier</a>
-                                <a href="javascript:void(0)" onclick="deleteUser({{ user.id }})">supprimer</a>
+                                <a href="javascript:void(0)" onclick="deleteUser('{{ user.id }}','{{ token }}')">supprimer</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -50,9 +50,9 @@
 {% endblock content %}
 
 {% block javascript %}
-function deleteUser(id) {
+function deleteUser(id,token) {
     if (confirm("Êtes vous sûr de vouloir supprimer l'utilisateur ?")) {
-        window.location.href = "index.php?action=dashboard/deleteUser&id=" + id;
+        window.location.href = "index.php?action=dashboard/deleteUser&id=" + id + "&token=" + token ;
     } else {
         alert("Vous avez annulé la suppression");
     }
