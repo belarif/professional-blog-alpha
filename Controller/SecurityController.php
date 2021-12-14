@@ -14,15 +14,12 @@ class SecurityController
     public function loginForm(TemplateWrapper $template)
     {
         try {
-            $this->login();
-            if (isset($_SESSION['successRegister']) && $_SESSION['successRegister'] !== null) {
-                $successRegister = $_SESSION['successRegister'];
-                $_SESSION['successRegister'] = null;
-
-                echo $template->render(['successRegister' => $successRegister]);
-            } else {
-                echo $template->render();
+            if (isset($_SESSION['flash'])) {
+                unset($_SESSION['flash']);
             }
+            $this->login();
+
+            echo $template->render();
         } catch (Exception $e) {
             $identificationError = $e->getMessage();
             echo $template->render(['identificationError' => $identificationError]);
@@ -120,6 +117,7 @@ class SecurityController
                     throw new Exception("Tous les champs sont obligatoires");
                 }
             }
+
             echo $template->render();
 
         } catch (Exception $e) {
@@ -137,8 +135,9 @@ class SecurityController
         $user = $UserManager->getLoginUser($email);
         if (!$user) {
             $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
+            $flashMessage = new FlashMessageController();
+            $flashMessage->successRegister();
 
-            $_SESSION['successRegister'] = "Vous vous êtes inscrit avec succès. Désomais,vous pouvez vous connecter";
             header("Location:index.php?action=login");
         } else {
             throw new Exception("Un compte existe déjà avec l'adresse email : " . $email);
@@ -188,7 +187,6 @@ class SecurityController
 
     public function logout()
     {
-        session_start();
         session_destroy();
         header("location:index.php?action=home");
     }
