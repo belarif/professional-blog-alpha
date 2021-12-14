@@ -8,7 +8,9 @@ class UserManager extends Manager
     public function getUsers()
     {
         $db = $this->dbConnect();
-        return $db->query('SELECT * FROM user');
+        return $db->query('
+                    SELECT * FROM user 
+                    ORDER BY createdAt DESC');
     }
 
     public function getUser($id)
