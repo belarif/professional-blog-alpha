@@ -14,7 +14,6 @@ class HomeController
      */
     public function home(TemplateWrapper $template)
     {
-        session_start();
         if (!isset($_SESSION['logged_user'])) {
             echo $template->render();
         } else {

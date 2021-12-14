@@ -14,7 +14,6 @@ class SecurityController
     public function loginForm(TemplateWrapper $template)
     {
         try {
-            session_start();
             $this->login();
             if (isset($_SESSION['successRegister']) && $_SESSION['successRegister'] !== null) {
                 $successRegister = $_SESSION['successRegister'];
@@ -138,7 +137,7 @@ class SecurityController
         $user = $UserManager->getLoginUser($email);
         if (!$user) {
             $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-            session_start();
+
             $_SESSION['successRegister'] = "Vous vous êtes inscrit avec succès. Désomais,vous pouvez vous connecter";
             header("Location:index.php?action=login");
         } else {
@@ -151,7 +150,6 @@ class SecurityController
      */
     public function dashboard(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             $token = $_SESSION['token'];
@@ -166,7 +164,6 @@ class SecurityController
      */
     public function frontOfficeError(TemplateWrapper $template)
     {
-        session_start();
         if (!isset($_SESSION['logged_user'])) {
             echo $template->render();
         } else {
@@ -180,7 +177,6 @@ class SecurityController
      */
     public function backOfficeError(TemplateWrapper $template)
     {
-        session_start();
         if (!isset($_SESSION['logged_user'])) {
             echo $template->render();
         } else {

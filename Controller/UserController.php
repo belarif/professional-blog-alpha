@@ -14,7 +14,6 @@ class UserController
      */
     public function listUsers(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             $logged_user = $_SESSION['logged_user'];
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
@@ -37,7 +36,6 @@ class UserController
     public function addUserForm(TemplateWrapper $template)
     {
         try {
-            session_start();
             if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                 $logged_user = $_SESSION['logged_user'];
                 $token = $_SESSION['token'];
@@ -95,7 +93,6 @@ class UserController
      */
     public function editUser(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $logged_user = $_SESSION['logged_user'];
@@ -155,7 +152,6 @@ class UserController
      */
     public function readUser(TemplateWrapper $template)
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             if (isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
                 $logged_user = $_SESSION['logged_user'];
@@ -178,7 +174,6 @@ class UserController
 
     public function deleteUser()
     {
-        session_start();
         if (isset($_SESSION['logged_user']) && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
             if (isset($_GET['token']) && ($_GET['token'] == $_SESSION['token'])) {
                 $token = $_SESSION['token'];
