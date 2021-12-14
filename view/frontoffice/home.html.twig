@@ -53,11 +53,14 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
-                    {% if successSendMessage is defined and successSendMessage is not null %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ successSendMessage }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                    {% if session.flash.success is defined and session.flash.success is not null %}
+                        {% for message in session.flash.success %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
                     {% endif %}
                     <form method="post" action="index.php?action=sendMessage">
                         <div class="form-floating mb-3">
