@@ -7,56 +7,65 @@
 {% endblock stylesheet %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-12">
-            <article>
-                <header class="mb-4">
-                    <h2 class="fw-bolder mb-1">{{ post.title }}</h2>
-                    <p class="mb-2">{{ post.chapo }}</p>
-                </header>
-                <div class="text-muted fst-italic mb-2">Posté le {{ post.lastUpdate }} <span>par : </span>{{ post.lastnameAdmin }} {{ post.firstnameAdmin }}</div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <article>
+                    <header class="mb-4">
+                        <h2 class="fw-bolder mb-1">{{ post.title }}</h2>
+                        <p class="mb-2">{{ post.chapo }}</p>
+                    </header>
+                    <div class="text-muted fst-italic mb-2">Posté le {{ post.lastUpdate }}
+                        <span>par : </span>{{ post.lastnameAdmin }} {{ post.firstnameAdmin }}</div>
+                    <section class="mb-5">
+                        <p class="fs-5 mb-4">{{ post.content }}</p>
+                    </section>
+                </article>
                 <section class="mb-5">
-                    <p class="fs-5 mb-4">{{ post.content }}</p>
-                </section>
-            </article>
-            <section class="mb-5">
-                <div class="card bg-light">
-                    <div class="card-body">
-                        {% if logged_user is defined and logged_user is not null %}
-                            {% if successComment is defined and successComment is not null %}
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ successComment }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            {% endif %}
-                            <form class="mb-4" method="post" action="index.php?action=commentPost&id={{ post.id }}&amp;token={{ token }}">
-                                <textarea class="form-control" rows="3" placeholder="laisser un commentaire" name="content" required></textarea>
-                                <div class="d-flex justify-content-end mt-2">
-                                    <input type="submit" value="Commenter" name="submit">
-                                </div>
-                            </form>
-                        {% else %}
-                            <p>Pour commenter la publication, vous devez vous authentifier :
-                                <a class="btn btn-primary" href="index.php?action=login" role="button">se connecter</a>
-                            </p>
-                        {% endif %}
-                        {% for comment in comments %}
-                            {% if comment.isEnabled == 1 %}
-                                <div class="d-flex mb-4">
-                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                                    <div class="ms-3">
-                                        <div class="fw-bold">{{ comment.lastnameVisitor }} {{ comment.firstnameVisitor }}</div>
-                                        {{ comment.content }}
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            {% if logged_user is defined and logged_user is not null %}
+                                {% if session.flash.success is defined and session.flash.success is not null %}
+                                    {% for message in session.flash.success %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ message }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <form class="mb-4" method="post"
+                                      action="index.php?action=commentPost&id={{ post.id }}&amp;token={{ token }}">
+                                    <textarea class="form-control" rows="3" placeholder="laisser un commentaire"
+                                              name="content" required></textarea>
+                                    <div class="d-flex justify-content-end mt-2">
+                                        <input type="submit" value="Commenter" name="submit">
                                     </div>
-                                </div>
+                                </form>
+                            {% else %}
+                                <p>Pour commenter la publication, vous devez vous authentifier :
+                                    <a class="btn btn-primary" href="index.php?action=login" role="button">se
+                                        connecter</a>
+                                </p>
                             {% endif %}
-                        {% endfor %}
+                            {% for comment in comments %}
+                                {% if comment.isEnabled == 1 %}
+                                    <div class="d-flex mb-4">
+                                        <div class="flex-shrink-0"><img class="rounded-circle"
+                                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                                                                        alt="..."/></div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold">{{ comment.lastnameVisitor }} {{ comment.firstnameVisitor }}</div>
+                                            {{ comment.content }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     </div>
-</div>
 {% endblock content %}
 
