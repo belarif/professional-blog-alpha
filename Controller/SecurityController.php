@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\UserManager;
+use App\Tools\FlashMessageTool;
 use Exception;
 use Twig\TemplateWrapper;
 
@@ -135,8 +136,7 @@ class SecurityController
         $user = $UserManager->getLoginUser($email);
         if (!$user) {
             $UserManager->createUser($lastName, $firstName, $email, $hashPassword, $role);
-            $flashMessage = new FlashMessageController();
-            $flashMessage->successRegister();
+            FlashMessageTool::successRegister();
 
             header("Location:index.php?action=login");
         } else {

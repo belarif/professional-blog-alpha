@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\CommentManager;
 use App\Model\PostManager;
 use App\Model\UserManager;
+use App\Tools\FlashMessageTool;
 use Exception;
 use Twig\TemplateWrapper;
 
@@ -12,7 +13,7 @@ use Twig\TemplateWrapper;
 class PostController
 {
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function addPostForm(TemplateWrapper $template)
     {
@@ -66,7 +67,7 @@ class PostController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function listPosts(TemplateWrapper $template)
     {
@@ -87,7 +88,7 @@ class PostController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function readPost(TemplateWrapper $template)
     {
@@ -113,7 +114,7 @@ class PostController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function editPost(TemplateWrapper $template)
     {
@@ -192,7 +193,7 @@ class PostController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function post(TemplateWrapper $template)
     {
@@ -230,7 +231,7 @@ class PostController
     /**
      * @param $token
      * @param $id
-     * @param $commentManager
+     * @param CommentManager $commentManager
      */
     private function commentPost($token, $id, CommentManager $commentManager)
     {
@@ -240,8 +241,7 @@ class PostController
             if (isset($_POST['submit'])) {
                 $user_id = $_SESSION['id'];
                 $commentManager->createComment($content, $post_id, $user_id);
-                $flashMessage = new FlashMessageController();
-                $flashMessage->successCommentPost();
+                FlashMessageTool::successCommentPost();
 
                 header("Location:index.php?action=commentPost&id=$post_id&token=$token");
             }
@@ -249,7 +249,7 @@ class PostController
     }
 
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function posts(TemplateWrapper $template)
     {

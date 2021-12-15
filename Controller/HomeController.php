@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Tools\FlashMessageTool;
 use Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -10,7 +11,7 @@ use Twig\TemplateWrapper;
 class HomeController
 {
     /**
-     * @param $template
+     * @param TemplateWrapper $template
      */
     public function home(TemplateWrapper $template)
     {
@@ -63,6 +64,7 @@ class HomeController
      * @param $email
      * @param $lastName
      * @throws \PHPMailer\PHPMailer\Exception
+     * @throws Exception
      */
     private function mail($subject, $content, $email, $lastName)
     {
@@ -83,8 +85,8 @@ class HomeController
         $mail->Body = $content;
 
         if ($mail->send()) {
-            $flashMessage = new FlashMessageController();
-            $flashMessage->successSendMessage();
+            FlashMessageTool::successSendMessage();
+
             header("location:index.php?action=home");
             unset($mail);
         } else {
