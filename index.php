@@ -13,6 +13,7 @@ use Twig\Loader\FilesystemLoader;
 require_once __DIR__ . '/vendor/autoload.php';
 
 $loader = new FilesystemLoader(['view/frontoffice', 'view/backoffice', 'view/error']);
+
 $twig = new Environment($loader, [
     'cache' => './var/cache',
     'auto_reload' => true,
