@@ -38,6 +38,11 @@ Installation du projet :
  
 5. Accès au site :
 
-  Page d'accueil :  http://localhost/professional-blog/index.php?action=home
+5.1 Page d'accueil :  http://localhost/professional-blog/index.php?action=home
 
-  Espace administration du site :   http://localhost/professional-blog/index.php?action=dashboard
+5.2 Espace administration du site :   http://localhost/professional-blog/index.php?action=dashboard
+
+5.2.1 Identifiants :
+
+    - Email : example@gmail.com
+    - Password : admin2
