@@ -1,6 +1,6 @@
-## Installation du projet : 
+## Installation du projet
 
-### 1. Copie du projet en local :
+### 1. Copie du projet en local
 
   1.1- Cliquez sur le bouton "code", puis sur la section HTTPS qui affiche l'url suivante : 
 
@@ -18,15 +18,15 @@
                 git clone https://github.com/belarif/professional-blog.git
   Après exécution de la commande, le projet sera copié sur votre ordinateur
 
-### 2. Installation des dépendances : 
+### 2. Installation des dépendances
   Toujours depuis votre terminal, exécutez la commande suivant :
                 
                 composer install
     
-### 3. Base de données : 
+### 3. Base de données
   Depuis votre SGBD, importez le ficher professional_blog.sql fourni, qui contient la base de données du projet.
 
-### 4. Connexion à la base de données : 
+### 4. Connexion à la base de données
   A la racine du projet, créez un fichier : `.env`, dans lequel vous insérez les variables suivantes:
 
   `DATABASE="dbname"`
@@ -40,7 +40,7 @@
    Remplacez les valeurs des variables USERNAME et PASSWORD par les identifiants que vous utilisez pour vous connecter à votre SGBD
    ,la valeur de la variable DATABASE par le nom du fichier .sql fourni et la variable DB_HOST par la valeur de votre server de base de données (pour mon cas : 127.0.0.1)
  
-### 5. Accès au site :
+### 5. Accès au site
 
 5.1 Page d'accueil :  http://localhost/professional-blog/index.php?action=home
 
