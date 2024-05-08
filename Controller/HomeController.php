@@ -75,11 +75,11 @@ class HomeController
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'belarif.test@gmail.com';
-        $mail->Password = 'EmailTest';
+        $mail->Password = 'gadcqzbekcipodyg';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;        //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-        $mail->setFrom($email, $lastName);
-        $mail->addAddress('belarif.test@gmail.com');
+        $mail->setFrom('belarif.test@gmail.com', 'Hocine blog professionnel');
+        $mail->addAddress($email, $lastName);
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $content;
