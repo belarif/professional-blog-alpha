@@ -1,10 +1,15 @@
+## Description
+
+Dans ce projet, j'ai créé mon blog professionnel en PHP natif.
+Dans cette version alpha, j'ai utilisé Bootstrap coté front end.
+
 ## Installation du projet
 
 ### 1. Copie du projet en local
 
 1.1- Cliquez sur le bouton "code", puis sur la section HTTPS qui affiche l'url suivante :
 
-                https://github.com/belarif/professional-blog.git
+                https://github.com/belarif/professional-blog-alpha.git
 
 copiez cette url à utiliser pour installer le projet en local.
 
@@ -17,7 +22,7 @@ Si vous utilisez un server autre que WampServer64, positionnez vous sur le chemi
 
 1.3- Sur le meme chemin, tapez la commande suivante pour cloner le projet :
 
-                git clone https://github.com/belarif/professional-blog.git
+                git clone https://github.com/belarif/professional-blog-alpha.git
 
 Après exécution de la commande, le projet sera copié sur votre ordinateur
 
@@ -48,9 +53,9 @@ Remplacez les valeurs des variables USERNAME et PASSWORD par les identifiants qu
 
 ### 5. Accès au site
 
-5.1 Page d'accueil : http://localhost/professional-blog/index.php?action=home
+5.1 Page d'accueil : http://localhost/professional-blog-alpha/index.php?action=home
 
-5.2 Espace administration du site : http://localhost/professional-blog/index.php?action=dashboard
+5.2 Espace administration du site : http://localhost/professional-blog-alpha/index.php?action=dashboard
 
 5.2.1 Identifiants :
 
