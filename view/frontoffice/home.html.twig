@@ -2,7 +2,36 @@
 
 {% block title %} Accueil {% endblock %}
 
+{% block stylesheet %}
+    <link href="public/css/frontoffice/modal.css" rel="stylesheet"/>
+{% endblock stylesheet %}
+
 {% block content %}
+    <!-- modal tools-->
+    <div class="modal-tools">
+      <div class="modal-tools-content">
+        <div class="modal-tools-btn">
+          <button id="close-modal-tools">fermer</button>
+        </div>
+        <div class="tech-infos">
+          <h2>Pour cette réalisation, j'ai utilisé :</h2>
+          <ul>
+            <li>Html5</li>
+            <li>Css3</li>
+            <li>Php7</li>
+            <li>Uml</li>
+            <li>POO</li>
+            <li>JavaScript</li>
+            <li>Bootstrap 5</li>
+            <li>Git & GitHub</li>
+            <li>Architecture MVC</li>
+            <li>Responsive design</li>
+            <li>Création d'un front-office et d'un back-office</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
             <img class="masthead-avatar mb-5" src="public/assets/img/logo/logo.jpg" alt="logo"/>
